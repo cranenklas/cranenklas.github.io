@@ -1,5 +1,193 @@
 <!DOCTYPE html>
-<html>
-<head><title>Test</title></head>
-<body><h1>Hallo, dit wordt mijn website👋</h1></body>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Mockup — landingspagina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdfbf6;
+    --bg-deep: #f3ede0;
+    --ink: #232b35;
+    --ink-soft: #4d5661;
+    --terracotta: #a84e2c;
+    --terracotta-dark: #7c3820;
+    --wood: #6b4a34;
+    --wood-dark: #4d3325;
+    --line: #b7ac97;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    flex-shrink: 0;
+  }
+  .logo {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .logo span { color: var(--terracotta); }
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-left: 2rem;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+    padding: 0 2rem;
+  }
+  .hero {
+    text-align: center;
+    max-width: 640px;
+  }
+  .hero h1 {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    margin: 0 0 0.75rem;
+  }
+  .hero p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 460px;
+  }
+
+  /* Wegwijzerbord */
+  .signpost-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex: 1;
+    min-height: 0;
+    padding: 1rem 0;
+  }
+  .signpost {
+    position: relative;
+    width: 60px;
+    height: 100%;
+    max-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .post {
+    width: 22px;
+    height: 100%;
+    background: var(--wood);
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+  }
+  .post::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 16px;
+    background: var(--wood-dark);
+    border-radius: 50%;
+    opacity: 0.3;
+    z-index: -1;
+  }
+  .plank {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    height: 46px;
+    padding: 0 22px;
+    background: var(--terracotta);
+    color: #f5ede2;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    text-decoration: none;
+    border-radius: 3px 20px 20px 3px;
+    box-shadow: 2px 3px 0 var(--terracotta-dark);
+    transition: transform 0.15s ease;
+    transform: var(--tf);
+  }
+  .plank:hover { transform: var(--tf) translateY(-3px); }
+  .plank.left {
+    border-radius: 20px 3px 3px 20px;
+    justify-content: flex-end;
+    padding-right: 24px;
+  }
+  .plank-1 { top: 6%; --tf: translateX(6px) rotate(-2deg); }
+  .plank-1.left { --tf: translateX(calc(-100% - 6px)) rotate(2deg); }
+  .plank-2 { top: 33%; --tf: translateX(6px) rotate(-1.5deg); }
+  .plank-2.left { --tf: translateX(calc(-100% - 6px)) rotate(1.5deg); }
+  .plank-3 { top: 60%; --tf: translateX(6px) rotate(-1deg); }
+  .plank-3.left { --tf: translateX(calc(-100% - 6px)) rotate(1deg); }
+
+  .footer-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    padding-bottom: 0.75rem;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Cranenklas<span>.</span></div>
+  <nav>
+    <a href="#">Educatieve tools</a>
+    <a href="#">Over mij</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <h1>Aardrijkskunde<br>Welke kant wil je op?</h1>
+  <p>Lesmateriaal, een kijkje in mijn onderwijspad, of meteen contact opnemen? Kies hieronder een richting.</p>
+</section>
+
+<div class="signpost-wrap">
+  <div class="signpost">
+    <a class="plank plank-1 left" href="#">Educatieve tools</a>
+    <a class="plank plank-2" href="#">Over mij</a>
+    <a class="plank plank-3 left" href="#">Contact</a>
+    <div class="post"></div>
+  </div>
+</div>
+</main>
+
+<p class="footer-note">— mockup, kleuren en typografie ter beoordeling —</p>
+
+</body>
 </html>
