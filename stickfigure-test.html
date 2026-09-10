@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stickfigure test</title>
+<style>
+  :root {
+    --bg: #fdfbf6;
+    --ink: #232b35;
+    --terracotta: #a84e2c;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .stage {
+    background: #fff;
+    border: 1px dashed #ccc;
+  }
+  svg { display: block; }
+  p { font-size: 0.85rem; color: #666; }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <svg id="figure" viewBox="0 0 140 140" width="420" height="420" xmlns="http://www.w3.org/2000/svg"
+       stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" fill="none">
+
+    <!-- Hoofd -->
+    <circle cx="60" cy="30" r="10" />
+
+    <!-- Romp -->
+    <line x1="60" y1="40" x2="60" y2="78" />
+
+    <!-- Linkerbeen -->
+    <g class="leg-upper-left" transform="rotate(-14 60 78)">
+      <line x1="60" y1="78" x2="58" y2="98" />
+      <g class="leg-lower-left" transform="rotate(0 58 98)">
+        <line x1="58" y1="98" x2="56" y2="118" />
+      </g>
+    </g>
+
+    <!-- Rechterbeen -->
+    <g class="leg-upper-right" transform="rotate(14 60 78)">
+      <line x1="60" y1="78" x2="62" y2="98" />
+      <g class="leg-lower-right" transform="rotate(0 62 98)">
+        <line x1="62" y1="98" x2="64" y2="118" />
+      </g>
+    </g>
+
+    <!-- Linkerarm -->
+    <g class="arm-upper-left" transform="rotate(8 60 50)">
+      <line x1="60" y1="50" x2="48" y2="64" />
+      <g class="arm-lower-left" transform="rotate(0 48 64)">
+        <line x1="48" y1="64" x2="40" y2="80" />
+      </g>
+    </g>
+
+    <!-- Rechterarm -->
+    <g class="arm-upper-right" transform="rotate(-8 60 50)">
+      <line x1="60" y1="50" x2="72" y2="64" />
+      <g class="arm-lower-right" transform="rotate(0 72 64)">
+        <line x1="72" y1="64" x2="80" y2="80" />
+      </g>
+    </g>
+
+  </svg>
+</div>
+<p>Testpagina voor het wandelfiguurtje — losstaand van index.html, nog geen animatie.</p>
+
+</body>
+</html>
