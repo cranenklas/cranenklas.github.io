@@ -2,6 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cranenklas aardrijkskunde</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,11 +168,31 @@
       margin: 0 0 0.6rem;
     }
     .hero p { font-size: 0.95rem; }
-    .signpost-wrap { flex: 1; padding: 1.5rem 0 2.5rem; }
-    .signpost { max-height: 76vh; width: 100px; }
-    .post { width: 32px; }
-    .plank { height: 70px; font-size: 1.15rem; padding: 0 22px; }
-    .plank.left { padding-right: 26px; }
+    .signpost-wrap {
+      flex: 1;
+      min-height: 0;
+      align-items: flex-start;
+      padding: 0.5rem 0 1rem;
+    }
+    .signpost {
+      height: 78%;
+      max-height: 85dvh;
+      width: 220px;
+    }
+    .post { width: 64px; }
+    .plank {
+      height: 128px;
+      font-size: 1.4rem;
+      line-height: 1.15;
+      padding: 0 22px;
+      white-space: normal;
+      text-align: left;
+      /* voorkomt dat een bord buiten het scherm valt: begrenst de breedte
+         tot de ruimte die vanaf het midden tot de schermrand beschikbaar is */
+      max-width: calc(50vw - 30px);
+      overflow: hidden;
+    }
+    .plank.left { padding-right: 24px; text-align: right; }
     .footer-note { font-size: 0.8rem; }
   }
 </style>
