@@ -176,23 +176,28 @@
     }
     .signpost {
       height: 78%;
+      min-height: 260px;
       max-height: 85dvh;
       width: 220px;
     }
-    .post { width: 64px; }
+    .post { width: 30px; }
     .plank {
-      height: 128px;
-      font-size: 1.4rem;
+      height: 80px;
+      width: max-content;
+      font-size: 1.3rem;
       line-height: 1.15;
-      padding: 0 22px;
+      padding: 0 24px;
       white-space: normal;
       text-align: left;
       /* voorkomt dat een bord buiten het scherm valt: begrenst de breedte
          tot de ruimte die vanaf het midden tot de schermrand beschikbaar is */
-      max-width: calc(50vw - 30px);
+      max-width: calc(50vw - 15px);
       overflow: hidden;
     }
-    .plank.left { padding-right: 24px; text-align: right; }
+    .plank.left { padding-right: 26px; text-align: right; }
+    .plank-1 { top: 6%; }
+    .plank-2 { top: 26%; }
+    .plank-3 { top: 46%; }
     .footer-note { font-size: 0.8rem; }
   }
 </style>
