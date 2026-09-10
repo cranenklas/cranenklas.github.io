@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Cranenklas aardrijkskunde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdfbf6;
+    --ink: #232b35;
+    --ink-soft: #4d5661;
+    --terracotta: #a84e2c;
+    --terracotta-dark: #7c3820;
+    --wood: #6b4a34;
+    --wood-dark: #4d3325;
+    --placeholder: #ece3d3;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    flex-shrink: 0;
+  }
+  .logo {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .logo span { color: var(--terracotta); }
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-left: 2rem;
+  }
+  nav a.active {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+    padding: 0 2rem;
+  }
+  .contact {
+    text-align: center;
+    max-width: 640px;
+  }
+
+  .photo-strip {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .photo-placeholder {
+    width: 96px;
+    height: 96px;
+    border-radius: 10px;
+    background: var(--placeholder);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .photo-placeholder svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--wood);
+    opacity: 0.6;
+  }
+
+  .contact h1 {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    margin: 0 0 0.75rem;
+  }
+  .contact p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 auto 2rem;
+    max-width: 460px;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1.5rem;
+    background: var(--terracotta);
+    color: #f5ede2;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 999px;
+    box-shadow: 2px 3px 0 var(--terracotta-dark);
+    transition: transform 0.15s ease;
+  }
+  .pill:hover { transform: translateY(-3px); }
+  .pill svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  @media (max-width: 640px) {
+    header { padding: 1rem 1.25rem; }
+    .logo { font-size: 1.15rem; }
+    nav a { display: none; }
+    main { padding: 0 1rem; }
+    .photo-strip { gap: 0.75rem; margin-bottom: 1.5rem; }
+    .photo-placeholder { width: 72px; height: 72px; border-radius: 8px; }
+    .photo-placeholder svg { width: 26px; height: 26px; }
+    .contact h1 {
+      font-size: clamp(1.6rem, 7vw, 2rem);
+      margin: 0 0 0.6rem;
+    }
+    .contact p {
+      font-size: 0.95rem;
+      margin: 0 auto 1.5rem;
+    }
+    .contact-links { gap: 0.65rem; }
+    .pill { padding: 0.7rem 1.15rem; font-size: 0.88rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Cranenklas<span>.</span></div>
+  <nav>
+    <a href="#">Educatieve tools</a>
+    <a href="#">Over mij</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+</header>
+
+<main>
+<section class="contact">
+  <div class="photo-strip">
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2.5"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <path d="M21 15l-5-5L5 21"></path>
+      </svg>
+    </div>
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2.5"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <path d="M21 15l-5-5L5 21"></path>
+      </svg>
+    </div>
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2.5"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <path d="M21 15l-5-5L5 21"></path>
+      </svg>
+    </div>
+  </div>
+
+  <h1>Laten we kennismaken</h1>
+  <p>Ik denk graag mee over aardrijkskunde-onderwijs, ICT-toepassingen in de klas en digitale vaardigheden. En over het weer, uiteraard.</p>
+
+  <div class="contact-links">
+    <a class="pill" href="mailto:test@voorbeeld.nl">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.2.5 7.15 5.72a1 1 0 0 0 1.25 0L19.75 6H4.2ZM20 7.9l-6.87 5.5a3 3 0 0 1-3.75 0L4 7.9v10.6h16V7.9Z"></path></svg>
+      test@voorbeeld.nl
+    </a>
+    <a class="pill" href="https://linkedin.com/in/placeholder" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5ZM.5 8.4h4V23h-4V8.4Zm7 0h3.83v1.99h.06c.53-1 1.84-2.06 3.79-2.06 4.06 0 4.81 2.67 4.81 6.14V23h-4v-6.85c0-1.63-.03-3.73-2.27-3.73-2.28 0-2.63 1.78-2.63 3.62V23h-4V8.4Z"></path></svg>
+      LinkedIn
+    </a>
+  </div>
+</section>
+</main>
+
+</body>
+</html>
