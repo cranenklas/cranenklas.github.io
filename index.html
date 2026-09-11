@@ -16,6 +16,7 @@
     --terracotta-dark: #7c3820;
     --wood: #6b4a34;
     --wood-dark: #4d3325;
+    --line: #b3a696;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -87,9 +88,11 @@
 
   /* Wegwijzerbord */
   .signpost-wrap {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    align-self: stretch;
     flex: 1;
     min-height: 0;
     padding: 1rem 0 2.75rem;
@@ -155,6 +158,45 @@
   .plank-3 { top: 60%; --tf: translateX(6px) rotate(-1deg); }
   .plank-3.left { --tf: translateX(calc(-100% - 6px)) rotate(1deg); }
 
+  /* Wandelfiguurtje ("Over mij") */
+  .walk-path {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2.75rem;
+    height: 2px;
+    background-image: repeating-linear-gradient(to right, var(--line) 0 6px, transparent 6px 12px);
+  }
+  .walk-figure {
+    position: absolute;
+    bottom: 2.75rem;
+    left: calc(50% + 150px);
+  }
+  .walk-figure svg {
+    display: block;
+    width: 190px;
+    height: 163px;
+  }
+  .controls-box {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border: 2px solid var(--terracotta);
+    border-radius: 10px;
+    background: transparent;
+    padding: 0.7rem 1rem;
+  }
+  .controls-box p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .walk-path[hidden], .walk-figure[hidden], .controls-box[hidden] { display: none; }
+
   .footer-note {
     text-align: center;
     font-size: 0.75rem;
@@ -205,6 +247,7 @@
     .plank-2 { top: 26%; }
     .plank-3 { top: 46%; }
     .footer-note { font-size: 0.8rem; }
+    .walk-path, .walk-figure, .controls-box { display: none !important; }
   }
 </style>
 </head>
@@ -214,7 +257,7 @@
   <a class="logo" href="index.html">Cranenklas<span>.</span></a>
   <nav>
     <a href="#">Educatieve tools</a>
-    <a href="#">Over mij</a>
+    <a href="#" class="over-mij-trigger">Over mij</a>
     <a href="contact.html">Contact</a>
   </nav>
 </header>
@@ -226,14 +269,123 @@
 </section>
 
 <div class="signpost-wrap">
+  <div class="walk-path" id="walk-path" hidden></div>
+
   <div class="signpost">
     <a class="plank plank-1 left" href="#">Educatieve tools</a>
-    <a class="plank plank-2" href="#">Over mij</a>
+    <a class="plank plank-2 over-mij-trigger" href="#">Over mij</a>
     <a class="plank plank-3 left" href="contact.html">Contact</a>
     <div class="post"></div>
   </div>
+
+  <div class="walk-figure" id="walk-figure" hidden>
+    <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg"
+         stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" fill="none">
+
+      <!-- Hoofd -->
+      <circle cx="60" cy="30" r="10" />
+
+      <!-- Romp -->
+      <line x1="60" y1="40" x2="60" y2="78" />
+
+      <!-- Linkerbeen -->
+      <g class="leg-upper-left" transform="rotate(-14 60 78)">
+        <line x1="60" y1="78" x2="58" y2="98" />
+        <g class="leg-lower-left" transform="rotate(0 58 98)">
+          <line x1="58" y1="98" x2="56" y2="118" />
+        </g>
+      </g>
+
+      <!-- Rechterbeen -->
+      <g class="leg-upper-right" transform="rotate(14 60 78)">
+        <line x1="60" y1="78" x2="62" y2="98" />
+        <g class="leg-lower-right" transform="rotate(0 62 98)">
+          <line x1="62" y1="98" x2="64" y2="118" />
+        </g>
+      </g>
+
+      <!-- Linkerarm -->
+      <g class="arm-upper-left" transform="rotate(8 60 50)">
+        <line x1="60" y1="50" x2="48" y2="64" />
+        <g class="arm-lower-left" transform="rotate(0 48 64)">
+          <line x1="48" y1="64" x2="40" y2="80" />
+        </g>
+      </g>
+
+      <!-- Rechterarm: brengt na het verschijnen kort een kaartje omhoog -->
+      <g class="arm-upper-right" transform="rotate(-8 60 50)">
+        <animateTransform id="card-arm-upper" attributeName="transform" type="rotate"
+          begin="indefinite" repeatCount="1"
+          values="-8 60 50;-95 60 50;-95 60 50;-8 60 50"
+          keyTimes="0;0.3;0.7;1" dur="1.1s" />
+        <line x1="60" y1="50" x2="72" y2="64" />
+        <g class="arm-lower-right" transform="rotate(0 72 64)">
+          <animateTransform id="card-arm-lower" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="0 72 64;-20 72 64;-20 72 64;0 72 64"
+            keyTimes="0;0.3;0.7;1" dur="1.1s" />
+          <line x1="72" y1="64" x2="80" y2="80" />
+          <rect x="75" y="70" width="12" height="16" rx="1.5" fill="#f5ede2" stroke="var(--terracotta-dark)" stroke-width="1.5" stroke-linecap="round" opacity="0">
+            <animate id="card-reveal" attributeName="opacity" begin="indefinite" repeatCount="1"
+              values="0;1;1;0" keyTimes="0;0.3;0.7;1" dur="1.1s" />
+          </rect>
+        </g>
+      </g>
+
+    </svg>
+  </div>
+
+  <div class="controls-box" id="controls-box" hidden>
+    <p>&rarr; Loop naar rechts</p>
+    <p>&larr; Loop naar links</p>
+    <p>&uarr; Springen</p>
+  </div>
 </div>
 </main>
+
+<script>
+(function () {
+  var triggers = document.querySelectorAll('.over-mij-trigger');
+  var walkPath = document.getElementById('walk-path');
+  var walkFigure = document.getElementById('walk-figure');
+  var controlsBox = document.getElementById('controls-box');
+  var revealed = false;
+
+  var CARD_DELAY = 700;      // ms, binnen de gevraagde 0.5-1s
+  var CARD_DURATION = 1100;  // ms, moet gelijk zijn aan dur van de SMIL-animaties hierboven
+
+  function beginById(id) {
+    var el = document.getElementById(id);
+    if (el && el.beginElement) el.beginElement();
+  }
+
+  function showScene() {
+    if (revealed) return;
+    if (!window.matchMedia('(min-width: 641px)').matches) return; // desktop-only
+    revealed = true;
+
+    walkPath.hidden = false;
+    walkFigure.hidden = false;
+
+    setTimeout(function () {
+      beginById('card-arm-upper');
+      beginById('card-arm-lower');
+      beginById('card-reveal');
+
+      setTimeout(function () {
+        controlsBox.hidden = false;
+      }, CARD_DURATION);
+    }, CARD_DELAY);
+  }
+
+  triggers.forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      showScene();
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
