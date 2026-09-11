@@ -33,6 +33,28 @@
   .row { display: flex; gap: 3rem; align-items: flex-start; flex-wrap: wrap; justify-content: center; }
   figure { margin: 0; text-align: center; }
   figcaption { font-size: 0.85rem; color: #666; margin-top: 0.5rem; }
+
+  .interactive-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .interactive-section h2 { font-size: 1rem; margin: 0; }
+  .interactive-section .hint { font-size: 0.8rem; color: #666; margin: 0; }
+  #interactive-status {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--ink);
+    margin: 0;
+  }
+  .mobile-note { display: none; font-size: 0.9rem; color: #666; max-width: 320px; text-align: center; }
+
+  @media (max-width: 640px) {
+    .interactive-section { display: none; }
+    .mobile-note { display: block; }
+  }
 </style>
 </head>
 <body>
@@ -85,6 +107,84 @@
   </svg>
 </div>
 <figcaption>Rustpose (goedgekeurd, ongewijzigd)</figcaption>
+</figure>
+
+<figure>
+<div class="stage">
+  <svg id="figure-jump-idle" viewBox="0 -30 140 170" width="280" height="340" xmlns="http://www.w3.org/2000/svg"
+       stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" fill="none">
+
+    <g class="figure-root" transform="translate(0 0)">
+      <animateTransform attributeName="transform" type="translate"
+        values="0 0;0 6;0 -38;0 6;0 0"
+        keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+
+      <!-- Hoofd -->
+      <circle cx="60" cy="30" r="10" />
+
+      <!-- Romp: rechte lijn, ongewijzigd -->
+      <line x1="60" y1="40" x2="60" y2="78" />
+
+      <!-- Linkerbeen -->
+      <g class="leg-upper-left" transform="rotate(-14 60 78)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="-14 60 78;-22 60 78;-55 60 78;-22 60 78;-14 60 78"
+          keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+        <line x1="60" y1="78" x2="58" y2="98" />
+        <g class="leg-lower-left" transform="rotate(0 58 98)">
+          <animateTransform attributeName="transform" type="rotate"
+            values="0 58 98;20 58 98;75 58 98;20 58 98;0 58 98"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+          <line x1="58" y1="98" x2="56" y2="118" />
+        </g>
+      </g>
+
+      <!-- Rechterbeen -->
+      <g class="leg-upper-right" transform="rotate(14 60 78)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="14 60 78;22 60 78;55 60 78;22 60 78;14 60 78"
+          keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+        <line x1="60" y1="78" x2="62" y2="98" />
+        <g class="leg-lower-right" transform="rotate(0 62 98)">
+          <animateTransform attributeName="transform" type="rotate"
+            values="0 62 98;-20 62 98;-75 62 98;-20 62 98;0 62 98"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+          <line x1="62" y1="98" x2="64" y2="118" />
+        </g>
+      </g>
+
+      <!-- Linkerarm -->
+      <g class="arm-upper-left" transform="rotate(8 60 50)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="8 60 50;20 60 50;70 60 50;20 60 50;8 60 50"
+          keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+        <line x1="60" y1="50" x2="48" y2="64" />
+        <g class="arm-lower-left" transform="rotate(0 48 64)">
+          <animateTransform attributeName="transform" type="rotate"
+            values="0 48 64;10 48 64;-40 48 64;10 48 64;0 48 64"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+          <line x1="48" y1="64" x2="40" y2="80" />
+        </g>
+      </g>
+
+      <!-- Rechterarm -->
+      <g class="arm-upper-right" transform="rotate(-8 60 50)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="-8 60 50;-20 60 50;-70 60 50;-20 60 50;-8 60 50"
+          keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+        <line x1="60" y1="50" x2="72" y2="64" />
+        <g class="arm-lower-right" transform="rotate(0 72 64)">
+          <animateTransform attributeName="transform" type="rotate"
+            values="0 72 64;-10 72 64;40 72 64;-10 72 64;0 72 64"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" repeatCount="indefinite" />
+          <line x1="72" y1="64" x2="80" y2="80" />
+        </g>
+      </g>
+
+    </g>
+  </svg>
+</div>
+<figcaption>Sprong vanuit stilstand (nieuw)</figcaption>
 </figure>
 
 <figure>
@@ -248,7 +348,289 @@
 </figure>
 
 </div>
+
+<div class="interactive-section">
+  <h2>Interactieve besturing</h2>
+  <p class="hint">→ ingedrukt houden om te lopen · ↑ om te springen (met → erbij: sprong tijdens het lopen)</p>
+  <div class="stage">
+    <svg id="figure-interactive" viewBox="0 -30 140 170" width="280" height="340" xmlns="http://www.w3.org/2000/svg"
+         stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" fill="none">
+
+      <g class="figure-root" transform="translate(0 0)">
+        <animateTransform id="int-root-jumpidle" attributeName="transform" type="translate"
+          begin="indefinite" repeatCount="1"
+          values="0 0;0 6;0 -38;0 6;0 0"
+          keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+        <animateTransform id="int-root-jumpwalk" attributeName="transform" type="translate"
+          begin="indefinite" repeatCount="1"
+          values="0 0;0 5;0 -40;0 5;0 0"
+          keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+
+        <!-- Hoofd -->
+        <circle cx="60" cy="30" r="10" />
+
+        <!-- Romp: standaard een rechte lijn (via Bezier met controlepunt op de lijn zelf) -->
+        <path d="M 60 78 Q 60 59 60 40">
+          <animate id="int-torso-walk" attributeName="d" begin="indefinite" repeatCount="indefinite"
+            values="M 60 78 Q 62 59 60 40;M 60 78 Q 65 59 60 40;M 60 78 Q 62 59 60 40;M 60 78 Q 65 59 60 40;M 60 78 Q 62 59 60 40"
+            keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+          <animate id="int-torso-jumpwalk" attributeName="d" begin="indefinite" repeatCount="1"
+            values="M 60 78 Q 62 59 60 40;M 60 78 Q 64 59 60 40;M 60 78 Q 66 59 60 40;M 60 78 Q 64 59 60 40;M 60 78 Q 62 59 60 40"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+        </path>
+
+        <!-- Linkerbeen -->
+        <g class="leg-upper-left" transform="rotate(-14 60 78)">
+          <animateTransform id="int-leg-upper-left-walk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="indefinite"
+            values="22 60 78;0 60 78;-22 60 78;0 60 78;22 60 78"
+            keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+          <animateTransform id="int-leg-upper-left-jumpidle" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="-14 60 78;-22 60 78;-55 60 78;-22 60 78;-14 60 78"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+          <animateTransform id="int-leg-upper-left-jumpwalk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="-10 60 78;-22 60 78;-50 60 78;-22 60 78;-10 60 78"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+          <line x1="60" y1="78" x2="58" y2="98" />
+          <g class="leg-lower-left" transform="rotate(0 58 98)">
+            <animateTransform id="int-leg-lower-left-walk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="indefinite"
+              values="5 58 98;60 58 98;15 58 98;10 58 98;5 58 98"
+              keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+            <animateTransform id="int-leg-lower-left-jumpidle" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="0 58 98;20 58 98;75 58 98;20 58 98;0 58 98"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+            <animateTransform id="int-leg-lower-left-jumpwalk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="5 58 98;15 58 98;55 58 98;15 58 98;5 58 98"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+            <line x1="58" y1="98" x2="56" y2="118" />
+          </g>
+        </g>
+
+        <!-- Rechterbeen -->
+        <g class="leg-upper-right" transform="rotate(14 60 78)">
+          <animateTransform id="int-leg-upper-right-walk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="indefinite"
+            values="-22 60 78;0 60 78;22 60 78;0 60 78;-22 60 78"
+            keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+          <animateTransform id="int-leg-upper-right-jumpidle" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="14 60 78;22 60 78;55 60 78;22 60 78;14 60 78"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+          <animateTransform id="int-leg-upper-right-jumpwalk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="10 60 78;25 60 78;45 60 78;25 60 78;10 60 78"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+          <line x1="60" y1="78" x2="62" y2="98" />
+          <g class="leg-lower-right" transform="rotate(0 62 98)">
+            <animateTransform id="int-leg-lower-right-walk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="indefinite"
+              values="15 62 98;10 62 98;5 62 98;60 62 98;15 62 98"
+              keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+            <animateTransform id="int-leg-lower-right-jumpidle" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="0 62 98;-20 62 98;-75 62 98;-20 62 98;0 62 98"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+            <animateTransform id="int-leg-lower-right-jumpwalk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="10 62 98;30 62 98;70 62 98;30 62 98;10 62 98"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+            <line x1="62" y1="98" x2="64" y2="118" />
+          </g>
+        </g>
+
+        <!-- Linkerarm (geometrie van de rustpose: elleboog op 48,64) -->
+        <g class="arm-upper-left" transform="rotate(8 60 50)">
+          <animateTransform id="int-arm-upper-left-walk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="indefinite"
+            values="-12 60 50;0 60 50;12 60 50;0 60 50;-12 60 50"
+            keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+          <animateTransform id="int-arm-upper-left-jumpidle" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="8 60 50;20 60 50;70 60 50;20 60 50;8 60 50"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+          <animateTransform id="int-arm-upper-left-jumpwalk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="-15 60 50;-25 60 50;-45 60 50;-25 60 50;-15 60 50"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+          <line x1="60" y1="50" x2="48" y2="64" />
+          <g class="arm-lower-left" transform="rotate(0 48 64)">
+            <animateTransform id="int-arm-lower-left-walk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="indefinite"
+              values="-35 48 64;-30 48 64;-45 48 64;-70 48 64;-35 48 64"
+              keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+            <animateTransform id="int-arm-lower-left-jumpidle" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="0 48 64;10 48 64;-40 48 64;10 48 64;0 48 64"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+            <animateTransform id="int-arm-lower-left-jumpwalk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="-30 48 64;-40 48 64;-55 48 64;-40 48 64;-30 48 64"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+            <line x1="48" y1="64" x2="40" y2="80" />
+          </g>
+        </g>
+
+        <!-- Rechterarm (geometrie van de rustpose: elleboog op 72,64) -->
+        <g class="arm-upper-right" transform="rotate(-8 60 50)">
+          <animateTransform id="int-arm-upper-right-walk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="indefinite"
+            values="12 60 50;0 60 50;-12 60 50;0 60 50;12 60 50"
+            keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+          <animateTransform id="int-arm-upper-right-jumpidle" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="-8 60 50;-20 60 50;-70 60 50;-20 60 50;-8 60 50"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+          <animateTransform id="int-arm-upper-right-jumpwalk" attributeName="transform" type="rotate"
+            begin="indefinite" repeatCount="1"
+            values="15 60 50;20 60 50;35 60 50;20 60 50;15 60 50"
+            keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+          <line x1="60" y1="50" x2="72" y2="64" />
+          <g class="arm-lower-right" transform="rotate(0 72 64)">
+            <animateTransform id="int-arm-lower-right-walk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="indefinite"
+              values="-30 72 64;-45 72 64;-25 72 64;-30 72 64;-30 72 64"
+              keyTimes="0;0.25;0.5;0.75;1" dur="1.2s" />
+            <animateTransform id="int-arm-lower-right-jumpidle" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="0 72 64;-10 72 64;40 72 64;-10 72 64;0 72 64"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.5s" />
+            <animateTransform id="int-arm-lower-right-jumpwalk" attributeName="transform" type="rotate"
+              begin="indefinite" repeatCount="1"
+              values="-40 72 64;-45 72 64;-55 72 64;-45 72 64;-40 72 64"
+              keyTimes="0;0.15;0.5;0.85;1" dur="1.1s" />
+            <line x1="72" y1="64" x2="80" y2="80" />
+          </g>
+        </g>
+
+      </g>
+    </svg>
+  </div>
+  <p id="interactive-status">Stilstaand</p>
+</div>
+
+<p class="mobile-note">Deze interactieve ervaring is niet beschikbaar op mobiel — [tekstversie volgt hier later]</p>
+
 <p>Testpagina voor het wandelfiguurtje — losstaand van index.html.</p>
+
+<script>
+(function () {
+  function byId(id) { return document.getElementById(id); }
+
+  var limbAnims = {
+    walk: [
+      'int-torso-walk',
+      'int-leg-upper-left-walk', 'int-leg-lower-left-walk',
+      'int-leg-upper-right-walk', 'int-leg-lower-right-walk',
+      'int-arm-upper-left-walk', 'int-arm-lower-left-walk',
+      'int-arm-upper-right-walk', 'int-arm-lower-right-walk'
+    ],
+    'jump-idle': [
+      'int-root-jumpidle',
+      'int-leg-upper-left-jumpidle', 'int-leg-lower-left-jumpidle',
+      'int-leg-upper-right-jumpidle', 'int-leg-lower-right-jumpidle',
+      'int-arm-upper-left-jumpidle', 'int-arm-lower-left-jumpidle',
+      'int-arm-upper-right-jumpidle', 'int-arm-lower-right-jumpidle'
+    ],
+    'jump-walk': [
+      'int-root-jumpwalk', 'int-torso-jumpwalk',
+      'int-leg-upper-left-jumpwalk', 'int-leg-lower-left-jumpwalk',
+      'int-leg-upper-right-jumpwalk', 'int-leg-lower-right-jumpwalk',
+      'int-arm-upper-left-jumpwalk', 'int-arm-lower-left-jumpwalk',
+      'int-arm-upper-right-jumpwalk', 'int-arm-lower-right-jumpwalk'
+    ]
+  };
+
+  var JUMP_IDLE_DUR = 1500;
+  var JUMP_WALK_DUR = 1100;
+
+  var rightPressed = false;
+  var upPressed = false;
+  var jumping = false;
+  var continuousState = 'idle'; // 'idle' | 'walk'
+  var statusEl = byId('interactive-status');
+
+  function startAnims(names) {
+    names.forEach(function (id) {
+      var el = byId(id);
+      if (el && el.beginElement) el.beginElement();
+    });
+  }
+  function stopAnims(names) {
+    names.forEach(function (id) {
+      var el = byId(id);
+      if (el && el.endElement) el.endElement();
+    });
+  }
+
+  function setContinuous(state) {
+    if (state === continuousState) return;
+    if (continuousState === 'walk') stopAnims(limbAnims.walk);
+    if (state === 'walk') startAnims(limbAnims.walk);
+    continuousState = state;
+    if (!jumping) updateStatus();
+  }
+
+  function updateStatus(jumpLabel) {
+    if (!statusEl) return;
+    if (jumpLabel) {
+      statusEl.textContent = jumpLabel;
+    } else {
+      statusEl.textContent = continuousState === 'walk' ? 'Lopen naar rechts' : 'Stilstaand';
+    }
+  }
+
+  function triggerJump() {
+    if (jumping) return; // negeer, voorkomt overlappende sprongen
+    jumping = true;
+    var variant = rightPressed ? 'jump-walk' : 'jump-idle';
+    var dur = variant === 'jump-walk' ? JUMP_WALK_DUR : JUMP_IDLE_DUR;
+    if (continuousState === 'walk') stopAnims(limbAnims.walk);
+    startAnims(limbAnims[variant]);
+    updateStatus(variant === 'jump-walk' ? 'Sprong tijdens het lopen' : 'Sprong vanuit stilstand');
+    setTimeout(function () {
+      stopAnims(limbAnims[variant]);
+      jumping = false;
+      continuousState = 'idle';
+      setContinuous(rightPressed ? 'walk' : 'idle');
+      updateStatus();
+    }, dur);
+  }
+
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (!rightPressed) {
+        rightPressed = true;
+        if (!jumping) setContinuous('walk');
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!upPressed) {
+        upPressed = true;
+        triggerJump();
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      // Nog geen animatie voor lopen naar links (volgt als spiegeling van rechts).
+      // Toets wordt geregistreerd maar verandert de pose voorlopig niet.
+    }
+  });
+
+  window.addEventListener('keyup', function (e) {
+    if (e.key === 'ArrowRight') {
+      rightPressed = false;
+      if (!jumping) setContinuous('idle');
+    } else if (e.key === 'ArrowUp') {
+      upPressed = false;
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
