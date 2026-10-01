@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Water – Cranenklas aardrijkskunde</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="../css/basis.css">
+  <link rel="stylesheet" href="../css/tool.css">
+</head>
+<body class="is-tools">
+
+  <!-- Navigatiebalk: brengt je terug naar de hoofdsite -->
+  <nav class="nav" aria-label="Hoofdmenu">
+    <a class="logo" href="../index.html">Cranenklas<span>.</span></a>
+    <ul>
+      <li><a class="link-tools" href="../index.html#tools" aria-current="page">Educatieve tools</a></li>
+      <li><a href="#" data-stub>Over mij</a></li>
+      <li><a href="#" data-stub>Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="layout">
+    <aside class="side" aria-label="Onderwerp Water">
+      <div class="side-head">
+        <h2>Water</h2>
+        <button class="toggle" id="toggle" type="button" aria-expanded="true" aria-controls="sideList" aria-label="Sidebar inklappen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"/></svg>
+        </button>
+      </div>
+      <ul id="sideList">
+        <li><a href="#" aria-current="page" data-stub>Verdeling van water</a></li>
+        <li><a href="#" data-stub>Kringloop van water</a></li>
+      </ul>
+    </aside>
+
+    <main>
+      <div class="tool">
+        <div class="cup-col">
+        <svg class="cup" id="cup" viewBox="0 0 380 400" role="img" aria-label="Maatbeker met een schaalverdeling in procenten">
+          <defs>
+            <clipPath id="inner"><path d="M94 32 H286 V350 Q286 366 270 366 H110 Q94 366 94 350 Z"/></clipPath>
+          </defs>
+          <path class="cup-body" d="M90 30 H290 V352 Q290 370 272 370 H108 Q90 370 90 352 Z"/>
+          <g clip-path="url(#inner)">
+            <rect class="layer light" x="90" y="52" width="200" height="318"/>
+            <rect class="layer dark" id="dark" x="90" y="52" width="200" height="318"/>
+          </g>
+          <path class="rim" d="M90 30 L72 22"/>
+          <g id="ticks"></g>
+        </svg>
+        </div>
+
+        <div class="panel">
+        <h1>Verdeling van water</h1>
+        <div class="quiz" id="quiz" aria-hidden="true">
+          <p class="question" id="question">Hoeveel procent van al het water op aarde is zout water?</p>
+          <div class="legend"><span class="z">Zout water</span><span class="f">Zoet water</span></div>
+
+          <div class="slider-wrap">
+            <div class="value" id="value" aria-live="off">50%</div>
+            <input type="range" id="slider" min="0" max="105" step="1" value="50" aria-labelledby="question">
+            <div class="scale" id="scale" aria-hidden="true"></div>
+            <p class="note">Vanaf 95% schuif je in stappen van een half procent.</p>
+          </div>
+
+          <button class="btn" id="check" type="button">Controleer</button>
+          <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+
+          <div class="explain" id="explain" hidden>
+            <p><strong>Goed gedaan!</strong> Ongeveer 97,5% van al het water op aarde is zout water. Slechts 2,5% is zoet water.</p>
+            <button class="btn" id="next" type="button">Verder</button>
+          </div>
+          <div class="more" id="more" hidden>
+            <p>Van dat kleine beetje zoet water stroomt maar een heel klein deel door rivieren en meren. Het meeste zit vast in ijskappen en gletsjers, of zit als grondwater diep in de grond.</p>
+            <p>In de volgende stap bekijk je in welke vormen het zoete water voorkomt.</p>
+          </div>
+        </div>
+        </div>
+
+        <button class="btn ghost replay" id="replay" type="button">Opnieuw beginnen</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/verdeling-van-water.js"></script>
+</body>
+</html>

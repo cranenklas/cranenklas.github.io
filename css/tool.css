@@ -1,0 +1,126 @@
+/* ===========================================================
+   Cranenklas aardrijkskunde — stijl van een ICT-tool
+   Kleuren, lettertype, basisinstellingen en de navigatiebalk staan
+   in css/basis.css. Hier staat alleen de stijl van de toolpagina's
+   zelf: sidebar, maatbeker, vraag en feedback.
+   Layout: vaste navigatiebalk bovenin, sidebar links (onderwerp +
+   tools), rechts de tool zelf.
+   =========================================================== */
+
+body { line-height: 1.55; }
+
+/* ---------- Sidebar + inhoud ---------- */
+:root { --side-w: 260px; }
+
+.layout { display: grid; grid-template-columns: var(--side-w) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); height: 100vh; padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); transition: grid-template-columns .3s ease; }
+.layout.collapsed { grid-template-columns: 64px minmax(0, 1fr); }
+.side {
+  height: 100%; padding: 32px 24px; border-right: 1px solid var(--nav-line); overflow: hidden;
+}
+.side-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.side h2 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+.toggle {
+  flex: none; width: 36px; height: 36px; display: grid; place-items: center; cursor: pointer;
+  background: none; border: 2px solid var(--line); border-radius: 50%; color: var(--fg);
+}
+.toggle:hover { background: color-mix(in srgb, var(--fg) 10%, transparent); }
+.toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s; }
+.layout.collapsed .toggle svg { transform: rotate(180deg); }
+.layout.collapsed .side { padding-inline: 12px; }
+.layout.collapsed .side-head { justify-content: center; }
+.layout.collapsed .side h2, .layout.collapsed .side ul { display: none; }
+.side ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.side a { display: block; padding: 6px 0; color: var(--fg); text-decoration: none; }
+.side a:hover { color: var(--rust); }
+.side a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--rust); }
+
+/* Inhoud: beker links, vraag en antwoord rechts, alles op één scherm zonder scrollen */
+main { min-height: 0; padding: 16px 32px; overflow: auto; }
+.tool { position: relative; width: 100%; height: 100%; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: minmax(0, 1fr); gap: 32px; align-items: center; }
+.cup-col { height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.panel { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 540px; justify-self: center; }
+.panel h1 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.15; text-align: center; text-wrap: balance; }
+
+/* ---------- Maatbeker ---------- */
+.cup { height: 100%; max-height: 560px; width: auto; max-width: 100%; overflow: visible; }
+.cup.shake { animation: shake .45s; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-9px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
+.cup-body { fill: var(--cup); stroke: var(--line); stroke-width: 4; stroke-linejoin: round; }
+.layer { transform-box: fill-box; transform-origin: bottom; }
+.layer.light { fill: var(--water-light); transform: scaleY(0); }
+.layer.dark  { fill: var(--water-dark);  transform: scaleY(0); transition: transform .2s ease-out; }
+.cup.filling .layer.light { transform: scaleY(1); transition: transform 4s ease-in-out; }
+.tick { stroke: var(--line); stroke-width: 2; opacity: .8; }
+.tick-label { font-family: var(--font); font-size: 15px; fill: var(--fg); }
+.rim { stroke: var(--line); stroke-width: 4; stroke-linecap: round; }
+
+/* ---------- Vraag + slider ---------- */
+.quiz { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; transform: translateY(10px); transition: opacity .6s, transform .6s; pointer-events: none; }
+.quiz.show { opacity: 1; transform: none; pointer-events: auto; }
+.question { margin: 0; font-size: 1.2rem; font-weight: 700; text-align: center; text-wrap: balance; }
+.legend { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; font-size: .95rem; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; vertical-align: -2px; border: 1.5px solid var(--line); }
+.legend .z::before { background: var(--water-dark); }
+.legend .f::before { background: var(--water-light); }
+
+.slider-wrap { width: min(100%, 520px); display: flex; flex-direction: column; gap: 4px; }
+.value { text-align: center; font-size: 1.75rem; line-height: 1.2; font-weight: 700; color: var(--water-dark); font-variant-numeric: tabular-nums; }
+:root[data-theme="dark"] .value { color: var(--water); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .value { color: var(--water); } }
+input[type=range] { width: 100%; accent-color: var(--water-dark); height: 32px; margin: 0; cursor: pointer; }
+.scale { position: relative; height: 22px; font-size: .9rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.scale span { position: absolute; transform: translateX(-50%); }
+.note { text-align: center; font-size: .9rem; color: var(--muted); margin: 0; }
+
+.btn {
+  font: inherit; font-weight: 700; cursor: pointer; border: 0; border-radius: 999px; padding: 10px 26px;
+  background: var(--rust); color: var(--rust-fg);
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:disabled { opacity: .45; cursor: default; filter: none; }
+.btn.ghost { background: none; color: var(--fg); border: 2px solid var(--line); }
+
+/* ---------- Feedback + uitleg ---------- */
+.feedback { width: 100%; min-height: 0; text-align: center; }
+.fb { display: inline-flex; align-items: center; gap: 12px; padding: 10px 18px; border-radius: 14px; font-weight: 700; border: 2px solid; }
+.fb .ic { font-size: 1.4rem; line-height: 1; }
+.fb.good { color: var(--forest); border-color: var(--forest); background: color-mix(in srgb, var(--forest) 12%, transparent); }
+.fb.bad  { color: var(--rust);   border-color: var(--rust);   background: color-mix(in srgb, var(--rust) 12%, transparent); }
+.hint { display: block; margin-top: 4px; color: var(--fg); font-weight: 400; }
+
+.explain { width: 100%; background: var(--card); border-radius: 16px; padding: 16px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.explain p { margin: 0; }
+.explain[hidden], .more[hidden], .feedback[hidden] { display: none; }
+.more { width: 100%; border-left: 5px solid var(--water); padding: 4px 0 4px 18px; }
+.more p { margin: 0 0 8px; }
+.more p:last-child { margin: 0; }
+
+/* Na het goede antwoord: alleen wat nog nodig is, zodat alles op één scherm blijft */
+.quiz.solved .legend, .quiz.solved .note, .quiz.solved #check { display: none; }
+.quiz.read .slider-wrap, .quiz.read .feedback { display: none; }
+
+.replay { position: absolute; top: 0; right: 0; padding: 6px 16px; font-size: .9rem; }
+
+/* ---------- Mobiele weergave: hier mag de pagina wél scrollen ---------- */
+@media (max-width: 760px) {
+  .nav { padding-inline: 16px; }
+  .nav a { padding: 6px 8px; font-size: .95rem; }
+  .layout, .layout.collapsed { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; height: auto; min-height: 100vh; }
+  .side { height: auto; border-right: 0; border-bottom: 1px solid var(--nav-line); padding: 16px; }
+  .layout.collapsed .side { padding-inline: 16px; }
+  .layout.collapsed .side-head { justify-content: space-between; }
+  .layout.collapsed .side h2 { display: block; }
+  .side h2 { font-size: 1.25rem; }
+  .side-head { margin-bottom: 4px; }
+  .side ul { flex-direction: row; flex-wrap: wrap; gap: 4px 20px; }
+  main { padding: 24px 16px 48px; overflow: visible; }
+  .tool { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; height: auto; gap: 16px; }
+  .cup-col { height: auto; }
+  .cup { height: 38vh; }
+  .replay { position: static; justify-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cup.filling .layer.light { transition-duration: .01s; }
+  .cup.shake { animation: none; }
+  .quiz { transition-duration: .01s; }
+}

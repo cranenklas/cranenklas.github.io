@@ -5,6 +5,7 @@
 // ===========================================================
 (function () {
   var body = document.body;
+  var track = document.getElementById('track');
   var panelTools = document.getElementById('panelTools');
   var panelHome = document.getElementById('panelHome');
 
@@ -49,4 +50,18 @@
   }
   bindPulse('grpAtm', 'atm', 'run-atm');
   bindPulse('grpEarth', 'earth', 'run-earth');
+
+  // Als de pagina wordt geopend met #tools in de link (bv. via de knop
+  // "Educatieve tools" vanaf een toolpagina), toon die pagina meteen,
+  // zonder de schuifanimatie.
+  if (window.location.hash === '#tools') {
+    track.classList.add('no-anim');
+    body.classList.add('is-tools');
+    panelTools.inert = false;
+    panelHome.inert = true;
+    track.getBoundingClientRect();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { track.classList.remove('no-anim'); });
+    });
+  }
 })();
