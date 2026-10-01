@@ -1,0 +1,144 @@
+/* ===========================================================
+   Cranenklas aardrijkskunde — stijl
+   Layout: vaste navigatiebalk; daaronder een horizontale baan met
+   twee pagina's naast elkaar [Educatieve tools | Landing]. Een klik
+   op het bord schuift de baan naar rechts (pagina scrolt naar links),
+   de wegwijzer verdwijnt daarbij naar rechts.
+   =========================================================== */
+
+/* ---------- Kleuren en basisinstellingen (licht + donker thema) ---------- */
+:root {
+  --bg: #F1E6CC;
+  --fg: #2B2A24;
+  --muted: #5E5A4B;
+  --rust: #B5532B;
+  --rust-fg: #FFF8EC;
+  --forest: #2F5D3A;
+  --water: #2C7FA8;
+  --plank: #C98F55;
+  --plank-dim: #D9B98F;
+  --plank-fg: #2B2A24;
+  --post: #7A5230;
+  --line: #2B2A24;
+  --nav-bg: #F1E6CC;
+  --nav-line: #D8C9A5;
+  --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --nav-h: 64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1F2621; --fg: #EFE6D0; --muted: #B9B29B; --rust: #E0805A; --rust-fg: #1F2621;
+    --forest: #6DAE7D; --water: #5BB0D6; --plank: #9A6B3E; --plank-dim: #5E4630; --plank-fg: #FFF4DE;
+    --post: #6B4A2C; --line: #EFE6D0; --nav-bg: #1F2621; --nav-line: #3A453D; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1F2621; --fg: #EFE6D0; --muted: #B9B29B; --rust: #E0805A; --rust-fg: #1F2621;
+  --forest: #6DAE7D; --water: #5BB0D6; --plank: #9A6B3E; --plank-dim: #5E4630; --plank-fg: #FFF4DE;
+  --post: #6B4A2C; --line: #EFE6D0; --nav-bg: #1F2621; --nav-line: #3A453D; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font);
+  font-size: 1.0625rem; line-height: 1.5; overflow: hidden;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--water); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- Navigatiebalk (blijft altijd vast bovenaan staan) ---------- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; height: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) 24px 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: var(--nav-bg); border-bottom: 1px solid var(--nav-line);
+}
+.logo { font-weight: 700; font-size: 1.25rem; text-decoration: none; letter-spacing: .01em; background: none; border: 0; color: inherit; font-family: inherit; cursor: pointer; padding: 4px 0; }
+.logo span { color: var(--rust); }
+.nav ul { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; justify-content: flex-end; }
+.nav a, .nav button.link {
+  font: inherit; color: var(--fg); text-decoration: none; background: none; border: 0; cursor: pointer;
+  padding: 8px 12px; border-radius: 999px; display: inline-block;
+}
+.nav a:hover, .nav button.link:hover { background: color-mix(in srgb, var(--fg) 10%, transparent); }
+/* Markering van de actieve pagina: body krijgt een klasse "is-<pagina>",
+   en de bijbehorende knop krijgt dan deze opmaak. Voor een nieuwe pagina:
+   voeg een vergelijkbare regel toe, bv. "body.is-overmij .nav .link-overmij { ... }". */
+body.is-tools .nav .link-tools { background: var(--forest); color: var(--bg); }
+
+/* ---------- Baan met twee pagina's naast elkaar ---------- */
+.viewport {
+  position: fixed; inset: calc(var(--nav-h) + env(safe-area-inset-top, 0px)) 0 0 0; overflow: hidden;
+}
+.track {
+  display: flex; width: 200%; height: 100%;
+  transform: translateX(-50%);
+  transition: transform 1s cubic-bezier(.65, 0, .25, 1);
+}
+body.is-tools .track { transform: translateX(0); }
+.panel { position: relative; width: 50%; height: 100%; flex: none; overflow: visible; }
+
+/* ---------- Landingspagina met wegwijzer ---------- */
+.home {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; padding: 16px 16px 24px; text-align: center;
+}
+.home h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.1; text-wrap: balance; }
+.home p { margin: 0; font-size: clamp(1.05rem, 2vw, 1.4rem); color: var(--rust); font-weight: 700; }
+.sign { width: min(100%, 560px); max-height: 62vh; margin-top: 8px; overflow: visible; }
+.sign text { font-family: var(--font); font-weight: 700; font-size: 24px; fill: var(--plank-fg); pointer-events: none; }
+.plank { fill: var(--plank); stroke: var(--line); stroke-width: 2.5; stroke-linejoin: round; }
+.plank.dim { fill: var(--plank-dim); }
+.plank-btn { cursor: pointer; }
+.plank-btn:hover .plank { fill: var(--rust); }
+.plank-btn:hover text { fill: var(--rust-fg); }
+/* Planken die nog niets doen (Over mij, Contact) blijven er "slapend" uitzien */
+.plank-btn.idle { cursor: default; }
+.plank-btn.idle:hover .plank { fill: var(--plank-dim); }
+.plank-btn.idle:hover text { fill: var(--plank-fg); }
+.post { fill: var(--post); stroke: var(--line); stroke-width: 2.5; }
+.ground { fill: var(--forest); }
+
+/* ---------- Pagina "Educatieve tools" ---------- */
+.earth { position: absolute; left: 0; top: 0; height: 100%; width: 60%; overflow: visible; }
+.earth g.zoom { transform-origin: 60px 430px; }
+/* Hover-animaties van precies 2 seconden: atmosfeer (stippellijn) en aarde worden kort groter */
+@keyframes grow-atm   { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes grow-earth { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+.earth g.zoom.run-atm   { animation: grow-atm 2s ease-in-out; }
+.earth g.zoom.run-earth { animation: grow-earth 2s ease-in-out; }
+
+.topics {
+  position: absolute; left: 52%; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 28px; padding-right: 24px;
+}
+.topics ul { margin: 0; padding: 12px 16px 12px 36px; border-radius: 12px; font-size: 1.25rem; line-height: 1.7; }
+.topics ul:hover { background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.topics li::marker { color: var(--rust); }
+.topics a { text-decoration: none; }
+.topics a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+.back {
+  position: absolute; top: 20px; right: 24px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: none; border: 0; color: var(--fg); font: inherit; font-weight: 700; cursor: pointer; padding: 8px 12px; border-radius: 12px;
+}
+.back svg { width: 64px; height: 40px; fill: var(--rust); transition: transform .2s; }
+.back:hover svg { transform: translateX(6px); }
+.back:hover { background: color-mix(in srgb, var(--fg) 8%, transparent); }
+
+/* ---------- Mobiele weergave (smaller dan 720px) ---------- */
+@media (max-width: 720px) {
+  .nav { padding-inline: 16px; }
+  .nav a, .nav button.link { padding: 6px 8px; font-size: .95rem; }
+  .earth { width: 100%; height: 40%; }
+  .topics { left: 0; right: 0; top: 44%; transform: none; padding: 0 16px; gap: 16px; }
+  .topics ul { font-size: 1.1rem; line-height: 1.6; padding-block: 8px; }
+  .back { top: 8px; right: 12px; }
+  .back svg { width: 48px; height: 30px; }
+}
+/* Minder beweging als de gebruiker dat als voorkeur heeft ingesteld */
+@media (prefers-reduced-motion: reduce) {
+  .track { transition-duration: .01s; }
+  .earth g.zoom.run-atm, .earth g.zoom.run-earth { animation-duration: .01s; }
+}

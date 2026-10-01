@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cranenklas aardrijkskunde</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigatiebalk: blijft altijd vast bovenaan staan -->
+  <nav class="nav" aria-label="Hoofdmenu">
+    <button class="logo" id="logo" type="button">Cranenklas<span>.</span></button>
+    <ul>
+      <li><button class="link link-tools" id="navTools" type="button">Educatieve tools</button></li>
+      <li><a href="#" data-stub>Over mij</a></li>
+      <li><a href="#" data-stub>Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Baan met de twee pagina's naast elkaar -->
+  <div class="viewport">
+    <div class="track" id="track">
+
+      <!-- Pagina links: Educatieve tools -->
+      <section class="panel tools" id="panelTools" aria-label="Educatieve tools" inert>
+        <svg class="earth" viewBox="0 0 700 860" preserveAspectRatio="xMinYMid meet" aria-hidden="true">
+          <defs>
+            <filter id="wc" x="-15%" y="-15%" width="130%" height="130%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="4" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="46"/>
+              <feGaussianBlur stdDeviation="1.4"/>
+            </filter>
+            <filter id="grain" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="4" seed="9"/>
+              <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.5 -0.62"/>
+            </filter>
+            <clipPath id="globeClip"><circle cx="60" cy="430" r="360"/></clipPath>
+            <radialGradient id="ocean" cx="55%" cy="40%" r="75%">
+              <stop offset="0" stop-color="#7FD0F0"/>
+              <stop offset="1" stop-color="#2FA8DC"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Atmosfeer: gestippelde baan rond de aarde -->
+          <g class="zoom" id="atm">
+            <circle cx="60" cy="430" r="440" fill="none" stroke="var(--line)" stroke-width="2.5" stroke-dasharray="9 8"/>
+          </g>
+
+          <!-- Aarde in aquarelstijl -->
+          <g class="zoom" id="earth">
+            <g clip-path="url(#globeClip)">
+              <circle cx="60" cy="430" r="360" fill="url(#ocean)"/>
+              <g filter="url(#wc)">
+                <path d="M-40 250 C 60 160, 190 150, 250 235 C 295 300, 230 360, 140 372 C 50 384, -20 345, -40 300 Z" fill="#6FCF6A" opacity=".85"/>
+                <path d="M90 520 C 160 440, 300 410, 372 490 C 440 565, 400 700, 300 760 C 200 810, 70 790, 0 730 C -40 690, 20 590, 90 520 Z" fill="#2FB037"/>
+                <path d="M150 560 C 210 520, 290 530, 320 590 C 345 640, 290 700, 220 700 C 150 700, 110 610, 150 560 Z" fill="#7BDB6C" opacity=".75"/>
+                <path d="M-10 590 C 30 560, 70 600, 60 650 C 50 700, -10 700, -30 660 Z" fill="#8FE08A" opacity=".7"/>
+              </g>
+              <rect x="-320" y="70" width="760" height="720" filter="url(#grain)" opacity=".55"/>
+            </g>
+          </g>
+        </svg>
+
+        <div class="topics">
+          <ul id="grpAtm" aria-label="Atmosfeer">
+            <li><a href="#" data-stub>weer en klimaat</a></li>
+            <li><a href="#" data-stub>windsystemen</a></li>
+            <li><a href="#" data-stub>klimaatverandering</a></li>
+          </ul>
+          <ul id="grpEarth" aria-label="Aarde en water">
+            <li><a href="#" data-stub>lagen van de aarde</a></li>
+            <li><a href="#" data-stub>platentektoniek, aardbevingen en vulkanen</a></li>
+            <li><a href="#" data-stub>verwering en erosie</a></li>
+            <li><a href="#" data-stub>water</a></li>
+          </ul>
+        </div>
+
+        <button class="back" id="back" type="button" aria-label="Terug naar de wegwijzer">
+          <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M2 36 C 6 16, 22 8, 42 10 L 40 2 L 62 14 L 38 28 L 40 19 C 26 18, 12 24, 2 36 Z"/></svg>
+          Terug
+        </button>
+      </section>
+
+      <!-- Pagina rechts: Landing met wegwijzer -->
+      <section class="panel home" id="panelHome" aria-label="Start">
+        <h1>Aardrijkskunde</h1>
+        <p>Welke kant wil je op?</p>
+        <svg class="sign" viewBox="0 0 560 440" role="group" aria-label="Wegwijzer">
+          <rect class="ground" x="150" y="402" width="260" height="22" rx="11"/>
+          <rect class="post" x="262" y="30" width="36" height="384" rx="4"/>
+          <!-- Educatieve tools: wijst naar links -->
+          <g class="plank-btn" id="plankTools" role="button" tabindex="0" aria-label="Educatieve tools">
+            <polygon class="plank" points="16,100 56,60 360,60 360,140 56,140"/>
+            <text x="196" y="108" text-anchor="middle">Educatieve tools</text>
+          </g>
+          <!-- Over mij: wijst naar rechts (nog niet bepaald) -->
+          <g class="plank-btn idle">
+            <polygon class="plank dim" points="200,170 500,170 544,210 500,250 200,250"/>
+            <text x="352" y="218" text-anchor="middle">Over mij</text>
+          </g>
+          <!-- Contact: wijst naar rechts (nog niet bepaald) -->
+          <g class="plank-btn idle">
+            <polygon class="plank dim" points="210,280 450,280 490,320 450,360 210,360"/>
+            <text x="338" y="328" text-anchor="middle">Contact</text>
+          </g>
+        </svg>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
