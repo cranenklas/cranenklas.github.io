@@ -1,0 +1,63 @@
+/* ===========================================================
+   Cranenklas aardrijkskunde — onderwerppagina (tegels)
+   Kleuren, lettertype, basisinstellingen en de navigatiebalk staan
+   in css/basis.css. Hier staat de stijl van een onderwerppagina met
+   tegels (zoals water/index.html) en de Terug-pijl, zodat latere
+   onderwerppagina's (bv. "aarde") dit bestand kunnen hergebruiken.
+   =========================================================== */
+
+body { line-height: 1.55; }
+
+/* Tekst die alleen voor schermlezers bedoeld is */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Tegels ---------- */
+main { padding: calc(var(--nav-h) + 40px) 48px 48px; max-width: 1100px; margin: 0 auto; }
+h1 { margin: 0 0 40px; font-size: clamp(1.9rem, 4vw, 2.6rem); text-align: center; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 40px 56px; list-style: none; margin: 0; padding: 0; }
+.tile {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: flex; align-items: center; justify-content: center; text-align: center; min-height: 150px; padding: 24px 28px;
+  border-radius: 28px; text-decoration: none; color: var(--fg); font-weight: 700; font-size: 1.25rem; line-height: 1.25;
+  background: var(--cup); border: 2px solid transparent;
+  transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
+}
+/* ".tile > span" (niet "span" alleen): zo blijft de verborgen tekst voor
+   schermlezers binnen in een tegel wél verborgen via .visually-hidden. */
+.tile > span { position: relative; z-index: 2; }
+.tile:hover, .tile:focus-visible { transform: translateY(-4px); border-color: var(--line); }
+
+/* Water dat bij hover of focus rustig omhoog komt, met bewegende golven */
+.tile::before, .tile::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none;
+  transform: translateY(105%); transition: transform 1.1s cubic-bezier(.3, .7, .3, 1);
+  background-repeat: repeat-x, no-repeat; background-size: var(--p) var(--h), 100% 100%; background-position: 0 0, 0 calc(var(--h) - 1px);
+  --p: 160px; --h: 14px; animation: drift 7s linear infinite;
+}
+.tile::before { --p: 260px; --h: 18px; height: 46%; opacity: .9; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath fill='%23AEE1F7' d='M0 12 C66 -4 133 -4 200 12 S333 28 400 12 V24 H0Z'/%3E%3C/svg%3E"), linear-gradient(#AEE1F7, #AEE1F7); animation-duration: 9s; animation-direction: reverse; }
+.tile::after { height: 38%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath fill='%2300B8F3' d='M0 12 C66 -4 133 -4 200 12 S333 28 400 12 V24 H0Z'/%3E%3C/svg%3E"), linear-gradient(#00B8F3, #00B8F3); }
+.tile:hover::before, .tile:focus-visible::before, .tile:hover::after, .tile:focus-visible::after { transform: translateY(0); }
+.tile:hover::before, .tile:focus-visible::before { transition-delay: 0s; }
+.tile:hover::after, .tile:focus-visible::after { transition-delay: .12s; }
+@keyframes drift { from { background-position: 0 0, 0 calc(var(--h) - 1px); } to { background-position: var(--p) 0, 0 calc(var(--h) - 1px); } }
+:root[data-theme="dark"] .tile:hover, :root[data-theme="dark"] .tile:focus-visible { color: #10222C; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tile:hover, :root:not([data-theme="light"]) .tile:focus-visible { color: #10222C; } }
+@media (prefers-reduced-motion: reduce) { .tile::before, .tile::after { animation: none; transition-duration: .01s; } .tile { transition-duration: .01s; } }
+
+/* ---------- Terug-pijl ---------- */
+.back { position: fixed; top: calc(var(--nav-h) + 16px); right: 24px; display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--fg); text-decoration: none; font-weight: 700; font-size: .95rem; padding: 4px 8px; border-radius: 12px; }
+.back svg { width: 56px; height: 40px; fill: none; stroke: var(--rust); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
+.back:hover svg { transform: translateX(4px); }
+
+/* ---------- Mobiele weergave ----------
+   De navigatiebalk zelf schakelt via css/basis.css om (één breekpunt
+   voor alle pagina's); hier staat alleen wat verder nog specifiek is
+   voor een onderwerppagina. ---------- */
+@media (max-width: 760px) {
+  main { padding: calc(var(--nav-h) + 72px) 16px 40px; }
+  .tiles { gap: 20px; }
+  .back { right: 12px; }
+}

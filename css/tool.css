@@ -19,6 +19,10 @@ body { line-height: 1.55; }
 }
 .side-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
 .side h2 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+/* Losstaand van de ".side a"-regel hierboven: de titel blijft gewoon
+   tekst, alleen de kleur verandert bij hover. */
+.side-head h2 a { display: inline; padding: 0; color: inherit; text-decoration: none; }
+.side-head h2 a:hover { color: var(--rust); }
 .toggle {
   flex: none; width: 36px; height: 36px; display: grid; place-items: center; cursor: pointer;
   background: none; border: 2px solid var(--line); border-radius: 50%; color: var(--fg);
