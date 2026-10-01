@@ -19,6 +19,10 @@
   --water-dark: #1D5F9A;
   --cup: #FBF6E8;
   --card: #E8DAB8;
+  --plank: #C98F55;
+  --plank-dim: #D9B98F;
+  --plank-fg: #2B2A24;
+  --post: #7A5230;
   --line: #2B2A24;
   --nav-bg: #F1E6CC;
   --nav-line: #D8C9A5;
@@ -30,6 +34,7 @@
     --bg: #1F2621; --fg: #EFE6D0; --muted: #B9B29B; --rust: #E0805A; --rust-fg: #1F2621;
     --forest: #6DAE7D; --water: #5BB0D6; --water-light: #8FD3F0; --water-dark: #2E78C0;
     --cup: #27302A; --card: #2B352E;
+    --plank: #9A6B3E; --plank-dim: #5E4630; --plank-fg: #FFF4DE; --post: #6B4A2C;
     --line: #EFE6D0; --nav-bg: #1F2621; --nav-line: #3A453D; color-scheme: dark;
   }
 }
@@ -37,6 +42,7 @@
   --bg: #1F2621; --fg: #EFE6D0; --muted: #B9B29B; --rust: #E0805A; --rust-fg: #1F2621;
   --forest: #6DAE7D; --water: #5BB0D6; --water-light: #8FD3F0; --water-dark: #2E78C0;
   --cup: #27302A; --card: #2B352E;
+  --plank: #9A6B3E; --plank-dim: #5E4630; --plank-fg: #FFF4DE; --post: #6B4A2C;
   --line: #EFE6D0; --nav-bg: #1F2621; --nav-line: #3A453D; color-scheme: dark;
 }
 
@@ -57,8 +63,11 @@ a { color: inherit; }
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   background: var(--nav-bg); border-bottom: 1px solid var(--nav-line);
 }
-.logo { font-weight: 700; font-size: 1.25rem; text-decoration: none; letter-spacing: .01em; background: none; border: 0; color: inherit; font-family: inherit; cursor: pointer; padding: 4px 0; }
-.logo span { color: var(--rust); }
+/* ".nav .logo" (in plaats van alleen ".logo") zorgt dat het logo altijd
+   wint van de ".nav a"-regel hieronder, ook wanneer het logo (zoals op
+   een toolpagina) een echte link <a> is in plaats van een knop <button>. */
+.nav .logo { font-weight: 700; font-size: 1.25rem; text-decoration: none; letter-spacing: .01em; background: none; border: 0; color: inherit; font-family: inherit; cursor: pointer; padding: 4px 0; }
+.nav .logo span { color: var(--rust); }
 .nav ul { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; justify-content: flex-end; }
 .nav a, .nav button.link {
   font: inherit; color: var(--fg); text-decoration: none; background: none; border: 0; cursor: pointer;
@@ -70,6 +79,12 @@ a { color: inherit; }
    voeg een vergelijkbare regel toe, bv. "body.is-overmij .nav .link-overmij { ... }". */
 body.is-tools .nav .link-tools { background: var(--forest); color: var(--bg); }
 
-/* Let op: de mobiele aanpassingen van de navigatiebalk (kleinere knoppen)
-   staan bewust per pagina in css/style.css en css/tool.css, omdat elke
-   pagina op een eigen schermbreedte naar de mobiele weergave overschakelt. */
+/* ---------- Navigatiebalk op smalle schermen ----------
+   Eén breekpunt voor alle pagina's, zodat de balk er overal hetzelfde
+   uitziet en nooit per pagina apart gecorrigeerd hoeft te worden. */
+@media (max-width: 720px) {
+  .nav { padding-inline: 10px; gap: 6px; }
+  .nav .logo { font-size: 1rem; }
+  .nav ul { gap: 0; }
+  .nav a, .nav button.link { padding: 5px 6px; font-size: .82rem; }
+}

@@ -72,6 +72,11 @@ input[type=range] { width: 100%; accent-color: var(--water-dark); height: 32px; 
 .scale span { position: absolute; transform: translateX(-50%); }
 .note { text-align: center; font-size: .9rem; color: var(--muted); margin: 0; }
 
+/* Controleer en Opnieuw beginnen op dezelfde rij; na een goed antwoord
+   verdwijnt alleen Controleer (zie .quiz.solved #check hieronder) en
+   blijft Opnieuw beginnen op zijn plek in deze rij staan. */
+.actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; }
+
 .btn {
   font: inherit; font-weight: 700; cursor: pointer; border: 0; border-radius: 999px; padding: 10px 26px;
   background: var(--rust); color: var(--rust-fg);
@@ -99,12 +104,11 @@ input[type=range] { width: 100%; accent-color: var(--water-dark); height: 32px; 
 .quiz.solved .legend, .quiz.solved .note, .quiz.solved #check { display: none; }
 .quiz.read .slider-wrap, .quiz.read .feedback { display: none; }
 
-.replay { position: absolute; top: 0; right: 0; padding: 6px 16px; font-size: .9rem; }
-
-/* ---------- Mobiele weergave: hier mag de pagina wél scrollen ---------- */
+/* ---------- Mobiele weergave: hier mag de pagina wél scrollen ----------
+   De navigatiebalk zelf schakelt via css/basis.css om (één breekpunt
+   voor alle pagina's); hier staat alleen wat verder nog specifiek is
+   voor deze tool. ---------- */
 @media (max-width: 760px) {
-  .nav { padding-inline: 16px; }
-  .nav a { padding: 6px 8px; font-size: .95rem; }
   .layout, .layout.collapsed { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; height: auto; min-height: 100vh; }
   .side { height: auto; border-right: 0; border-bottom: 1px solid var(--nav-line); padding: 16px; }
   .layout.collapsed .side { padding-inline: 16px; }
@@ -117,7 +121,6 @@ input[type=range] { width: 100%; accent-color: var(--water-dark); height: 32px; 
   .tool { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; height: auto; gap: 16px; }
   .cup-col { height: auto; }
   .cup { height: 38vh; }
-  .replay { position: static; justify-self: center; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cup.filling .layer.light { transition-duration: .01s; }

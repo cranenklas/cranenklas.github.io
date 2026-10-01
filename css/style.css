@@ -75,10 +75,11 @@ body.is-tools .track { transform: translateX(0); }
 .back:hover svg { transform: translateX(6px); }
 .back:hover { background: color-mix(in srgb, var(--fg) 8%, transparent); }
 
-/* ---------- Mobiele weergave (smaller dan 720px) ---------- */
+/* ---------- Mobiele weergave (smaller dan 720px) ----------
+   De navigatiebalk zelf schakelt via css/basis.css om (één breekpunt
+   voor alle pagina's); hier staat alleen wat verder nog specifiek is
+   voor deze pagina. ---------- */
 @media (max-width: 720px) {
-  .nav { padding-inline: 16px; }
-  .nav a, .nav button.link { padding: 6px 8px; font-size: .95rem; }
   .earth { width: 100%; height: 40%; }
   .topics { left: 0; right: 0; top: 44%; transform: none; padding: 0 16px; gap: 16px; }
   .topics ul { font-size: 1.1rem; line-height: 1.6; padding-block: 8px; }
