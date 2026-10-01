@@ -19,6 +19,15 @@
   --water-dark: #1D5F9A;
   --cup: #FBF6E8;
   --card: #E8DAB8;
+  --ice: #FFFFFF;
+  --sandy: #E3C77F;
+  --perma: #C9CED3;
+  --c-lake: #4C9ED9;
+  --c-soil: #9C7A52;
+  --c-air: #D6DEE6;
+  --c-marsh: #6FA86B;
+  --c-river: #2A7F8F;
+  --c-life: #D98E3F;
   --plank: #C98F55;
   --plank-dim: #D9B98F;
   --plank-fg: #2B2A24;
@@ -34,6 +43,8 @@
     --bg: #1F2621; --fg: #EFE6D0; --muted: #B9B29B; --rust: #E0805A; --rust-fg: #1F2621;
     --forest: #6DAE7D; --water: #5BB0D6; --water-light: #8FD3F0; --water-dark: #2E78C0;
     --cup: #27302A; --card: #2B352E;
+    --ice: #F2F8FC; --sandy: #C9A85C; --perma: #A9B1B8; --c-lake: #5BB0E6; --c-soil: #B8946A;
+    --c-air: #B9C4CE; --c-marsh: #7DBE79; --c-river: #3FA0B2; --c-life: #E5A05A;
     --plank: #9A6B3E; --plank-dim: #5E4630; --plank-fg: #FFF4DE; --post: #6B4A2C;
     --line: #EFE6D0; --nav-bg: #1F2621; --nav-line: #3A453D; color-scheme: dark;
   }
@@ -42,6 +53,8 @@
   --bg: #1F2621; --fg: #EFE6D0; --muted: #B9B29B; --rust: #E0805A; --rust-fg: #1F2621;
   --forest: #6DAE7D; --water: #5BB0D6; --water-light: #8FD3F0; --water-dark: #2E78C0;
   --cup: #27302A; --card: #2B352E;
+  --ice: #F2F8FC; --sandy: #C9A85C; --perma: #A9B1B8; --c-lake: #5BB0E6; --c-soil: #B8946A;
+  --c-air: #B9C4CE; --c-marsh: #7DBE79; --c-river: #3FA0B2; --c-life: #E5A05A;
   --plank: #9A6B3E; --plank-dim: #5E4630; --plank-fg: #FFF4DE; --post: #6B4A2C;
   --line: #EFE6D0; --nav-bg: #1F2621; --nav-line: #3A453D; color-scheme: dark;
 }

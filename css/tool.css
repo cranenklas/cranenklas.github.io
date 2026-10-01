@@ -37,13 +37,14 @@ body { line-height: 1.55; }
 /* Inhoud: beker links, vraag en antwoord rechts, alles op één scherm zonder scrollen */
 main { min-height: 0; padding: 16px 32px; overflow: auto; }
 .tool { position: relative; width: 100%; height: 100%; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: minmax(0, 1fr); gap: 32px; align-items: center; }
-.cup-col { height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.cup-col { height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
 .panel { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 540px; justify-self: center; }
 .panel h1 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.15; text-align: center; text-wrap: balance; }
 
 /* ---------- Maatbeker ---------- */
-.cup { height: 100%; max-height: 560px; width: auto; max-width: 100%; overflow: visible; }
+.cup { height: 100%; max-height: 560px; width: auto; max-width: 100%; overflow: visible; transition: transform 2.6s cubic-bezier(.6, 0, .25, 1), opacity .7s ease; }
 .cup.shake { animation: shake .45s; }
+.cup.faded { opacity: 0; }
 @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-9px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
 .cup-body { fill: var(--cup); stroke: var(--line); stroke-width: 4; stroke-linejoin: round; }
 .layer { transform-box: fill-box; transform-origin: bottom; }
@@ -95,14 +96,80 @@ input[type=range] { width: 100%; accent-color: var(--water-dark); height: 32px; 
 
 .explain { width: 100%; background: var(--card); border-radius: 16px; padding: 16px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
 .explain p { margin: 0; }
-.explain[hidden], .more[hidden], .feedback[hidden] { display: none; }
-.more { width: 100%; border-left: 5px solid var(--water); padding: 4px 0 4px 18px; }
-.more p { margin: 0 0 8px; }
-.more p:last-child { margin: 0; }
+.explain[hidden], .feedback[hidden] { display: none; }
 
 /* Na het goede antwoord: alleen wat nog nodig is, zodat alles op één scherm blijft */
 .quiz.solved .legend, .quiz.solved .note, .quiz.solved #check { display: none; }
-.quiz.read .slider-wrap, .quiz.read .feedback { display: none; }
+
+/* ---------- Na "Verder": inzoomen op het zoete water ----------
+   De beker zoomt in op de strook zoet water (#fresh) en verandert in een
+   liggende balk met vier delen; bij "Verder" zoomt het kleinste deel (0,4%)
+   verder uit tot een staande balk met zes delen. ---------- */
+.tool.zoomed { overflow: hidden; }
+.panel { transition: opacity .5s; }
+.tool.zooming .panel { opacity: 0; pointer-events: none; }
+
+.stage { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.scene { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 0 10%; }
+.scene > * { width: 100%; max-width: 900px; }
+.scene1 { transition: opacity .6s; }
+.stage.out .scene1 { opacity: 0; }
+.stage-title { margin: 0; font-size: clamp(1.4rem, 2.8vw, 2rem); line-height: 1.15; text-align: center; text-wrap: balance; opacity: 0; transition: opacity .6s; }
+.stage.show .scene1 .stage-title { opacity: 1; }
+.bar-wrap { position: relative; height: 110px; display: flex; align-items: center; }
+.bar { display: flex; width: 100%; height: var(--bh, 12px); border: 2px solid var(--line); border-radius: 8px; opacity: 0; transition: height .9s ease-in-out, opacity .3s; }
+.stage.show .bar { opacity: 1; }
+.seg { flex: none; height: 100%; background: var(--water-light); position: relative; transition: background-color .6s ease; }
+.seg:first-child { border-radius: 6px 0 0 6px; }
+.seg:last-child { border-radius: 0 6px 6px 0; }
+.stage.split .seg { background: var(--c); transition-delay: calc(var(--i) * .45s); }
+.stage.split .seg + .seg { box-shadow: -1px 0 0 var(--line); }
+.seg.pulse { animation: seg-pulse 1.5s ease-in-out; z-index: 2; outline: 2px solid var(--line); }
+@keyframes seg-pulse { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(var(--gx, 1), 1.5); } }
+
+.callout { position: absolute; bottom: calc(100% + 8px); background: var(--fg); color: var(--bg); padding: 6px 12px; border-radius: 10px; font-weight: 700; white-space: nowrap; opacity: 0; pointer-events: none; transform: translateX(-50%); z-index: 3; }
+.callout.right { transform: none; right: 0; }
+.callout.v { bottom: auto; right: calc(100% + 12px); transform: translateY(-50%); }
+.callout.on { animation: callout 1.5s ease-in-out; }
+@keyframes callout { 0%, 100% { opacity: 0; } 12%, 80% { opacity: 1; } }
+
+/* Legenda: lijst onder elkaar, eerst het percentage */
+.legend-block { opacity: 0; transition: opacity .6s; }
+.legend-block h3 { margin: 0 0 2px 12px; font-size: 1.05rem; }
+.legend-block ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+.stage.legend-on .scene1 .legend-block, .stage.l2l .scene2 .legend-block { opacity: 1; }
+.li-btn { font: inherit; display: inline-flex; align-items: center; gap: 10px; padding: 4px 12px; border-radius: 12px; border: 2px solid transparent; background: none; color: var(--fg); cursor: pointer; text-align: left; pointer-events: none; }
+.li-btn:hover, .li-btn:focus-visible { background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.li-btn b { font-variant-numeric: tabular-nums; }
+.sw { width: 20px; height: 20px; flex: none; border-radius: 5px; border: 2px solid var(--line); background: var(--c); }
+
+.stage-actions { display: flex; gap: 12px; flex-wrap: wrap; opacity: 0; transition: opacity .6s; }
+.stage-actions .btn { pointer-events: none; }
+.stage.legend-on:not(.out) .scene1 .stage-actions, .stage.l2l .scene2 .stage-actions { opacity: 1; }
+.stage.legend-on:not(.out) .scene1 .stage-actions .btn, .stage.legend-on:not(.out) .scene1 .li-btn,
+.stage.l2l .scene2 .stage-actions .btn, .stage.l2l .scene2 .li-btn { pointer-events: auto; }
+.stage-actions { justify-content: center; }
+.scene2 .stage-actions { justify-content: flex-start; }
+
+/* Tweede niveau: staande balk links, legenda rechts */
+.title2 { margin: 0; font-size: clamp(1.4rem, 2.8vw, 2rem); line-height: 1.15; text-align: center; text-wrap: balance; opacity: 0; transition: opacity .6s; }
+.stage.l2t .title2 { opacity: 1; }
+.s2-body { display: flex; align-items: center; justify-content: center; gap: 56px; }
+.vbar-col { margin-left: 190px; width: 110px; flex: none; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.vbar-wrap { position: relative; width: 110px; height: min(46vh, 340px); }
+.vbar { display: flex; flex-direction: column; width: 100%; height: 100%; border: 2px solid transparent; border-radius: 8px; opacity: 0; transition: border-color .3s; will-change: transform; }
+.vbar.framed { border-color: var(--line); }
+.stage.l2 .vbar { opacity: 1; }
+.vseg { flex: none; width: 100%; background: var(--water-light); position: relative; transition: background-color .6s ease; }
+.vseg:first-child { border-radius: 6px 6px 0 0; }
+.vseg:last-child { border-radius: 0 0 6px 6px; }
+.stage.split2 .vseg { background: var(--c); transition-delay: calc(var(--i) * .45s); }
+.stage.split2 .vseg + .vseg { box-shadow: 0 -1px 0 var(--line); }
+.vseg.pulse { animation: vseg-pulse 1.5s ease-in-out; z-index: 2; outline: 2px solid var(--line); }
+@keyframes vseg-pulse { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.7, var(--gy, 1)); } }
+.vcap { margin: 0; font-weight: 700; white-space: nowrap; text-align: center; opacity: 0; transition: opacity .6s; }
+.stage.l2t .vcap { opacity: 1; }
+.s2-side { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
 
 /* ---------- Mobiele weergave: hier mag de pagina wél scrollen ----------
    De navigatiebalk zelf schakelt via css/basis.css om (één breekpunt
@@ -124,6 +191,9 @@ input[type=range] { width: 100%; accent-color: var(--water-dark); height: 32px; 
 }
 @media (prefers-reduced-motion: reduce) {
   .cup.filling .layer.light { transition-duration: .01s; }
+  .cup { transition-duration: .01s; }
   .cup.shake { animation: none; }
   .quiz { transition-duration: .01s; }
+  .seg.pulse, .vseg.pulse { animation-duration: .01s; }
+  .callout.on { animation-duration: .01s; }
 }

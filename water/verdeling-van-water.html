@@ -47,6 +47,7 @@
             <rect class="layer dark" id="dark" x="90" y="52" width="200" height="318"/>
           </g>
           <path class="rim" d="M90 30 L72 22"/>
+          <rect id="fresh" x="90" y="52" width="200" height="7.95" fill="none"/>
           <g id="ticks"></g>
         </svg>
         </div>
@@ -66,7 +67,7 @@
 
           <div class="actions">
             <button class="btn" id="check" type="button">Controleer</button>
-            <button class="btn ghost" id="replay" type="button">Opnieuw beginnen</button>
+            <button class="btn ghost js-replay" id="replay" type="button">Opnieuw beginnen</button>
           </div>
           <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
 
@@ -74,11 +75,39 @@
             <p><strong>Goed gedaan!</strong> Ongeveer 97,5% van al het water op aarde is zout water. Slechts 2,5% is zoet water.</p>
             <button class="btn" id="next" type="button">Verder</button>
           </div>
-          <div class="more" id="more" hidden>
-            <p>Van dat kleine beetje zoet water stroomt maar een heel klein deel door rivieren en meren. Het meeste zit vast in ijskappen en gletsjers, of zit als grondwater diep in de grond.</p>
-            <p>In de volgende stap bekijk je in welke vormen het zoete water voorkomt.</p>
-          </div>
         </div>
+        </div>
+
+        <!-- Na Verder: scene 1 = liggende balk + legenda, scene 2 = staande balk (inzoomen op 0,4%) + legenda -->
+        <div class="stage" id="stage" aria-hidden="true">
+          <div class="scene scene1">
+            <h2 class="stage-title">De verdeling van zoet water</h2>
+            <div class="bar-wrap" id="barWrap">
+              <div class="bar" id="bar" role="img"></div>
+            </div>
+            <div class="legend-block"><ul id="listA"></ul></div>
+            <div class="stage-actions">
+              <button class="btn ghost" id="back1" type="button">← Terug</button>
+              <button class="btn ghost js-replay" type="button">Opnieuw beginnen</button>
+              <button class="btn" id="verder2" type="button">Verder</button>
+            </div>
+          </div>
+          <div class="scene scene2">
+            <h2 class="title2">De verdeling van oppervlakte- en atmosferisch water</h2>
+            <div class="s2-body">
+              <div class="vbar-col">
+                <div class="vbar-wrap" id="vbarWrap"><div class="vbar" id="vbar" role="img"></div></div>
+                <p class="vcap">0,4% van het zoete water</p>
+              </div>
+              <div class="s2-side">
+                <div class="legend-block"><h3>Oppervlakte- en atmosferisch water</h3><ul id="listB"></ul></div>
+                <div class="stage-actions">
+                  <button class="btn ghost" id="back2" type="button">← Terug</button>
+                  <button class="btn ghost js-replay" type="button">Opnieuw beginnen</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
