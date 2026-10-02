@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>De gesteentecyclus – Cranenklas aardrijkskunde</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="../css/basis.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/de-gesteentecyclus.css">
+</head>
+<body class="is-tools">
+
+  <!-- Navigatiebalk: brengt je terug naar de hoofdsite -->
+  <nav class="nav" aria-label="Hoofdmenu">
+    <a class="logo" href="../index.html">Cranenklas<span>.</span></a>
+    <ul>
+      <li><a class="link-tools" href="../index.html#tools" aria-current="page">Educatieve tools</a></li>
+      <li><a href="#" data-stub>Over mij</a></li>
+      <li><a href="#" data-stub>Contact</a></li>
+    </ul>
+  </nav>
+
+  <a class="back" href="index.html" aria-label="Terug naar Lagen van de aarde">
+    <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M2 36 C 6 16, 22 8, 42 10 L 40 2 L 62 14 L 38 28 L 40 19 C 26 18, 12 24, 2 36 Z"/></svg>Terug
+  </a>
+
+  <div class="layout">
+    <aside class="side" aria-label="Onderwerp Lagen van de aarde">
+      <div class="side-head">
+        <h2><a href="index.html">Lagen van de aarde</a></h2>
+        <button class="toggle" id="toggle" type="button" aria-expanded="true" aria-controls="sideList" aria-label="Sidebar inklappen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"/></svg>
+        </button>
+      </div>
+      <ul id="sideList">
+        <li><a href="lagen-van-de-aarde.html">Lagen van de aarde</a></li>
+        <li><a href="#" aria-current="page" data-stub>De gesteentecyclus</a></li>
+      </ul>
+    </aside>
+
+    <main>
+      <h1 class="visually-hidden">De gesteentecyclus</h1>
+
+      <div class="gesteente">
+        <div class="gesteente-main">
+          <p class="gesteente-goal">Doorloop de complete gesteentecyclus met zo min mogelijk worpen.</p>
+          <div class="gesteente-chips" id="gesteente-chips"></div>
+
+          <div class="gesteente-stage">
+            <!-- Venster met vaste verhouding 8:5. De kaart is 250% zo breed als het venster;
+                 de camera verschuift en schaalt de hele kaart met een CSS-transform
+                 (zie setVB in js/de-gesteentecyclus.js), de viewBox blijft altijd gelijk. -->
+            <div class="gesteente-frame" id="gesteente-frame">
+              <svg id="gesteente-map" viewBox="0 -150 2000 1250" role="img" aria-labelledby="gesteente-map-title">
+                <title id="gesteente-map-title">Doorsnede van de aardkorst met de zeven plekken van de gesteentecyclus</title>
+                <!-- Lucht met zon en wolken -->
+                <rect x="0" y="-150" width="2000" height="450" fill="#cfe6f2"/>
+                <circle cx="1050" cy="-60" r="55" fill="#ffd966"/>
+                <g fill="#fff" opacity=".9"><ellipse cx="620" cy="-30" rx="90" ry="26"/><ellipse cx="680" cy="-48" rx="60" ry="26"/><ellipse cx="1500" cy="-70" rx="100" ry="26"/><ellipse cx="1560" cy="-88" rx="60" ry="24"/></g>
+                <!-- Ondergrond en magma -->
+                <rect x="0" y="300" width="2000" height="800" fill="#9a8266"/>
+                <rect x="0" y="830" width="2000" height="270" fill="#6b3a2a"/>
+                <path d="M0 955 C200 925 400 975 600 945 S1000 925 1200 950 S1800 925 2000 950 L2000 1100 L0 1100Z" fill="#c8330f"/>
+                <path d="M0 1005 C250 985 450 1020 700 995 S1100 985 1300 1005 S1800 985 2000 1000 L2000 1100 L0 1100Z" fill="#ff5a1a"/>
+                <path d="M0 1055 C300 1040 600 1070 900 1050 S1500 1040 2000 1055 L2000 1100 L0 1100Z" fill="#ff9a1a"/>
+                <g fill="#ffd23f"><circle cx="120" cy="1040" r="9"/><circle cx="330" cy="1060" r="7"/><circle cx="520" cy="1030" r="10"/><circle cx="760" cy="1065" r="8"/><circle cx="980" cy="1035" r="9"/><circle cx="1230" cy="1060" r="7"/><circle cx="1880" cy="1050" r="9"/><circle cx="1400" cy="1035" r="8"/></g>
+                <path d="M0 830 C300 815 700 850 1000 830 S1700 815 2000 830" fill="none" stroke="#4a2619" stroke-width="6"/>
+                <!-- Gebergte met regoliet -->
+                <polygon points="0,300 0,230 120,190 215,150 275,188 380,68 520,190 600,232 760,300" fill="#8a7a6f"/>
+                <path id="gesteente-rg1" d="M0 232 L120 192 L215 152 L275 190 L380 70 L520 192 L600 234 L760 302 L880 302" fill="none" stroke="#cfae82" stroke-width="16" stroke-linejoin="round"/>
+                <path id="gesteente-rg2" d="M1360 302 L1480 302 L1640 152 L1700 130 L1760 130 L1830 152 L2000 302" fill="none" stroke="#cfae82" stroke-width="16" stroke-linejoin="round"/>
+                <polygon points="380,68 335,118 365,106 395,130 425,104 468,140 520,190 450,120" fill="#fff"/>
+                <polygon points="215,150 185,185 215,176 245,190 275,188" fill="#fff"/>
+                <path id="gesteente-rg3" d="M0 300 L760 300" fill="none" stroke="#cfae82" stroke-width="18"/>
+                <g fill="#3f6b3a"><polygon points="90,300 110,250 130,300"/><polygon points="125,300 150,236 175,300"/><polygon points="40,300 58,262 76,300"/></g>
+                <!-- Rivier, zee, sediment en sedimentair gesteente -->
+                <path d="M700 285 C770 305 830 300 905 308" fill="none" stroke="#5d9fc4" stroke-width="12" stroke-linecap="round"/>
+                <path d="M880 300 L1360 300 L1360 360 C1250 395 1000 395 880 360 Z" fill="#5d9fc4"/>
+                <path d="M880 360 C1000 395 1250 395 1360 360 L1370 455 C1250 470 1000 470 870 455 Z" fill="#e0c58a"/>
+                <g fill="#b9985a"><circle cx="940" cy="410" r="4"/><circle cx="1010" cy="430" r="5"/><circle cx="1180" cy="425" r="4"/><circle cx="1280" cy="415" r="5"/><circle cx="1090" cy="445" r="4"/></g>
+                <g><rect x="870" y="470" width="500" height="26" fill="#c9a36b"/><rect x="870" y="496" width="500" height="30" fill="#a9835a"/><rect x="870" y="526" width="500" height="24" fill="#d9bf8e"/><rect x="870" y="550" width="500" height="30" fill="#b98c5a"/><rect x="870" y="580" width="500" height="22" fill="#c9a36b"/></g>
+                <!-- Metamorf gesteente: vier golvende banen -->
+                <g fill="none" stroke-width="24" stroke-linecap="butt"><path d="M870 690 C960 620 1030 760 1120 690 S1280 620 1370 690" stroke="#c97a7a"/><path d="M870 716 C960 646 1030 786 1120 716 S1280 646 1370 716" stroke="#9a9aa5"/><path d="M870 742 C960 672 1030 812 1120 742 S1280 672 1370 742" stroke="#e0b9a0"/><path d="M870 768 C960 698 1030 838 1120 768 S1280 698 1370 768" stroke="#7e7a86"/></g>
+                <!-- Magmakamer, vulkaan en stollingsgesteente -->
+                <ellipse cx="1550" cy="930" rx="250" ry="95" fill="#c8330f"/><ellipse cx="1550" cy="940" rx="215" ry="70" fill="#ff5a1a"/>
+                <g fill="#ffd23f"><circle cx="1470" cy="925" r="9"/><circle cx="1620" cy="960" r="12"/><circle cx="1540" cy="975" r="7"/><circle cx="1690" cy="925" r="7"/></g>
+                <path d="M1640 860 C1670 700 1740 480 1770 260" fill="none" stroke="#ff5a1a" stroke-width="34" stroke-linecap="round"/>
+                <polygon points="1480,300 1640,150 1700,128 1760,128 1830,150 2000,300" fill="#4a4448"/>
+                <polygon points="1700,128 1760,128 1740,160 1720,140" fill="#ff5a1a"/>
+                <path d="M1830 150 C1880 200 1860 250 1930 300" fill="none" stroke="#ff7a1a" stroke-width="14" stroke-linecap="round"/>
+                <g fill="#6b6468" opacity=".85"><circle cx="1735" cy="90" r="22"/><circle cx="1765" cy="62" r="28"/><circle cx="1800" cy="30" r="34"/></g>
+                <g fill="#cfc8c0"><circle cx="1790" cy="240" r="3"/><circle cx="1812" cy="252" r="3"/><circle cx="1775" cy="262" r="3"/><circle cx="1830" cy="236" r="3"/><circle cx="1805" cy="272" r="3"/></g>
+                <!-- Routes, namen en de speelpion worden door js/de-gesteentecyclus.js gevuld -->
+                <g id="gesteente-routes"></g>
+                <g id="gesteente-labels"></g>
+                <circle id="gesteente-tok" r="18" fill="#ffd23f" stroke="#2a2118" stroke-width="5"/>
+              </svg>
+              <canvas class="gesteente-fw" id="gesteente-fw" aria-hidden="true"></canvas>
+            </div>
+          </div>
+          <p class="gesteente-cap">Doorsnede, niet op schaal</p>
+
+          <div class="gesteente-top">
+            <div class="gesteente-here" id="gesteente-here"></div>
+            <div class="gesteente-cnt" id="gesteente-cnt"></div>
+          </div>
+          <div class="gesteente-msg" id="gesteente-msg" role="status" aria-live="polite"></div>
+          <div class="gesteente-end" id="gesteente-end" hidden></div>
+          <div class="gesteente-lb" id="gesteente-lb" hidden></div>
+          <div class="gesteente-trail" id="gesteente-trail"></div>
+        </div>
+
+        <div class="gesteente-col">
+          <div class="gesteente-dice" aria-hidden="true"><div class="gesteente-die" id="gesteente-d1"></div><div class="gesteente-die" id="gesteente-d2"></div></div>
+          <button class="btn gesteente-go" id="gesteente-go" type="button">Gooi de dobbelstenen</button>
+          <div class="gesteente-need" id="gesteente-need"></div>
+          <button class="btn ghost" id="gesteente-ov" type="button">Overzicht</button>
+          <button class="btn ghost" id="gesteente-lbb" type="button">Ranglijst</button>
+          <button class="btn ghost" id="gesteente-snd" type="button">Geluid: aan</button>
+          <label class="gesteente-lab" for="gesteente-st">Startplek</label>
+          <select class="gesteente-select" id="gesteente-st"></select>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/de-gesteentecyclus.js"></script>
+</body>
+</html>
