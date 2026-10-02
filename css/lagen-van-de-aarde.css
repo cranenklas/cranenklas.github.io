@@ -1,0 +1,70 @@
+/* ===========================================================
+   Cranenklas aardrijkskunde — tool "Lagen van de aarde"
+   Wordt geladen na css/basis.css en css/tool.css (navigatiebalk,
+   sidebar, knoppen). Hier staat alleen de stijl van deze tool:
+   doorsnede van de aarde links, knoppenkolom rechts, tekstvak met
+   uitleg over de afbeelding, en de Terug-pijl rechtsboven.
+   =========================================================== */
+
+/* Tekst die alleen voor schermlezers bedoeld is */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Terug-pijl (zelfde als op een onderwerppagina) ---------- */
+.back { position: fixed; top: calc(var(--nav-h) + 16px); right: 24px; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--fg); text-decoration: none; font-weight: 700; font-size: .95rem; padding: 4px 8px; border-radius: 12px; }
+.back svg { width: 56px; height: 40px; fill: var(--rust); transition: transform .2s; }
+.back:hover svg { transform: translateX(4px); }
+
+/* ---------- Doorsnede links, knoppen rechts (alles op één scherm) ---------- */
+.lagen { display: grid; grid-template-columns: minmax(0, 1fr) var(--side-w); gap: 32px; align-items: start; }
+/* Vierkante afbeelding: zo groot als past in de hoogte onder de navigatiebalk */
+.lagen-fig { width: min(100%, calc(100vh - var(--nav-h) - 80px)); justify-self: center; }
+.lagen-stage { position: relative; aspect-ratio: 1 / 1; background: var(--cup); border-radius: 16px; overflow: hidden; }
+.lagen-stage svg { width: 100%; height: 100%; display: block; }
+.lagen-cap { font-size: .9rem; color: var(--muted); margin: 6px 0 0; }
+
+/* Lagen: kort groter worden bij hover; lichter als een andere laag gekozen is */
+.ring { cursor: pointer; transition: opacity .45s; transform-box: view-box; transform-origin: 0 600px; }
+.ring.dim { opacity: .28; pointer-events: none; }
+.ring.pulse { animation: ring-pulse .7s ease-in-out; }
+@keyframes ring-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+
+/* Tekstvak met uitleg; staat rechtsboven (tr) of rechtsonder (br), nooit over de gekozen laag */
+.lagen-box {
+  position: absolute; right: 2%; width: 56%; max-height: 48%; overflow: auto;
+  background: var(--card); border-radius: 16px; padding: 12px 16px; font-size: .9rem; line-height: 1.45;
+  opacity: 0; pointer-events: none; transition: opacity .35s;
+}
+.lagen-box.on { opacity: 1; pointer-events: auto; }
+.lagen-box.tr { top: 2%; }
+.lagen-box.br { bottom: 2%; }
+.lagen-box h3 { font-size: 1.05rem; margin: 0 0 4px; }
+.lagen-box p { margin: 0 0 4px; }
+
+/* Knoppenkolom; begint onder de Terug-pijl rechtsboven */
+.lagen-col { display: flex; flex-direction: column; gap: 8px; padding-top: 80px; }
+.lagen-col .btn {
+  text-align: left; min-height: 36px; line-height: 1.3; white-space: normal; max-height: 80px; overflow: hidden;
+  transition: max-height .35s, opacity .3s, margin .35s, padding .35s, border-width .35s, background-color .2s;
+}
+.lagen-col .btn.sub { margin-left: 14px; }
+.lagen-col .btn.gone { max-height: 0; min-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; margin-top: -4px; margin-bottom: -4px; border-width: 0; pointer-events: none; }
+.lagen-col .btn.active { background: var(--rust); color: var(--rust-fg); border-color: var(--rust); }
+/* De gekozen startknop wordt een titel: geen knop meer */
+.lagen-col .btn.title { background: none; border-color: transparent; font-size: 1.2rem; padding-left: 0; cursor: default; pointer-events: none; color: var(--fg); filter: none; }
+
+/* ---------- Mobiele weergave: knoppen onder de afbeelding ---------- */
+@media (max-width: 760px) {
+  .lagen { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .lagen-fig { width: 100%; }
+  .lagen-col { padding-top: 0; }
+  .lagen-box { padding: 8px 10px; }
+  .side, .layout.collapsed .side { padding-right: 92px; }   /* ruimte voor de Terug-pijl rechtsboven */
+  .back { right: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ring.pulse { animation-duration: .01s; }
+  .lagen-col .btn, .lagen-box, .ring { transition-duration: .01s; }
+}
