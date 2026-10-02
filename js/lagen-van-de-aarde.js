@@ -159,7 +159,7 @@
     document.getElementById('sideList').hidden = collapsed;
   });
 
-  // Links die voorlopig nog niets doen (Over mij, Contact, De gesteentecyclus)
+  // Links die voorlopig nog niets doen (Over mij, Contact)
   document.querySelectorAll('[data-stub]').forEach(function (a) {
     a.addEventListener('click', function (e) { e.preventDefault(); });
   });
