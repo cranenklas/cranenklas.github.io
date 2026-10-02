@@ -3,7 +3,7 @@
    Kleuren, lettertype, basisinstellingen en de navigatiebalk staan
    in css/basis.css. Hier staat de stijl van een onderwerppagina met
    tegels (zoals water/index.html) en de Terug-pijl, zodat latere
-   onderwerppagina's (bv. "aarde") dit bestand kunnen hergebruiken.
+   onderwerppagina's (bv. aarde/index.html) dit bestand kunnen hergebruiken.
    =========================================================== */
 
 body { line-height: 1.55; }
@@ -46,6 +46,23 @@ h1 { margin: 0 0 40px; font-size: clamp(1.9rem, 4vw, 2.6rem); text-align: center
 :root[data-theme="dark"] .tile:hover, :root[data-theme="dark"] .tile:focus-visible { color: #10222C; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tile:hover, :root:not([data-theme="light"]) .tile:focus-visible { color: #10222C; } }
 @media (prefers-reduced-motion: reduce) { .tile::before, .tile::after { animation: none; transition-duration: .01s; } .tile { transition-duration: .01s; } }
+
+/* ---------- Variant: kwartcirkels (onderwerp "Lagen van de aarde") ----------
+   Zet "tiles-rings" op de lijst met tegels. Het water hierboven valt dan weg;
+   in plaats daarvan groeien bij hover of focus vijf kwartcirkels (de lagen
+   van de aarde) vanuit de linkeronderhoek, van binnen naar buiten. De rand en
+   de omhoogbeweging blijven gelijk aan die van de gewone tegel. ---------- */
+.tiles-rings .tile::before, .tiles-rings .tile::after { content: none; }
+.tiles-rings .tile:hover, .tiles-rings .tile:focus-visible { color: var(--fg); }
+.tile .rings { position: absolute; left: 0; bottom: 0; width: 84px; height: 84px; z-index: 1; pointer-events: none; }
+.tile .rings g { transform-box: view-box; transform-origin: 0 100px; transform: scale(.2); opacity: 0; transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s; }
+.tile .rings g:nth-child(5) { transition-delay: 0s; }
+.tile .rings g:nth-child(4) { transition-delay: .06s; }
+.tile .rings g:nth-child(3) { transition-delay: .12s; }
+.tile .rings g:nth-child(2) { transition-delay: .18s; }
+.tile .rings g:nth-child(1) { transition-delay: .24s; }
+.tile:hover .rings g, .tile:focus-visible .rings g { transform: scale(1); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .tile .rings g { transition-duration: .01s; transition-delay: 0s !important; } }
 
 /* ---------- Terug-pijl ---------- */
 .back { position: fixed; top: calc(var(--nav-h) + 16px); right: 24px; display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--fg); text-decoration: none; font-weight: 700; font-size: .95rem; padding: 4px 8px; border-radius: 12px; }
