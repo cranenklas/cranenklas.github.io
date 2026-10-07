@@ -71,6 +71,31 @@ img.uitleg-ph { display: block; object-fit: cover; border: 0; }
 .uitleg-photos small { display: block; color: var(--muted); font-size: .85rem; line-height: 1.35; }
 .uitleg-photos .cr { font-size: .78rem; margin-top: 2px; }
 
+/* Foto als knop: klik vergroot (lightbox). Vergrootglas rechtsonder. */
+.uitleg-zoom { display: block; position: relative; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px; cursor: zoom-in; }
+.uitleg-lens { position: absolute; right: 8px; bottom: 8px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--cup); color: var(--fg); border: 1.5px solid var(--line); opacity: .92; }
+.uitleg-lens svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.uitleg-zoom:hover .uitleg-lens { background: var(--rust); color: var(--rust-fg); border-color: var(--rust); opacity: 1; }
+
+/* Lightbox: donkere laag over de hele pagina. Overlay en tekst hebben vaste
+   kleuren, zodat ze in het lichte en donkere thema even goed leesbaar zijn. */
+.uitleg-lb { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 56px 72px 20px; background: rgba(20, 18, 14, .88); }
+.uitleg-lb[hidden] { display: none; }
+.uitleg-lb figure { margin: 0; max-width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.uitleg-lb img { display: block; width: auto; height: auto; max-width: min(100%, 1200px); max-height: calc(100vh - 190px); max-height: calc(100dvh - 190px); object-fit: contain; border-radius: 8px; background: #000; }
+.uitleg-lb figcaption { color: #F1E6CC; text-align: center; font-size: .95rem; line-height: 1.4; }
+.uitleg-lb figcaption b { display: block; font-size: 1.05rem; }
+.uitleg-lb figcaption a { color: #F1E6CC; text-decoration: underline; text-underline-offset: 3px; }
+.uitleg-lb-count { display: block; margin-top: 4px; color: #D8C9A5; font-size: .85rem; }
+.uitleg-lb-x, .uitleg-lb-pijl { position: absolute; width: 46px; height: 46px; display: grid; place-items: center; padding: 0; font: inherit; font-size: 1.4rem; line-height: 1; cursor: pointer; border-radius: 50%; border: 2px solid #F1E6CC; background: rgba(20, 18, 14, .6); color: #F1E6CC; }
+.uitleg-lb-x { top: 12px; right: 12px; }
+.uitleg-lb-pijl { top: 50%; transform: translateY(-50%); }
+.uitleg-lb-pijl.prev { left: 12px; }
+.uitleg-lb-pijl.next { right: 12px; }
+.uitleg-lb-pijl[hidden] { display: none; }
+.uitleg-lb-x:hover, .uitleg-lb-pijl:hover { background: var(--rust); border-color: var(--rust); color: #FFF8EC; }
+.uitleg-lb :focus-visible { outline: 3px solid #F6C92B; outline-offset: 3px; }
+
 .uitleg-series { border-top: 1px solid var(--nav-line); margin-top: 18px; padding-top: 16px; }
 .uitleg-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 12px; }
 .btn.uitleg-chip { padding: 4px 16px; font-size: .95rem; }
@@ -141,6 +166,12 @@ img.uitleg-ph { display: block; object-fit: cover; border: 0; }
   .side, .layout.collapsed .side { padding-right: 92px; }   /* ruimte voor de Terug-pijl rechtsboven */
   .back { right: 12px; }
   .uitleg-info { padding: 16px; }
+  /* Lightbox: pijlen onder de foto */
+  .uitleg-lb { padding: 66px 16px 76px; }
+  .uitleg-lb img { max-height: calc(100vh - 260px); max-height: calc(100dvh - 260px); }
+  .uitleg-lb-pijl { top: auto; bottom: 16px; transform: none; }
+  .uitleg-lb-pijl.prev { left: calc(50% - 58px); }
+  .uitleg-lb-pijl.next { right: calc(50% - 58px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .back svg { transition-duration: .01s; }

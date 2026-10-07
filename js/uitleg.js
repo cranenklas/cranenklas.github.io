@@ -5,7 +5,7 @@
 // Elk element met data-k (in de tekening of een knop rechts) opent
 // het onderdeel met die sleutel in het uitlegvak (#uitleg-info) en
 // wordt op alle plekken tegelijk gemarkeerd. Verder: reeksen met
-// keuzeknoppen, fotovakken en de sidebar.
+// keuzeknoppen, fotovakken met vergroten (lightbox) en de sidebar.
 // ===========================================================
 (function () {
   var D = window.UITLEG;
@@ -21,14 +21,25 @@
     return '<div class="uitleg-step' + (first ? ' first' : '') + '"><b>' + v[0] + '</b>' + v[1] + (v[2] ? '<small>' + v[2] + '</small>' : '') + '</div>';
   }
 
-  // Fotovak: leeg vak zolang er geen foto is, anders de foto met maker en licentie
-  function photo(v) {
+  function alt(v) { return 'Foto van ' + v.naam.toLowerCase(); }
+  // Regel "maker · licentie", als link naar de bron als die er is
+  function credit(v) {
+    var cr = [v.maker, v.licentie].filter(Boolean).join(' · ');
+    return cr && v.bron ? '<a href="' + attr(v.bron) + '" target="_blank" rel="noopener">' + cr + '</a>' : cr;
+  }
+
+  // Fotovak: leeg vak zolang er geen foto is, anders een knop met de foto
+  // (vergroten, zie lbOpen) en daaronder maker en licentie. n = plek in de
+  // rij foto's van dit onderdeel.
+  function photo(v, n) {
     var h = '<figure>';
     if (v.foto) {
-      var cr = [v.maker, v.licentie].filter(Boolean).join(' · ');
-      h += '<img class="uitleg-ph" src="' + attr(D.fotoMap + v.foto) + '" alt="' + attr('Foto van ' + v.naam.toLowerCase()) + '" loading="lazy">';
+      var cr = credit(v);
+      h += '<button class="uitleg-zoom" type="button" data-p="' + n + '" aria-label="Vergroot ' + attr(alt(v).charAt(0).toLowerCase() + alt(v).slice(1)) + '">';
+      h += '<img class="uitleg-ph" src="' + attr(D.fotoMap + v.foto) + '" alt="' + attr(alt(v)) + '" loading="lazy">';
+      h += '<span class="uitleg-lens" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6M10 7v6M7 10h6"/></svg></span></button>';
       h += '<figcaption><b>' + v.naam + '</b><small>' + v.kenmerk + '</small>';
-      if (cr) h += '<small class="cr">' + (v.bron ? '<a href="' + attr(v.bron) + '" target="_blank" rel="noopener">' + cr + '</a>' : cr) + '</small>';
+      if (cr) h += '<small class="cr">' + cr + '</small>';
     } else {
       h += '<div class="uitleg-ph">foto</div><figcaption><b>' + v.naam + '</b><small>' + v.kenmerk + '</small>';
     }
@@ -63,13 +74,18 @@
       e.setAttribute('aria-pressed', String(on));
     });
     var h = '<div class="uitleg-kind">' + d.soort + '</div><h2>' + d.titel + '</h2><p>' + d.tekst + '</p>';
-    if (d.voorbeelden) h += '<div class="uitleg-photos">' + d.voorbeelden.map(photo).join('') + '</div>';
+    // Alleen voorbeelden met een foto zijn klikbaar en tellen mee bij het bladeren
+    var fotos = (d.voorbeelden || []).filter(function (v) { return v.foto; });
+    if (d.voorbeelden) h += '<div class="uitleg-photos">' + d.voorbeelden.map(function (v) { return photo(v, fotos.indexOf(v)); }).join('') + '</div>';
     if (d.reeksen) {
       h += '<div class="uitleg-series"><h3>' + d.reeksTitel + '</h3><p>' + d.reeksIntro + '</p><div class="uitleg-chips">';
       d.reeksen.forEach(function (s, i) { h += '<button class="btn ghost uitleg-chip" type="button" data-s="' + i + '" aria-pressed="false">' + s.knop + '</button>'; });
       h += '</div><div id="uitleg-series"></div></div>';
     }
     box.innerHTML = h;
+    box.querySelectorAll('[data-p]').forEach(function (b) {
+      b.addEventListener('click', function () { lbOpen(fotos, parseInt(b.getAttribute('data-p'), 10), b); });
+    });
     if (d.reeksen) {
       box.querySelectorAll('[data-s]').forEach(function (b) {
         b.addEventListener('click', function () { series(parseInt(b.getAttribute('data-s'), 10)); });
@@ -80,6 +96,67 @@
       var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       box.scrollIntoView({ block: 'nearest', behavior: still ? 'auto' : 'smooth' });
     }
+  }
+
+  // ---------- Foto vergroten (lightbox) ----------
+  // Eén venster voor de hele pagina, pas gemaakt bij de eerste klik. De grote
+  // foto gebruikt hetzelfde bestand als het kleine plaatje (geen tweede download).
+  // Sluiten: kruisje, klik naast de foto of Esc; bladeren met de pijlen (knoppen
+  // en toetsen), rond. Tab blijft binnen het venster; de pagina erachter is
+  // inert en scrolt niet.
+  var lb = null, lbList = [], lbI = 0, lbOpener = null;
+  function lbBuild() {
+    lb = document.createElement('div');
+    lb.className = 'uitleg-lb';
+    lb.hidden = true;
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'Vergrote foto');
+    lb.innerHTML = '<button class="uitleg-lb-x" type="button" aria-label="Sluiten">×</button>' +
+      '<button class="uitleg-lb-pijl prev" type="button" aria-label="Vorige foto">‹</button>' +
+      '<figure><img alt=""><figcaption></figcaption></figure>' +
+      '<button class="uitleg-lb-pijl next" type="button" aria-label="Volgende foto">›</button>';
+    document.body.appendChild(lb);
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target.tagName === 'FIGURE') lbClose(); });
+    lb.querySelector('.uitleg-lb-x').addEventListener('click', lbClose);
+    lb.querySelector('.prev').addEventListener('click', function () { lbShow(lbI - 1); });
+    lb.querySelector('.next').addEventListener('click', function () { lbShow(lbI + 1); });
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); lbClose(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); lbShow(lbI - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); lbShow(lbI + 1); }
+      else if (e.key === 'Tab') {
+        var f = lb.querySelectorAll('button:not([hidden]), a[href]'), a = f[0], z = f[f.length - 1];
+        if (!lb.contains(document.activeElement)) { e.preventDefault(); a.focus(); }
+        else if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+        else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+      }
+    });
+  }
+  function lbShow(i) {
+    var n = lbList.length;
+    lbI = (i + n) % n;
+    var v = lbList[lbI], img = lb.querySelector('img'), cr = credit(v);
+    img.src = D.fotoMap + v.foto;
+    img.alt = alt(v);
+    lb.querySelector('figcaption').innerHTML = '<b>' + v.naam + '</b>' + v.kenmerk + (cr ? '<br>' + cr : '') + '<span class="uitleg-lb-count">' + (lbI + 1) + ' van ' + n + '</span>';
+    lb.querySelectorAll('.uitleg-lb-pijl').forEach(function (b) { b.hidden = n < 2; });
+  }
+  function lbOpen(list, i, opener) {
+    if (!lb) lbBuild();
+    lbList = list; lbOpener = opener;
+    lbShow(i);
+    lb.hidden = false;
+    [].forEach.call(document.body.children, function (el) { if (el !== lb) el.inert = true; });
+    document.body.style.overflow = 'hidden';
+    lb.querySelector('.uitleg-lb-x').focus();
+  }
+  function lbClose() {
+    lb.hidden = true;
+    [].forEach.call(document.body.children, function (el) { el.inert = false; });
+    document.body.style.overflow = '';
+    if (lbOpener) lbOpener.focus();
   }
 
   // Klik, Enter of spatie (knoppen rechts doen Enter en spatie zelf al)
