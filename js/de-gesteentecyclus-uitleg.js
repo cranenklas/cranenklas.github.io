@@ -9,7 +9,8 @@
 //   titel, soort, tekst   kop, regel erboven en uitleg (tekst mag <br> bevatten)
 //   voorbeelden           (optioneel) fotovakken. foto = bestandsnaam in
 //                         fotoMap; leeg = leeg vak. maker en licentie komen
-//                         onder de foto, als link naar bron.
+//                         onder de foto, als link naar bron. Alt-tekst:
+//                         "Foto van <naam>".
 //                         Verwachte namen: de naam in kleine letters + .jpg,
 //                         bv. graniet.jpg, conglomeraat.jpg, kwartsiet.jpg.
 //   reeksTitel, reeksIntro, reeksen
@@ -48,11 +49,11 @@ window.UITLEG = {
       soort: "Gesteenteklasse",
       tekst: "Ontstaat als magma afkoelt en stolt. Onder de grond koelt het langzaam af en groeien de kristallen groot. Aan het oppervlak koelt het snel af en blijven de kristallen klein.",
       voorbeelden: [
-        { naam: "Graniet", kenmerk: "diep gestold, grofkorrelig", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Gabbro", kenmerk: "diep gestold, donker", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Basalt", kenmerk: "lava, fijnkorrelig en donker", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Rhyoliet", kenmerk: "lava, licht van kleur", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Andesiet", kenmerk: "lava, tussenvorm", foto: "", maker: "", licentie: "", bron: "" }
+        { naam: "Graniet", kenmerk: "diep gestold, grofkorrelig", foto: "graniet.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/granite:nmnhmineralsciences_1204768" },
+        { naam: "Gabbro", kenmerk: "diep gestold, donker", foto: "gabbro.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/gabbro:nmnhmineralsciences_1337538" },
+        { naam: "Basalt", kenmerk: "lava, fijnkorrelig en donker", foto: "basalt.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/basalt:nmnhmineralsciences_1325067" },
+        { naam: "Rhyoliet", kenmerk: "lava, licht van kleur", foto: "rhyoliet.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/rhyolite:nmnhmineralsciences_1325561" },
+        { naam: "Andesiet", kenmerk: "lava, tussenvorm", foto: "andesiet.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/andesite:nmnhmineralsciences_1211544" }
       ],
       reeksTitel: "Zelfde magma, ander gesteente",
       reeksIntro: "Welk gesteente ontstaat, hangt af van de soort magma en van de plek waar het stolt. Kies een soort magma.",
@@ -94,11 +95,11 @@ window.UITLEG = {
       soort: "Gesteenteklasse",
       tekst: "Sedimentair gesteente ontstaat als lagen sediment worden samengeperst. Je herkent het vaak aan de gelaagdheid. Dit is het type gesteente waarin je fossielen vindt. Een dood dier vergaat normaal gesproken snel of wordt opgegeten. Als het dier snel onder zand of modder verdwijnt, bijvoorbeeld in een rivier, op een zeebodem of tijdens een landverschuiving, blijven de harde delen bewaard. Laag na laag sediment komt eroverheen. Het sediment en de botten verstenen, bij lage temperatuur en zonder dat het gesteente vervormt. Bij de andere twee klassen kan dat niet.<br><br>Stollingsgesteente ontstaat uit magma en daarin verbrandt of smelt elk overblijfsel. Metamorf gesteente is zo sterk verhit en samengeperst dat fossielen worden vervormd of verdwijnen. Een enkele keer vind je nog een vervormd fossiel in licht omgevormd gesteente, of een afdruk in vulkanische as. Vrijwel alle fossielen komen dus uit sedimentair gesteente.",
       voorbeelden: [
-        { naam: "Zandsteen", kenmerk: "zandkorrels, aaneengekit", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Conglomeraat", kenmerk: "afgeronde kiezels in fijner materiaal", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Schalie", kenmerk: "klei, breekt in dunne plaatjes", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Kalksteen", kenmerk: "chemisch neergeslagen kalk", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Steenkool", kenmerk: "samengeperste plantenresten", foto: "", maker: "", licentie: "", bron: "" }
+        { naam: "Zandsteen", kenmerk: "zandkorrels, aaneengekit", foto: "zandsteen.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/sandstone:nmnhmineralsciences_1353349" },
+        { naam: "Conglomeraat", kenmerk: "afgeronde kiezels in fijner materiaal", foto: "conglomeraat.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/sedimentary-rock-conglomerate:nmnheducation_10025197" },
+        { naam: "Schalie", kenmerk: "klei, breekt in dunne plaatjes", foto: "schalie.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/shale:nmnhmineralsciences_1324806" },
+        { naam: "Kalksteen", kenmerk: "chemisch neergeslagen kalk", foto: "kalksteen.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/limestone:nmnhmineralsciences_1324776" },
+        { naam: "Steenkool", kenmerk: "samengeperste plantenresten", foto: "steenkool.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/sedimentary-rock-bituminous-coal:nmnheducation_10024916" }
       ],
       reeksTitel: "Van sediment naar gesteente",
       reeksIntro: "Het soort sediment bepaalt welk gesteente ontstaat. Kies een sediment.",
@@ -145,11 +146,11 @@ window.UITLEG = {
       soort: "Gesteenteklasse",
       tekst: "Ontstaat als bestaand gesteente diep in de aarde door hitte en druk verandert, zonder te smelten. De mineralen groeien opnieuw of worden andere mineralen. Vaak zie je banden of een glans.",
       voorbeelden: [
-        { naam: "Leisteen", kenmerk: "uit schalie, splijt in platen", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Schist", kenmerk: "uit schalie, glinsterende glimmers", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Gneis", kenmerk: "lichte en donkere banden", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Kwartsiet", kenmerk: "uit zandsteen, zeer hard", foto: "", maker: "", licentie: "", bron: "" },
-        { naam: "Marmer", kenmerk: "uit kalksteen", foto: "", maker: "", licentie: "", bron: "" }
+        { naam: "Leisteen", kenmerk: "uit schalie, splijt in platen", foto: "leisteen.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/slate:nmnhmineralsciences_1325040" },
+        { naam: "Schist", kenmerk: "uit schalie, glinsterende glimmers", foto: "schist.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/schist:nmnhmineralsciences_1325145" },
+        { naam: "Gneis", kenmerk: "lichte en donkere banden", foto: "gneis.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/gneiss:nmnhmineralsciences_1325517" },
+        { naam: "Kwartsiet", kenmerk: "uit zandsteen, zeer hard", foto: "kwartsiet.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/quartzite:nmnhmineralsciences_1321676" },
+        { naam: "Marmer", kenmerk: "uit kalksteen", foto: "marmer.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/marble:nmnhmineralsciences_1321942" }
       ],
       reeksTitel: "Metamorfose in stappen",
       reeksIntro: "Hoe heter en hoe hoger de druk, hoe verder een gesteente verandert. Kies een uitgangsgesteente.",

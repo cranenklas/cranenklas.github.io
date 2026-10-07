@@ -26,7 +26,7 @@
     var h = '<figure>';
     if (v.foto) {
       var cr = [v.maker, v.licentie].filter(Boolean).join(' · ');
-      h += '<img class="uitleg-ph" src="' + attr(D.fotoMap + v.foto) + '" alt="' + attr(v.naam) + '" loading="lazy">';
+      h += '<img class="uitleg-ph" src="' + attr(D.fotoMap + v.foto) + '" alt="' + attr('Foto van ' + v.naam.toLowerCase()) + '" loading="lazy">';
       h += '<figcaption><b>' + v.naam + '</b><small>' + v.kenmerk + '</small>';
       if (cr) h += '<small class="cr">' + (v.bron ? '<a href="' + attr(v.bron) + '" target="_blank" rel="noopener">' + cr + '</a>' : cr) + '</small>';
     } else {
