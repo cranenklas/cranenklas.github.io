@@ -85,24 +85,53 @@ img.uitleg-ph { display: block; object-fit: cover; border: 0; }
 .uitleg-grad i { flex: 1; height: 2px; background: var(--muted); }
 
 /* ---------- Rechts: knop naar de tool en een knop per onderdeel ---------- */
-.uitleg-col { display: flex; flex-direction: column; gap: 8px; padding-top: 76px; }
+.uitleg-col { display: flex; flex-direction: column; gap: 8px; }
 .uitleg-col h2 { font-size: 1.25rem; margin: 12px 0 2px; }
 .uitleg-col .btn { text-align: left; padding: 8px 22px; }
 .uitleg-col .btn.uitleg-go { text-align: center; padding: 10px; background: var(--forest); color: var(--bg); }
 /* Gekozen onderdeel: zelfde rode vulling als een gewone .btn */
 .btn.ghost.on { background: var(--rust); border-color: var(--rust); color: var(--rust-fg); }
 
-/* Breed en hoog genoeg: Terug-pijl en knoppen blijven staan bij het scrollen */
-@media (min-width: 1101px) and (min-height: 920px) {
+/* Breed scherm: Terug-pijl en knoppen blijven staan bij het scrollen, op elke
+   schermhoogte. De kolom begint onder de pijl (margin-top) en is nooit hoger dan
+   wat er onder de pijl zichtbaar is; past hij niet, dan scrolt hij zelf. Hij
+   eindigt 48px boven de onderrand (de onderpadding van main): verder kan hij
+   onderaan de pagina niet, en anders schuift hij daar over de pijl. De padding
+   met negatieve marge houdt de focusrand binnen het scrollvak. */
+@media (min-width: 1101px) {
   .back { position: fixed; }
-  .uitleg-col { position: sticky; top: calc(var(--nav-h) + 16px); align-self: start; }
+  .uitleg-col {
+    --u-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 92px);
+    position: sticky; top: var(--u-top); align-self: start;
+    margin: 76px -6px 0; padding: 6px;
+    max-height: calc(100vh - var(--u-top) - 48px); overflow-y: auto; overscroll-behavior: contain;
+  }
+}
+/* Lage schermen: knoppen en koppen dichter op elkaar, zodat de kolom zo vaak
+   mogelijk zonder eigen scroll past */
+@media (min-width: 1101px) and (max-height: 900px) {
+  .uitleg-col { gap: 5px; }
+  .uitleg-col h2 { font-size: 1.1rem; margin: 6px 0 0; }
+  .uitleg-col .btn { padding: 4px 22px; }
+  .uitleg-col .btn.uitleg-go { padding: 6px 10px; }
+}
+@media (min-width: 1101px) and (max-height: 800px) {
+  .uitleg-col { gap: 4px; }
+  .uitleg-col h2 { font-size: 1.05rem; margin: 4px 0 0; line-height: 1.3; }
+  .uitleg-col .btn { padding: 3px 20px; line-height: 1.3; }
+  .uitleg-col .btn.uitleg-go { padding: 5px 10px; }
+}
+@media (min-width: 1101px) and (max-height: 700px) {
+  .uitleg-col { gap: 3px; }
+  .uitleg-col .btn { padding: 2px 18px; }
+  .uitleg-col .btn.uitleg-go { padding: 4px 10px; }
 }
 
 /* ---------- Smaller: knoppen in rijen onder het uitlegvak ---------- */
 @media (max-width: 1100px) {
   .uitleg { grid-template-columns: minmax(0, 1fr); }
   .uitleg-main h1, .uitleg-intro { padding-right: 84px; }   /* ruimte voor de Terug-pijl rechtsboven */
-  .uitleg-col { padding-top: 0; flex-direction: row; flex-wrap: wrap; }
+  .uitleg-col { flex-direction: row; flex-wrap: wrap; }
   .uitleg-col h2 { flex-basis: 100%; margin: 10px 0 0; }
   .uitleg-col .btn.uitleg-go { padding: 10px 26px; }
 }
