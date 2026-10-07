@@ -150,7 +150,7 @@ window.UITLEG = {
         { naam: "Schist", kenmerk: "uit schalie, glinsterende glimmers", foto: "schist.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/schist:nmnhmineralsciences_1325145" },
         { naam: "Gneis", kenmerk: "lichte en donkere banden", foto: "gneis.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/gneiss:nmnhmineralsciences_1325517" },
         { naam: "Kwartsiet", kenmerk: "uit zandsteen, zeer hard", foto: "kwartsiet.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/quartzite:nmnhmineralsciences_1321676" },
-        { naam: "Marmer", kenmerk: "uit kalksteen", foto: "marmer.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/marble:nmnhmineralsciences_1321942" }
+        { naam: "Marmer", kenmerk: "uit kalksteen", foto: "marmer.jpg", maker: "Smithsonian, National Museum of Natural History", licentie: "CC0", bron: "https://www.si.edu/object/marble:nmnhmineralsciences_1324801" }
       ],
       reeksTitel: "Metamorfose in stappen",
       reeksIntro: "Hoe heter en hoe hoger de druk, hoe verder een gesteente verandert. Kies een uitgangsgesteente.",
