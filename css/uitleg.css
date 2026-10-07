@@ -1,0 +1,118 @@
+/* ===========================================================
+   Cranenklas aardrijkskunde — uitlegpagina bij een tool
+   Wordt geladen na css/basis.css en css/tool.css (navigatiebalk,
+   sidebar, knoppen). Opbouw: sidebar links, in het midden titel,
+   intro, een getekende doorsnede en het uitlegvak, rechts onder de
+   Terug-pijl de knop naar de tool en de knoppen per onderdeel.
+   Anders dan een tool mag deze pagina scrollen. De inhoud staat in
+   een databestand en wordt door js/uitleg.js ingevuld.
+   =========================================================== */
+
+/* Tekst die alleen voor schermlezers bedoeld is */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- De hele pagina scrolt (de tool zelf niet) ---------- */
+.layout { height: auto; min-height: 100vh; }
+main { overflow: visible; padding: 16px 24px 48px; }
+
+/* ---------- Terug-pijl (zelfde als op een onderwerppagina) ----------
+   Scrolt mee met de pagina; alleen op een breed en hoog scherm blijft
+   hij samen met de knoppen rechts staan. */
+.back { position: absolute; top: calc(var(--nav-h) + 16px); right: 24px; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--fg); text-decoration: none; font-weight: 700; font-size: .95rem; padding: 4px 8px; border-radius: 12px; }
+.back svg { width: 56px; height: 40px; fill: var(--rust); transition: transform .2s; }
+.back:hover svg { transform: translateX(4px); }
+
+/* ---------- Midden en rechts ---------- */
+.uitleg { display: grid; grid-template-columns: minmax(0, 1fr) var(--side-w); gap: 24px; }
+.uitleg-main { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.uitleg-main h1 { margin: 0; font-size: 1.2rem; line-height: 1.3; }
+.uitleg-intro { margin: -6px 0 0; max-width: 75ch; }
+
+/* Crème tegel met de tekening; die mag binnen zijn kader horizontaal scrollen */
+.uitleg-stage { position: relative; background: var(--cup); border-radius: 16px; padding: 10px; }
+.uitleg-frame { border-radius: 12px; overflow-x: auto; line-height: 0; }
+.uitleg-frame svg { display: block; width: 100%; min-width: 620px; height: auto; }
+.uitleg-cap { position: absolute; left: 18px; bottom: 18px; line-height: 1.2; border-radius: 999px; font-size: .75rem; padding: 4px 10px; background: color-mix(in srgb, var(--cup) 90%, transparent); color: var(--fg); }
+
+/* Namen, routes en stations in de tekening. De kleuren horen bij de
+   tekening en blijven in het donkere thema gelijk (net als in de tool). */
+.uitleg-frame svg {
+  --u-ink: #2a2118; --u-halo: #fbf4e6; --u-dash: #fffbe8; --u-node: #ffd23f; --u-hover: #e0c58a; --u-on: #B5532B;
+  font-family: var(--font);
+}
+.uitleg-st { font-size: 19px; font-weight: 700; fill: var(--u-ink); stroke: var(--u-halo); stroke-width: 5px; stroke-linejoin: round; paint-order: stroke; }
+.uitleg-pr { font-size: 15px; font-weight: 700; fill: var(--u-ink); stroke: var(--u-halo); stroke-width: 4.5px; stroke-linejoin: round; paint-order: stroke; cursor: pointer; }
+.uitleg-pr:hover, .uitleg-pr.on { fill: var(--u-on); }
+.uitleg-road { fill: none; stroke: var(--u-ink); stroke-width: 7; stroke-linecap: round; opacity: .6; }
+.uitleg-dash { fill: none; stroke: var(--u-dash); stroke-width: 2; stroke-dasharray: 9 9; stroke-linecap: round; }
+.uitleg-lift { fill: none; stroke: var(--u-ink); stroke-width: 5; stroke-dasharray: 3 10; stroke-linecap: round; opacity: .6; }
+.uitleg-hit { cursor: pointer; }
+.uitleg-hit circle { fill: var(--u-halo); stroke: var(--u-ink); stroke-width: 4; }
+.uitleg-hit:hover circle { fill: var(--u-hover); }
+.uitleg-hit.on circle { fill: var(--u-node); r: 14px; }
+.uitleg-frame svg [data-k]:focus { outline: none; }
+.uitleg-frame svg [data-k]:focus-visible { outline: 3px solid var(--water-dark); outline-offset: 3px; }
+
+/* ---------- Uitlegvak onder de tekening ---------- */
+.uitleg-info { background: var(--cup); border-radius: 16px; padding: 20px 24px; line-height: 1.55; }
+.uitleg-kind { font-size: .9rem; color: var(--muted); }
+.uitleg-info h2 { font-size: 1.25rem; margin: 0 0 6px; }
+.uitleg-info h3 { font-size: 1.1rem; margin: 0 0 4px; }
+.uitleg-info p { margin: 0; max-width: 70ch; }
+
+.uitleg-photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 16px; }
+.uitleg-photos figure { margin: 0; }
+.uitleg-ph { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; background: var(--bg); border: 1.5px dashed var(--muted); color: var(--muted); font-size: .85rem; }
+img.uitleg-ph { display: block; object-fit: cover; border: 0; }
+.uitleg-photos b { display: block; margin-top: 6px; }
+.uitleg-photos small { display: block; color: var(--muted); font-size: .85rem; line-height: 1.35; }
+.uitleg-photos .cr { font-size: .78rem; margin-top: 2px; }
+
+.uitleg-series { border-top: 1px solid var(--nav-line); margin-top: 18px; padding-top: 16px; }
+.uitleg-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 12px; }
+.btn.uitleg-chip { padding: 4px 16px; font-size: .95rem; }
+.uitleg-steps { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin-top: 12px; }
+.uitleg-step { flex: 1 1 0; min-width: 104px; background: var(--bg); border-radius: 10px; padding: 10px 12px; font-size: .92rem; line-height: 1.35; }
+.uitleg-step.first { background: none; border: 1.5px solid var(--line); }
+.uitleg-step b { display: block; font-size: 1rem; }
+.uitleg-step small { display: block; color: var(--muted); margin-top: 4px; font-size: .82rem; }
+.uitleg-arr { display: flex; align-items: center; font-weight: 700; }
+.uitleg-fork { flex: 2 1 0; min-width: 200px; display: flex; flex-direction: column; gap: 8px; }
+.uitleg-grad { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: .9rem; color: var(--muted); }
+.uitleg-grad i { flex: 1; height: 2px; background: var(--muted); }
+
+/* ---------- Rechts: knop naar de tool en een knop per onderdeel ---------- */
+.uitleg-col { display: flex; flex-direction: column; gap: 8px; padding-top: 76px; }
+.uitleg-col h2 { font-size: 1.25rem; margin: 12px 0 2px; }
+.uitleg-col .btn { text-align: left; padding: 8px 22px; }
+.uitleg-col .btn.uitleg-go { text-align: center; padding: 10px; background: var(--forest); color: var(--bg); }
+/* Gekozen onderdeel: zelfde rode vulling als een gewone .btn */
+.btn.ghost.on { background: var(--rust); border-color: var(--rust); color: var(--rust-fg); }
+
+/* Breed en hoog genoeg: Terug-pijl en knoppen blijven staan bij het scrollen */
+@media (min-width: 1101px) and (min-height: 920px) {
+  .back { position: fixed; }
+  .uitleg-col { position: sticky; top: calc(var(--nav-h) + 16px); align-self: start; }
+}
+
+/* ---------- Smaller: knoppen in rijen onder het uitlegvak ---------- */
+@media (max-width: 1100px) {
+  .uitleg { grid-template-columns: minmax(0, 1fr); }
+  .uitleg-main h1, .uitleg-intro { padding-right: 84px; }   /* ruimte voor de Terug-pijl rechtsboven */
+  .uitleg-col { padding-top: 0; flex-direction: row; flex-wrap: wrap; }
+  .uitleg-col h2 { flex-basis: 100%; margin: 10px 0 0; }
+  .uitleg-col .btn.uitleg-go { padding: 10px 26px; }
+}
+@media (max-width: 760px) {
+  main { padding: 24px 16px 48px; }
+  .uitleg-main h1, .uitleg-intro { padding-right: 0; }
+  .side, .layout.collapsed .side { padding-right: 92px; }   /* ruimte voor de Terug-pijl rechtsboven */
+  .back { right: 12px; }
+  .uitleg-info { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .back svg { transition-duration: .01s; }
+}

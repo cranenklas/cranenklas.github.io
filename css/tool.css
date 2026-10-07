@@ -36,7 +36,8 @@ body { line-height: 1.55; }
 .side ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .side a { display: block; padding: 6px 0; color: var(--fg); text-decoration: none; }
 .side a:hover { color: var(--rust); }
-.side a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--rust); }
+/* "page" op de pagina zelf, "true" op een tool die bij die zijbalklink hoort */
+.side a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--rust); }
 
 /* Inhoud: beker links, vraag en antwoord rechts, alles op één scherm zonder scrollen */
 main { min-height: 0; padding: 16px 32px; overflow: auto; }
@@ -89,6 +90,7 @@ input[type=range] { width: 100%; accent-color: var(--water-dark); height: 32px; 
 .btn:hover { filter: brightness(1.08); }
 .btn:disabled { opacity: .45; cursor: default; filter: none; }
 .btn.ghost { background: none; color: var(--fg); border: 2px solid var(--line); }
+a.btn { text-decoration: none; }
 
 /* ---------- Feedback + uitleg ---------- */
 .feedback { width: 100%; min-height: 0; text-align: center; }

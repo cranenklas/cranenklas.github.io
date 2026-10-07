@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uitleg De gesteentecyclus – Cranenklas aardrijkskunde</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="../css/basis.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/uitleg.css">
+</head>
+<body class="is-tools">
+
+  <!-- Navigatiebalk: brengt je terug naar de hoofdsite -->
+  <nav class="nav" aria-label="Hoofdmenu">
+    <a class="logo" href="../index.html">Cranenklas<span>.</span></a>
+    <ul>
+      <li><a class="link-tools" href="../index.html#tools" aria-current="page">Educatieve tools</a></li>
+      <li><a href="#" data-stub>Over mij</a></li>
+      <li><a href="#" data-stub>Contact</a></li>
+    </ul>
+  </nav>
+
+  <a class="back" href="index.html" aria-label="Terug naar Lagen van de aarde">
+    <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M2 36 C 6 16, 22 8, 42 10 L 40 2 L 62 14 L 38 28 L 40 19 C 26 18, 12 24, 2 36 Z"/></svg>Terug
+  </a>
+
+  <div class="layout">
+    <aside class="side" aria-label="Onderwerp Lagen van de aarde">
+      <div class="side-head">
+        <h2><a href="index.html">Lagen van de aarde</a></h2>
+        <button class="toggle" id="toggle" type="button" aria-expanded="true" aria-controls="sideList" aria-label="Sidebar inklappen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"/></svg>
+        </button>
+      </div>
+      <ul id="sideList">
+        <li><a href="lagen-van-de-aarde.html">Lagen van de aarde</a></li>
+        <li><a href="#" aria-current="page" data-stub>De gesteentecyclus</a></li>
+      </ul>
+    </aside>
+
+    <main>
+      <div class="uitleg">
+        <div class="uitleg-main">
+          <h1>De gesteentecyclus</h1>
+          <p class="uitleg-intro">Geen gesteente blijft voor altijd hetzelfde. Het wordt afgebroken, afgezet, samengeperst, omgevormd, gesmolten en opnieuw gestold. Samen vormen die processen de gesteentecyclus. Klik in de doorsnede op een onderdeel, of kies rechts een gesteente of proces.</p>
+
+          <div class="uitleg-stage">
+            <div class="uitleg-frame">
+              <!-- Getekende doorsnede. Elk element met data-k opent dat onderdeel
+                   uit js/de-gesteentecyclus-uitleg.js; de kleuren volgen de tool. -->
+              <svg viewBox="0 0 1000 540" role="group" aria-label="Getekende doorsnede van de aarde met de stations en processen van de gesteentecyclus">
+                <defs><marker id="uitleg-kop" viewBox="0 0 20 20" refX="30" refY="10" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 2L16 10L0 18Z" fill="#2a2118" stroke="#fbf4e6" stroke-width="1.5"/></marker></defs>
+                <!-- Lucht, wolk, ondergrond en de diepe laag met metamorfe banden -->
+                <rect width="1000" height="540" fill="#cfe6f2"/>
+                <g fill="#fff"><ellipse cx="560" cy="52" rx="62" ry="20"/><ellipse cx="610" cy="40" rx="46" ry="18"/></g>
+                <rect y="280" width="1000" height="260" fill="#9a8266"/>
+                <path d="M0 430 Q250 400 500 440 T1000 430 V540 H0Z" fill="#6b3a2a"/>
+                <path d="M250 462 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="#c97a7a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M270 484 q25 -10 50 0 t50 0 t50 0 t50 0" fill="none" stroke="#9a9aa5" stroke-width="3" stroke-linecap="round"/>
+                <!-- Zee met lagen sediment -->
+                <path d="M500 280 Q630 350 760 280 Z" fill="#5d9fc4"/>
+                <path d="M508 292 Q630 362 752 292" fill="none" stroke="#e0c58a" stroke-width="13"/>
+                <path d="M516 306 Q630 374 744 306" fill="none" stroke="#c9a36b" stroke-width="13"/>
+                <path d="M526 320 Q630 386 734 320" fill="none" stroke="#a9835a" stroke-width="13"/>
+                <!-- Magmabel, vulkaan en vulkaanpijp -->
+                <ellipse cx="830" cy="465" rx="92" ry="38" fill="#c8330f"/><ellipse cx="830" cy="462" rx="70" ry="25" fill="#ff5a1a"/>
+                <path d="M740 280 L830 120 L856 120 L960 280 Z" fill="#4a4448"/>
+                <path d="M830 440 Q850 330 843 124" fill="none" stroke="#ff5a1a" stroke-width="11" stroke-linecap="round"/>
+                <path d="M830 120 L856 120 L872 150 L858 142 L846 160 L836 140 L822 150 Z" fill="#ff5a1a"/>
+                <!-- Regoliet, gebergte met sneeuw en bomen -->
+                <rect y="275" width="500" height="11" fill="#cfae82"/><rect x="760" y="275" width="240" height="11" fill="#cfae82"/>
+                <path d="M60 280 L200 140 L245 185 L340 70 L500 280 Z" fill="#8a7a6f" stroke="#cfae82" stroke-width="9" stroke-linejoin="round"/>
+                <path d="M340 70 L312 106 L330 98 L343 112 L358 96 L372 114 Z M200 140 L180 162 L196 156 L208 166 L222 162 Z" fill="#fff"/>
+                <path d="M70 276 l18 -44 l18 44 Z M104 276 l22 -58 l22 58 Z M22 276 l15 -36 l15 36 Z" fill="#3f6b3a"/>
+                <g fill="#5c8a4a"><circle cx="130" cy="214" r="4"/><circle cx="262" cy="170" r="4"/><circle cx="420" cy="178" r="4"/><circle cx="300" cy="281" r="4"/><circle cx="900" cy="281" r="4"/></g>
+                <g fill="#6e5a48"><circle cx="165" cy="178" r="4"/><circle cx="380" cy="126" r="4"/><circle cx="450" cy="218" r="4"/><circle cx="200" cy="281" r="4"/><circle cx="400" cy="281" r="4"/><circle cx="820" cy="281" r="4"/></g>
+
+                <!-- Routes: donkere onderlaag met een streepjeslijn erover -->
+                <path class="uitleg-lift" d="M400 470 C150 470 120 330 290 165" marker-end="url(#uitleg-kop)"/>
+                <path class="uitleg-road" d="M800 215 C760 90 540 110 470 222" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M800 215 C760 90 540 110 470 222"/>
+                <path class="uitleg-road" d="M290 165 Q400 160 462 230" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M290 165 Q400 160 462 230"/>
+                <path class="uitleg-road" d="M462 230 Q540 262 630 313" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M462 230 Q540 262 630 313"/>
+                <path class="uitleg-road" d="M630 313 L630 385" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M630 313 L630 385"/>
+                <path class="uitleg-road" d="M630 385 Q560 455 400 470" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M630 385 Q560 455 400 470"/>
+                <path class="uitleg-road" d="M800 215 C770 380 700 470 400 470" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M800 215 C770 380 700 470 400 470"/>
+                <path class="uitleg-road" d="M400 470 Q600 510 830 465" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M400 470 Q600 510 830 465"/>
+                <path class="uitleg-road" d="M830 465 Q850 330 800 215" marker-end="url(#uitleg-kop)"/><path class="uitleg-dash" d="M830 465 Q850 330 800 215"/>
+
+                <!-- Processen -->
+                <text class="uitleg-pr" data-k="p-verwering" x="372" y="158" role="button" tabindex="0">Verwering</text>
+                <text class="uitleg-pr" data-k="p-verwering" x="646" y="116" text-anchor="middle" role="button" tabindex="0">Verwering</text>
+                <text class="uitleg-pr" data-k="p-erosie" x="520" y="246" role="button" tabindex="0">Erosie en afzetting</text>
+                <text class="uitleg-pr" data-k="p-begraving" x="614" y="364" text-anchor="end" role="button" tabindex="0">Begraving en cementatie</text>
+                <text class="uitleg-pr" data-k="p-metamorfose" x="520" y="424" text-anchor="end" role="button" tabindex="0">Metamorfose</text>
+                <text class="uitleg-pr" data-k="p-metamorfose" x="744" y="398" role="button" tabindex="0">Metamorfose</text>
+                <text class="uitleg-pr" data-k="p-smelten" x="610" y="518" text-anchor="middle" role="button" tabindex="0">Smelten</text>
+                <text class="uitleg-pr" data-k="p-intrusie" role="button" tabindex="0"><tspan x="860" y="330">Intrusie en</tspan><tspan x="860" y="350">vulkanisme</tspan></text>
+                <text class="uitleg-pr" data-k="p-opheffing" role="button" tabindex="0"><tspan x="52" y="340">Tektonische</tspan><tspan x="52" y="360">opheffing</tspan></text>
+
+                <!-- Stations -->
+                <g class="uitleg-hit" data-k="korst" role="button" tabindex="0"><circle cx="290" cy="165" r="10"/><text class="uitleg-st" x="274" y="150" text-anchor="end">Continentale korst</text></g>
+                <g class="uitleg-hit" data-k="regoliet" role="button" tabindex="0"><circle cx="462" cy="230" r="10"/><text class="uitleg-st" x="480" y="222">Regoliet</text></g>
+                <g class="uitleg-hit" data-k="sediment" role="button" tabindex="0"><circle cx="630" cy="313" r="10"/><text class="uitleg-st" x="614" y="336" text-anchor="end">Sediment</text></g>
+                <g class="uitleg-hit" data-k="sedimentair" role="button" tabindex="0"><circle cx="630" cy="385" r="10"/><text class="uitleg-st" x="614" y="394" text-anchor="end">Sedimentair gesteente</text></g>
+                <g class="uitleg-hit" data-k="metamorf" role="button" tabindex="0"><circle cx="400" cy="470" r="10"/><text class="uitleg-st" x="400" y="506" text-anchor="middle">Metamorf gesteente</text></g>
+                <g class="uitleg-hit" data-k="magma" role="button" tabindex="0"><circle cx="830" cy="465" r="10"/><text class="uitleg-st" x="830" y="526" text-anchor="middle">Magma</text></g>
+                <g class="uitleg-hit" data-k="stolling" role="button" tabindex="0"><circle cx="800" cy="215" r="10"/><text class="uitleg-st" x="770" y="206" text-anchor="end">Stollingsgesteente</text></g>
+              </svg>
+            </div>
+            <div class="uitleg-cap">Doorsnede, niet op schaal</div>
+          </div>
+
+          <section class="uitleg-info" id="uitleg-info" aria-live="polite"></section>
+        </div>
+
+        <div class="uitleg-col">
+          <a class="btn uitleg-go" href="de-gesteentecyclus.html">Start de tool</a>
+          <h2>Gesteenten</h2>
+          <button class="btn ghost" type="button" data-k="stolling">Stollingsgesteente</button>
+          <button class="btn ghost" type="button" data-k="sedimentair">Sedimentair gesteente</button>
+          <button class="btn ghost" type="button" data-k="metamorf">Metamorf gesteente</button>
+          <h2>Processen</h2>
+          <button class="btn ghost" type="button" data-k="p-verwering">Verwering</button>
+          <button class="btn ghost" type="button" data-k="p-erosie">Erosie en afzetting</button>
+          <button class="btn ghost" type="button" data-k="p-begraving">Begraving en cementatie</button>
+          <button class="btn ghost" type="button" data-k="p-metamorfose">Metamorfose</button>
+          <button class="btn ghost" type="button" data-k="p-smelten">Smelten</button>
+          <button class="btn ghost" type="button" data-k="p-intrusie">Intrusie en vulkanisme</button>
+          <button class="btn ghost" type="button" data-k="p-opheffing">Tektonische opheffing</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/de-gesteentecyclus-uitleg.js"></script>
+  <script src="../js/uitleg.js"></script>
+</body>
+</html>
