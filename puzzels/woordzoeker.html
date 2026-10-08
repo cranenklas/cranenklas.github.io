@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Woordzoeker – Cranenklas aardrijkskunde</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="../css/basis.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/woordzoeker.css">
+</head>
+<body class="is-tools">
+
+  <!-- Navigatiebalk: brengt je terug naar de hoofdsite -->
+  <nav class="nav" aria-label="Hoofdmenu">
+    <a class="logo" href="../index.html">Cranenklas<span>.</span></a>
+    <ul>
+      <li><a class="link-tools" href="../index.html#tools" aria-current="page">Educatieve tools</a></li>
+      <li><a href="#" data-stub>Over mij</a></li>
+      <li><a href="#" data-stub>Contact</a></li>
+    </ul>
+  </nav>
+
+  <a class="back" href="index.html" aria-label="Terug naar Puzzels">
+    <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M2 36 C 6 16, 22 8, 42 10 L 40 2 L 62 14 L 38 28 L 40 19 C 26 18, 12 24, 2 36 Z"/></svg>Terug
+  </a>
+
+  <div class="layout" id="layout">
+    <aside class="side" aria-label="Onderwerp Puzzels">
+      <div class="side-head">
+        <h2><a href="index.html">Puzzels</a></h2>
+        <button class="toggle" id="toggle" type="button" aria-expanded="true" aria-controls="sideList" aria-label="Sidebar inklappen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"/></svg>
+        </button>
+      </div>
+      <ul id="sideList">
+        <li><a href="woordzoeker.html" aria-current="page">Woordzoeker</a></li>
+      </ul>
+    </aside>
+
+    <!-- Links de instellingen (scrollen), rechts het A4-voorbeeld (blijft in beeld) -->
+    <main class="wz">
+      <div class="controls">
+        <header class="intro">
+          <h1>Woordzoeker maken</h1>
+          <p class="eg" id="egNote"><b>Voorbeeld</b>Vervang de woorden door je eigen lijst.</p>
+        </header>
+
+        <section class="blk" aria-labelledby="hWords">
+          <h2 id="hWords">Woorden</h2>
+          <div class="field">
+            <label for="words">Plak of typ je woorden</label>
+            <textarea id="words" rows="7" spellcheck="false" autocomplete="off"></textarea>
+          </div>
+          <p class="hint">Eén woord per regel of gescheiden door komma's. Spaties, streepjes en accenten vallen weg in het raster.</p>
+          <span class="stat" id="wordStat"></span>
+          <ul class="notes" id="wordNotes"></ul>
+          <div class="row tight">
+            <button class="btn ghost small" id="fill" type="button" aria-expanded="false" aria-controls="fillPanel">Woorden bijvullen</button>
+            <button class="btn ghost small" id="example" type="button">Voorbeeld invullen</button>
+          </div>
+          <div class="fillpanel" id="fillPanel" hidden>
+            <p class="q" id="topicQ">Uit welke onderwerpen mag de tool woorden kiezen?</p>
+            <div class="topics" id="topics" role="group" aria-labelledby="topicQ"></div>
+            <div class="row between">
+              <span class="stat" id="topicStat"></span>
+              <span class="row pair"><button class="textbtn" id="topicAll" type="button">Alles</button><button class="textbtn" id="topicNone" type="button">Niets</button></span>
+            </div>
+            <div><button class="btn small" id="fillGo" type="button" disabled>Vul aan</button></div>
+          </div>
+          <div id="fillNote" aria-live="polite"></div>
+        </section>
+
+        <section class="blk" aria-labelledby="hGrid">
+          <h2 id="hGrid">Raster</h2>
+          <div class="row">
+            <div class="field">
+              <label for="gw">Breedte</label>
+              <div class="stepper"><button type="button" data-for="gw" data-step="-1" aria-label="Breedte kleiner">−</button><input id="gw" type="number" min="5" max="25" value="12" inputmode="numeric"><button type="button" data-for="gw" data-step="1" aria-label="Breedte groter">+</button></div>
+            </div>
+            <div class="field">
+              <label for="gh">Hoogte</label>
+              <div class="stepper"><button type="button" data-for="gh" data-step="-1" aria-label="Hoogte kleiner">−</button><input id="gh" type="number" min="5" max="25" value="12" inputmode="numeric"><button type="button" data-for="gh" data-step="1" aria-label="Hoogte groter">+</button></div>
+            </div>
+          </div>
+          <p class="hint">Minimaal 5 en maximaal 25 letters per kant.</p>
+        </section>
+
+        <section class="blk" aria-labelledby="hDirs">
+          <h2 id="hDirs">Richtingen</h2>
+          <div class="chips" role="group" aria-labelledby="hDirs">
+            <label class="chip"><input class="vh" type="checkbox" id="dirH" checked><span>Horizontaal</span></label>
+            <label class="chip"><input class="vh" type="checkbox" id="dirV" checked><span>Verticaal</span></label>
+            <label class="chip"><input class="vh" type="checkbox" id="dirD" checked><span>Diagonaal</span></label>
+          </div>
+          <p class="hint" id="dirHint">Kies er minimaal één.</p>
+          <label class="switch"><input class="vh" type="checkbox" id="backwards" checked><span class="track"></span><span>Ook achterstevoren</span></label>
+        </section>
+
+        <section class="blk" aria-labelledby="hAns">
+          <h2 id="hAns">Verborgen antwoord</h2>
+          <label class="switch"><input class="vh" type="checkbox" id="useAnswer" checked><span class="track"></span><span>Met verborgen antwoord</span></label>
+          <div class="sub" id="answerBox">
+            <div class="field">
+              <label for="answer">Antwoord</label>
+              <input id="answer" type="text" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="row between">
+              <span class="hint">De letters die overblijven vormen dit antwoord.</span>
+              <span class="stat" id="answerStat"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="blk" aria-labelledby="hSheet">
+          <h2 id="hSheet">Werkblad</h2>
+          <div class="field"><label for="title">Titel</label><input id="title" type="text" maxlength="60" autocomplete="off"></div>
+          <div class="field"><label for="school">Naam van de school</label><input id="school" type="text" maxlength="60" placeholder="Niet verplicht" autocomplete="off"></div>
+          <div class="field"><label for="task">Opdracht</label><textarea id="task" rows="2" maxlength="170"></textarea></div>
+          <label class="switch"><input class="vh" type="checkbox" id="showList" checked><span class="track"></span><span>Woordenlijst laten zien</span></label>
+          <p class="hint">Op elk werkblad staan regels voor naam, klas en datum.</p>
+        </section>
+
+        <section class="blk" aria-labelledby="hPrint">
+          <h2 id="hPrint">Afdrukken</h2>
+          <p class="q" id="klasQ">Maak je de woordzoeker voor een klas?</p>
+          <div><div class="keuze" role="radiogroup" aria-labelledby="klasQ">
+            <label><input class="vh" type="radio" name="klas" id="klasNee" value="nee"><span>Nee</span></label>
+            <label><input class="vh" type="radio" name="klas" id="klasJa" value="ja" checked><span>Ja</span></label>
+          </div></div>
+          <div class="sub" id="klasOpts">
+            <div class="row end">
+              <div class="field">
+                <label for="students">Aantal leerlingen</label>
+                <div class="stepper"><button type="button" data-for="students" data-step="-1" aria-label="Minder leerlingen">−</button><input id="students" type="number" min="1" max="40" value="25" inputmode="numeric"><button type="button" data-for="students" data-step="1" aria-label="Meer leerlingen">+</button></div>
+              </div>
+              <button class="help" id="helpBtn" type="button" aria-expanded="false" aria-controls="tipStudents" aria-label="Uitleg over het aantal leerlingen">?</button>
+            </div>
+            <p class="tip" id="tipStudents" hidden>Je krijgt voor elke leerling één werkblad en één extra voor jezelf. Het antwoordblad komt daar nog bij. Print enkelzijdig, anders staat het werkblad van de volgende leerling op de achterkant.</p>
+            <label class="switch"><input class="vh" type="checkbox" id="unique"><span class="track"></span><span>Unieke woordzoeker per leerling</span></label>
+            <p class="hint" id="uniqueHint" hidden>Elke leerling krijgt dezelfde woorden in een ander raster. Werkblad en antwoordblad hebben hetzelfde nummer.</p>
+            <label class="switch"><input class="vh" type="checkbox" id="withKey" checked><span class="track"></span><span>Met antwoordblad</span></label>
+            <div id="keyWhoBox"><div class="keuze" id="keyWho" role="radiogroup" aria-label="Voor wie is het antwoordblad">
+              <label><input class="vh" type="radio" name="who" id="whoDocent" value="docent" checked><span>Alleen de docent</span></label>
+              <label><input class="vh" type="radio" name="who" id="whoAll" value="all"><span>Elke leerling</span></label>
+            </div></div>
+            <div id="keyLayBox" hidden><div class="keuze" id="keyLay" role="radiogroup" aria-label="Indeling van de antwoordbladen">
+              <label><input class="vh" type="radio" name="lay" id="layCompact" value="compact" checked><span>Compact</span></label>
+              <label><input class="vh" type="radio" name="lay" id="layFull" value="full"><span>Eén per pagina</span></label>
+            </div></div>
+            <p class="hint" id="keyHint" hidden></p>
+          </div>
+          <p class="count" id="pageCount"></p>
+          <p class="hint" id="printHint"></p>
+          <div class="row">
+            <button class="btn" id="dl" type="button">Download pdf</button>
+            <button class="btn ghost" id="copy" type="button">Kopieer als afbeelding</button>
+          </div>
+          <div id="outMsg" aria-live="polite"></div>
+          <p class="hint">Alles gebeurt in je browser. Er wordt niets verstuurd.</p>
+        </section>
+      </div>
+
+      <div class="preview">
+        <div class="pv-bar">
+          <div class="keuze" role="radiogroup" aria-label="Weergave">
+            <label><input class="vh" type="radio" name="view" id="viewW" value="werkblad" checked><span>Werkblad</span></label>
+            <label><input class="vh" type="radio" name="view" id="viewA" value="antwoord"><span>Antwoordblad</span></label>
+          </div>
+          <div class="variant" id="variant" hidden>
+            <button type="button" id="prevV" aria-label="Vorige woordzoeker">‹</button>
+            <span id="vLabel"></span>
+            <button type="button" id="nextV" aria-label="Volgende woordzoeker">›</button>
+          </div>
+          <button class="btn ghost small" id="shuffle" type="button">Husselen</button>
+        </div>
+        <div id="status" aria-live="polite"></div>
+        <div class="sheet-wrap">
+          <svg id="sheet" viewBox="0 0 210 297" role="img" aria-label="Voorbeeld van het werkblad op A4"></svg>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- jsPDF en het lettertype voor de pdf worden pas geladen bij "Download pdf" (zie js/woordzoeker.js) -->
+  <script src="../js/woordenbank.js"></script>
+  <script src="../js/woordzoeker.js"></script>
+</body>
+</html>
