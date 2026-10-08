@@ -84,14 +84,12 @@
 
           <div class="topics-col topics-werkbladen">
             <h2>werkbladen</h2>
-            <!-- Werkbladen die nog niet klaar zijn hebben class="binnenkort".
-                 Activeren: haal class="binnenkort", aria-disabled="true" en tabindex="-1"
-                 weg bij dat ene item (en maak de pagina in de map werkbladen/). -->
+            <!-- Activeren: zet data-href om naar href en haal class 'binnenkort' en aria-disabled weg bij dat item. -->
             <ul aria-label="Werkbladen">
-              <li><a class="binnenkort" href="werkbladen/puzzels.html" aria-disabled="true" tabindex="-1">puzzels</a></li>
-              <li><a class="binnenkort" href="werkbladen/grafieken.html" aria-disabled="true" tabindex="-1">grafieken</a></li>
-              <li><a class="binnenkort" href="werkbladen/kaarten.html" aria-disabled="true" tabindex="-1">kaarten</a></li>
-              <li><a class="binnenkort" href="werkbladen/topografie.html" aria-disabled="true" tabindex="-1">topografie</a></li>
+              <li><a class="binnenkort" data-href="werkbladen/puzzels.html" aria-disabled="true">puzzels</a></li>
+              <li><a class="binnenkort" data-href="werkbladen/grafieken.html" aria-disabled="true">grafieken</a></li>
+              <li><a class="binnenkort" data-href="werkbladen/kaarten.html" aria-disabled="true">kaarten</a></li>
+              <li><a class="binnenkort" data-href="werkbladen/topografie.html" aria-disabled="true">topografie</a></li>
             </ul>
           </div>
         </div>
