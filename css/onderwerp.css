@@ -64,6 +64,39 @@ h1 { margin: 0 0 40px; font-size: clamp(1.9rem, 4vw, 2.6rem); text-align: center
 .tile:hover .rings g, .tile:focus-visible .rings g { transform: scale(1); opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .tile .rings g { transition-duration: .01s; transition-delay: 0s !important; } }
 
+/* ---------- Variant: puzzelstukken (overzichtspagina "Puzzels") ----------
+   Zet "tiles-puzzel" op de lijst met tegels. Het water valt dan weg; in
+   plaats daarvan worden bij hover of focus drie puzzelstukken gelegd in de
+   onderste 40% van de tegel, van links naar rechts (0,6s per stuk, 0,4s na
+   elkaar). Ze blijven liggen zolang de muis op de tegel staat en vervagen
+   meteen (zonder vertraging) zodra de muis weggaat; met transitions in plaats
+   van keyframes klopt dat ook als je halverwege weggaat. ---------- */
+.tiles-puzzel .tile::before, .tiles-puzzel .tile::after { content: none; }
+.tiles-puzzel .tile:hover, .tiles-puzzel .tile:focus-visible { color: var(--fg); }
+.tile .stukken { position: absolute; left: 0; bottom: 0; width: 100%; height: 40%; z-index: 1; pointer-events: none; }
+.tile .stuk {
+  opacity: 0; transform-box: fill-box; transform-origin: center;
+  stroke: var(--cup); stroke-width: 2; vector-effect: non-scaling-stroke;
+  transition: opacity .4s ease, transform .4s ease;
+}
+.tile .p1 { fill: var(--forest); fill-opacity: .45; transform: translate(-30px, -24px) rotate(-14deg) scale(1.15); }
+.tile .p2 { fill: var(--rust);   fill-opacity: .42; transform: translate(0, -34px) rotate(8deg) scale(1.15); }
+.tile .p3 { fill: var(--water);  fill-opacity: .5;  transform: translate(30px, -24px) rotate(14deg) scale(1.15); }
+.tile:hover .stuk, .tile:focus-visible .stuk { opacity: 1; transform: none; }
+.tile:hover .p1, .tile:focus-visible .p1 { transition: opacity .6s ease-out 0s, transform .6s ease-out 0s; }
+.tile:hover .p2, .tile:focus-visible .p2 { transition: opacity .6s ease-out .4s, transform .6s ease-out .4s; }
+.tile:hover .p3, .tile:focus-visible .p3 { transition: opacity .6s ease-out .8s, transform .6s ease-out .8s; }
+/* Minder beweging: geen stukken en geen omhoogbeweging, alleen een lichte kleur */
+@media (prefers-reduced-motion: reduce) {
+  .tile .stukken { display: none; }
+  .tiles-puzzel .tile:hover, .tiles-puzzel .tile:focus-visible { transform: none; background: color-mix(in srgb, var(--cup) 70%, var(--card)); }
+}
+/* Touchscherm (geen hover): tegels blijven statisch */
+@media (hover: none) {
+  .tile .stukken { display: none; }
+  .tiles-puzzel .tile:hover { transform: none; border-color: transparent; }
+}
+
 /* ---------- Terug-pijl ---------- */
 .back { position: fixed; top: calc(var(--nav-h) + 16px); right: 24px; display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--fg); text-decoration: none; font-weight: 700; font-size: .95rem; padding: 4px 8px; border-radius: 12px; }
 .back svg { width: 56px; height: 40px; fill: var(--rust); transition: transform .2s; }
