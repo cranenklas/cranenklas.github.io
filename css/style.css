@@ -77,7 +77,7 @@ body.is-tools .track { transform: translateX(0); }
 .topics-uitleg { flex: 1 1 240px; max-width: max-content; }
 .topics-werkbladen { flex: 0 0 auto; min-width: 200px; }
 .topics-groepen { display: flex; flex-direction: column; gap: 28px; }
-.topics h2 { margin: 0; padding: 0 16px; font-size: 1.25rem; line-height: 1.7; font-weight: 800; }
+.topics-titel { margin: 0; padding: 0 16px; font-size: 1.25rem; line-height: 1.7; font-weight: 800; }
 .topics ul { margin: 0; padding: 12px 16px 12px 36px; border-radius: 12px; font-size: 1.25rem; line-height: 1.7; }
 .topics ul:hover { background: color-mix(in srgb, var(--fg) 6%, transparent); }
 .topics li::marker { color: var(--rust); }
@@ -114,7 +114,7 @@ body.is-tools .track { transform: translateX(0); }
   .earth { width: 100%; height: 40%; }
   .topics { left: 0; right: 0; top: 42%; transform: none; padding: 0 16px; gap: 12px; max-height: calc(58cqh - 8px); }
   .topics-groepen { gap: 8px; }
-  .topics h2 { font-size: 1.1rem; line-height: 1.6; }
+  .topics-titel { font-size: 1.1rem; line-height: 1.6; }
   .topics ul { font-size: 1.1rem; line-height: 1.6; padding-block: 4px; }
   .back { top: 8px; right: 12px; }
   .back svg { width: 48px; height: 30px; }
