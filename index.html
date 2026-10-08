@@ -65,17 +65,35 @@
         </svg>
 
         <div class="topics">
-          <ul id="grpAtm" aria-label="Atmosfeer">
-            <li><a href="#" data-stub>weer en klimaat</a></li>
-            <li><a href="#" data-stub>windsystemen</a></li>
-            <li><a href="#" data-stub>klimaatverandering</a></li>
-          </ul>
-          <ul id="grpEarth" aria-label="Aarde en water">
-            <li><a href="aarde/index.html">lagen van de aarde</a></li>
-            <li><a href="#" data-stub>platentektoniek, aardbevingen en vulkanen</a></li>
-            <li><a href="#" data-stub>verwering en erosie</a></li>
-            <li><a href="water/index.html">water</a></li>
-          </ul>
+          <div class="topics-col topics-uitleg">
+            <h2>uitleg en tools</h2>
+            <div class="topics-groepen">
+              <ul id="grpAtm" aria-label="Atmosfeer">
+                <li><a href="#" data-stub>weer en klimaat</a></li>
+                <li><a href="#" data-stub>windsystemen</a></li>
+                <li><a href="#" data-stub>klimaatverandering</a></li>
+              </ul>
+              <ul id="grpEarth" aria-label="Aarde en water">
+                <li><a href="aarde/index.html">lagen van de aarde</a></li>
+                <li><a href="#" data-stub>platentektoniek, aardbevingen en vulkanen</a></li>
+                <li><a href="#" data-stub>verwering en erosie</a></li>
+                <li><a href="water/index.html">water</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="topics-col topics-werkbladen">
+            <h2>werkbladen</h2>
+            <!-- Werkbladen die nog niet klaar zijn hebben class="binnenkort".
+                 Activeren: haal class="binnenkort", aria-disabled="true" en tabindex="-1"
+                 weg bij dat ene item (en maak de pagina in de map werkbladen/). -->
+            <ul aria-label="Werkbladen">
+              <li><a class="binnenkort" href="werkbladen/puzzels.html" aria-disabled="true" tabindex="-1">puzzels</a></li>
+              <li><a class="binnenkort" href="werkbladen/grafieken.html" aria-disabled="true" tabindex="-1">grafieken</a></li>
+              <li><a class="binnenkort" href="werkbladen/kaarten.html" aria-disabled="true" tabindex="-1">kaarten</a></li>
+              <li><a class="binnenkort" href="werkbladen/topografie.html" aria-disabled="true" tabindex="-1">topografie</a></li>
+            </ul>
+          </div>
         </div>
 
         <button class="back" id="back" type="button" aria-label="Terug naar de wegwijzer">

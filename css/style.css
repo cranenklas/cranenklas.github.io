@@ -57,15 +57,38 @@ body.is-tools .track { transform: translateX(0); }
 .earth g.zoom.run-atm   { animation: grow-atm 2s ease-in-out; }
 .earth g.zoom.run-earth { animation: grow-earth 2s ease-in-out; }
 
+/* Twee kolommen naast elkaar: "uitleg en tools" en "werkbladen".
+   De linkerkant begint net rechts van de stippellijn (atmosfeer), ook
+   wanneer die bij de hover-animatie 10% groter wordt: de SVG schaalt met
+   factor min(60% breedte / 700, hoogte / 860) en de uitgezette stippellijn
+   reikt tot x = 60 + 440 * 1,1 = 544 in SVG-eenheden. */
+.tools { container-type: size; }
 .topics {
-  position: absolute; left: 52%; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 28px; padding-right: 24px;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  left: calc(min(60cqw / 700, 100cqh / 860) * 544 + 24px); right: 24px;
+  display: flex; flex-wrap: nowrap; align-items: flex-start; gap: 28px 64px;
+  /* Past het niet in de hoogte (laag scherm), dan scrolt alleen dit blok */
+  max-height: calc(100cqh - 32px); overflow-y: auto;
 }
+.topics-col { display: flex; flex-direction: column; min-width: 0; }
+.topics-uitleg { flex: 1 1 0; }
+.topics-werkbladen { flex: 0 0 auto; min-width: 200px; }
+.topics-groepen { display: flex; flex-direction: column; gap: 28px; }
+.topics h2 { margin: 0; padding: 0 16px; font-size: 1.25rem; line-height: 1.7; font-weight: 800; }
 .topics ul { margin: 0; padding: 12px 16px 12px 36px; border-radius: 12px; font-size: 1.25rem; line-height: 1.7; }
-.topics ul:hover { background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.topics-groepen ul:hover { background: color-mix(in srgb, var(--fg) 6%, transparent); }
 .topics li::marker { color: var(--rust); }
 .topics a { text-decoration: none; }
-.topics a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.topics a:not(.binnenkort):hover { color: var(--forest); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+/* Werkbladen die er nog niet zijn: grijs, niet klikbaar, met het label "binnenkort" */
+.topics a.binnenkort { color: var(--muted); cursor: default; pointer-events: none; }
+.topics a.binnenkort::after { content: "binnenkort"; margin-left: 10px; font-size: .7em; font-style: italic; }
+/* Smal scherm (mobiel en tablet staand): de kolommen onder elkaar,
+   want naast elkaar wordt de linkerkolom dan te smal */
+@media (max-width: 960px) {
+  .topics { flex-direction: column; }
+  .topics-uitleg, .topics-werkbladen { flex: none; }
+}
 
 .back {
   position: absolute; top: 20px; right: 24px; display: flex; flex-direction: column; align-items: center; gap: 2px;
@@ -81,8 +104,10 @@ body.is-tools .track { transform: translateX(0); }
    voor deze pagina. ---------- */
 @media (max-width: 720px) {
   .earth { width: 100%; height: 40%; }
-  .topics { left: 0; right: 0; top: 44%; transform: none; padding: 0 16px; gap: 16px; }
-  .topics ul { font-size: 1.1rem; line-height: 1.6; padding-block: 8px; }
+  .topics { left: 0; right: 0; top: 42%; transform: none; padding: 0 16px; gap: 12px; max-height: calc(58cqh - 8px); }
+  .topics-groepen { gap: 8px; }
+  .topics h2 { font-size: 1.1rem; line-height: 1.6; }
+  .topics ul { font-size: 1.1rem; line-height: 1.6; padding-block: 4px; }
   .back { top: 8px; right: 12px; }
   .back svg { width: 48px; height: 30px; }
 }
