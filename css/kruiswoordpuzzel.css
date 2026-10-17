@@ -14,7 +14,6 @@
 /* ---------- Indeling: invoer | versleepbare lijn | voorbeeld ---------- */
 main.kw { grid-template-columns: var(--inw, 460px) 14px minmax(0, 1fr); }
 main.kw .controls { border-right: 0; container: kwin / inline-size; }
-main.kw .controls > * { max-width: 1000px; }
 body.kw-drag { user-select: none; cursor: col-resize; }
 
 .kw-split { position: relative; cursor: col-resize; touch-action: none; display: grid; place-items: center; }

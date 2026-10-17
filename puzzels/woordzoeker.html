@@ -47,15 +47,18 @@
           <p class="eg" id="egNote"><b>Voorbeeld</b>Vervang de woorden door je eigen lijst.</p>
         </header>
 
+        <section class="blk" aria-labelledby="hSheet">
+          <h2 id="hSheet">Werkblad</h2>
+          <div class="field"><label for="title">Titel</label><input id="title" type="text" maxlength="60" autocomplete="off"></div>
+          <div class="field"><label for="school">Naam van de school</label><input id="school" type="text" maxlength="60" placeholder="Niet verplicht" autocomplete="off"></div>
+          <div class="field"><label for="task">Opdracht</label><textarea id="task" rows="2" maxlength="170"></textarea></div>
+          <label class="switch"><input class="vh" type="checkbox" id="showList" checked><span class="track"></span><span>Woordenlijst laten zien</span></label>
+          <p class="hint">Op elk werkblad staan regels voor naam, klas en datum.</p>
+        </section>
+
         <section class="blk" aria-labelledby="hWords">
           <h2 id="hWords">Woorden</h2>
-          <div class="field">
-            <label for="words">Plak of typ je woorden</label>
-            <textarea id="words" rows="7" spellcheck="false" autocomplete="off"></textarea>
-          </div>
           <p class="hint">Eén woord per regel of gescheiden door komma's. Spaties, streepjes en accenten vallen weg in het raster.</p>
-          <span class="stat" id="wordStat"></span>
-          <ul class="notes" id="wordNotes"></ul>
           <div class="row tight">
             <button class="btn ghost small" id="fill" type="button" aria-expanded="false" aria-controls="fillPanel">Woorden bijvullen</button>
             <button class="btn ghost small" id="example" type="button">Voorbeeld invullen</button>
@@ -70,6 +73,12 @@
             <div><button class="btn small" id="fillGo" type="button" disabled>Vul aan</button></div>
           </div>
           <div id="fillNote" aria-live="polite"></div>
+          <div class="field">
+            <label for="words">Plak of typ je woorden</label>
+            <textarea id="words" rows="7" spellcheck="false" autocomplete="off"></textarea>
+          </div>
+          <span class="stat" id="wordStat"></span>
+          <ul class="notes" id="wordNotes"></ul>
         </section>
 
         <section class="blk" aria-labelledby="hGrid">
@@ -111,15 +120,6 @@
               <span class="stat" id="answerStat"></span>
             </div>
           </div>
-        </section>
-
-        <section class="blk" aria-labelledby="hSheet">
-          <h2 id="hSheet">Werkblad</h2>
-          <div class="field"><label for="title">Titel</label><input id="title" type="text" maxlength="60" autocomplete="off"></div>
-          <div class="field"><label for="school">Naam van de school</label><input id="school" type="text" maxlength="60" placeholder="Niet verplicht" autocomplete="off"></div>
-          <div class="field"><label for="task">Opdracht</label><textarea id="task" rows="2" maxlength="170"></textarea></div>
-          <label class="switch"><input class="vh" type="checkbox" id="showList" checked><span class="track"></span><span>Woordenlijst laten zien</span></label>
-          <p class="hint">Op elk werkblad staan regels voor naam, klas en datum.</p>
         </section>
 
         <section class="blk" aria-labelledby="hPrint">
