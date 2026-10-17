@@ -39,9 +39,9 @@
       </ul>
     </aside>
 
-    <!-- Links de instellingen (scrollen), rechts het A4-voorbeeld (blijft in beeld) -->
-    <main class="wz">
-      <div class="controls">
+    <!-- Links de instellingen (scrollen), dan de versleepbare lijn, rechts het A4-voorbeeld (blijft in beeld) -->
+    <main class="wz" id="main">
+      <div class="controls" id="controls">
         <header class="intro">
           <h1>Woordzoeker maken</h1>
           <p class="eg" id="egNote"><b>Voorbeeld</b>Vervang de woorden door je eigen lijst.</p>
@@ -162,6 +162,10 @@
         </section>
       </div>
 
+      <div class="pane-split" id="splitter" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Breedte van invoer en voorbeeld aanpassen" aria-valuemin="340" aria-valuemax="900" aria-valuenow="460" title="Sleep om de invoer breder te maken. Dubbelklik om terug te zetten.">
+        <div class="pane-grip"><i></i></div>
+      </div>
+
       <div class="preview">
         <div class="pv-bar">
           <div class="keuze" role="radiogroup" aria-label="Weergave">
@@ -176,8 +180,8 @@
           <button class="btn ghost small" id="shuffle" type="button">Husselen</button>
         </div>
         <div id="status" aria-live="polite"></div>
-        <div class="sheet-wrap">
-          <svg id="sheet" viewBox="0 0 210 297" role="img" aria-label="Voorbeeld van het werkblad op A4"></svg>
+        <div class="pv-stage">
+          <svg class="pv-paper" id="sheet" viewBox="0 0 210 297" role="img" aria-label="Voorbeeld van het werkblad op A4"></svg>
         </div>
       </div>
     </main>
@@ -185,6 +189,7 @@
 
   <!-- jsPDF en het lettertype voor de pdf worden pas geladen bij "Download pdf" (zie js/woordzoeker.js) -->
   <script src="../js/woordenbank.js"></script>
+  <script src="../js/splitter.js"></script>
   <script src="../js/woordzoeker.js"></script>
 </body>
 </html>

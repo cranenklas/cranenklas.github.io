@@ -11,20 +11,12 @@
    namen als .seg, .sub, .note en .topics al voor iets anders.
    =========================================================== */
 
-/* ---------- Indeling: invoer | versleepbare lijn | voorbeeld ---------- */
-main.kw { grid-template-columns: var(--inw, 460px) 14px minmax(0, 1fr); }
-main.kw .controls { border-right: 0; container: kwin / inline-size; }
-body.kw-drag { user-select: none; cursor: col-resize; }
-
-.kw-split { position: relative; cursor: col-resize; touch-action: none; display: grid; place-items: center; }
-.kw-split::before { content: ""; position: absolute; top: 0; bottom: 0; left: 6px; width: 2px; background: var(--nav-line); }
-.kw-split:hover::before, .kw-split.on::before { left: 5.5px; width: 3px; background: var(--forest); }
-.kw-grip { position: relative; z-index: 1; width: 14px; height: 54px; border-radius: 8px; background: var(--bg); border: 2px solid var(--line); display: grid; place-items: center; }
-.kw-grip i { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--line); box-shadow: 0 -9px 0 var(--line), 0 9px 0 var(--line); }
+/* ---------- Indeling: invoer | versleepbare lijn | voorbeeld (gedeeld, zie css/woordzoeker.css) ---------- */
+main.kw .controls { container: kwin / inline-size; }
 
 /* ---------- Voorbeeld verbergen en tonen ---------- */
 main.kw.nopv { grid-template-columns: minmax(0, 1fr); }
-main.kw.nopv .kw-split, main.kw.nopv .preview { display: none; }
+main.kw.nopv .pane-split, main.kw.nopv .preview { display: none; }
 /* Ruimte rechts houdt de invoer vrij van de Terug-pijl en de knop Voorbeeld tonen */
 main.kw.nopv .controls { padding-right: 150px; }
 .kw-pv-show {
@@ -77,9 +69,7 @@ main.wz input.kw-win[type=text] { position: relative; z-index: 1; background: tr
 .kw-radios label { display: flex; align-items: center; gap: 10px; font-size: .95rem; cursor: pointer; }
 .kw-radios input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--forest); }
 
-/* ---------- A4-blad: wit papier, ook in het donkere thema ---------- */
-.kw-stage { flex: 1 1 0; min-height: 360px; background: var(--card); border-radius: 16px; padding: 16px; overflow: auto; }
-.kw-paper { display: block; width: min(794px, 100%); height: auto; aspect-ratio: 210 / 297; margin: 0 auto; font-family: var(--font); box-shadow: 0 3px 16px rgba(60, 50, 20, .25); }
+/* ---------- A4-blad: zie .pv-stage en .pv-paper in css/woordzoeker.css ---------- */
 .kw-empty { margin: 0; padding: 40px 10px; text-align: center; color: var(--muted); }
 
 /* Weergave: bij een smal voorbeeld lopen de drie keuzes door op een tweede regel */
@@ -157,8 +147,7 @@ main.kw .preview { container: kwout / inline-size; }
   main.kw, main.kw.nopv { grid-template-columns: minmax(0, 1fr); }
   main.kw.nopv .preview { display: flex; }
   main.kw.nopv .controls { padding-right: 16px; }
-  main.kw .kw-split, main.kw .kw-pv-hide, main.kw.nopv .kw-pv-show { display: none; }
-  .kw-stage { flex: none; min-height: 0; padding: 8px; overflow: visible; }
+  main.kw .kw-pv-hide, main.kw.nopv .kw-pv-show { display: none; }
   .kw-dlg-head { padding: 14px 16px; }
   .kw-dlg-body { grid-template-columns: minmax(0, 1fr); }
   .kw-dlg-topics { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--nav-line); }
@@ -166,7 +155,7 @@ main.kw .preview { container: kwout / inline-size; }
   .kw-items { padding: 10px 12px; }
   .kw-dlg-foot { padding: 12px 16px; }
 }
-/* Minder beweging: ook het in- en uitklappen van de sidebar gaat direct */
+/* Minder beweging: ook het venster zonder overgang (de sidebar: zie css/woordzoeker.css) */
 @media (prefers-reduced-motion: reduce) {
-  #layout, #layout *, .kw-overlay * { transition: none !important; animation: none !important; }
+  .kw-overlay * { transition: none !important; animation: none !important; }
 }

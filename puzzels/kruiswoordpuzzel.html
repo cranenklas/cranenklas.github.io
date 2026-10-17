@@ -122,8 +122,8 @@
         </section>
       </section>
 
-      <div class="kw-split" id="splitter" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Breedte van invoer en voorbeeld aanpassen" aria-valuemin="340" aria-valuemax="900" aria-valuenow="460" title="Sleep om de invoer breder te maken. Dubbelklik om terug te zetten.">
-        <div class="kw-grip"><i></i></div>
+      <div class="pane-split" id="splitter" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Breedte van invoer en voorbeeld aanpassen" aria-valuemin="340" aria-valuemax="900" aria-valuenow="460" title="Sleep om de invoer breder te maken. Dubbelklik om terug te zetten.">
+        <div class="pane-grip"><i></i></div>
       </div>
 
       <section class="preview" id="outpanel" aria-label="Voorbeeld">
@@ -137,7 +137,7 @@
           <button class="btn ghost small kw-pv-hide" id="pvHide" type="button">Voorbeeld verbergen</button>
         </div>
         <div id="status" role="status"></div>
-        <div class="kw-stage" id="stage"></div>
+        <div class="pv-stage" id="stage"></div>
       </section>
 
       <button class="kw-pv-show" id="pvShow" type="button">Voorbeeld tonen</button>
@@ -169,6 +169,7 @@
   <!-- jsPDF en het lettertype voor de pdf worden pas geladen bij "Download PDF" (zie js/kruiswoordpuzzel.js) -->
   <script src="../js/kruiswoordbank.js"></script>
   <script src="../js/kruiswoordpuzzel-generator.js"></script>
+  <script src="../js/splitter.js"></script>
   <script src="../js/kruiswoordpuzzel.js"></script>
 </body>
 </html>

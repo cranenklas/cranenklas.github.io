@@ -911,6 +911,8 @@ function pickFill(cfg, opts, db, genSeed, pickSeed) {
   /* Links die voorlopig nog niets doen (Over mij, Contact) */
   document.querySelectorAll('[data-stub]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
 
+  /* Versleepbare lijn tussen instellingen en voorbeeld: gedeeld met de kruiswoordpuzzel (js/splitter.js) */
+  window.PaneSplitter({ main: $('main'), splitter: $('splitter'), panel: $('controls'), storeKey: 'cranenklas-woordzoeker-breedte' });
   /* Op een smal scherm (laptop, tablet liggend) begint de sidebar ingeklapt, zodat het voorbeeld groot genoeg is */
   if (window.innerWidth > 760 && window.innerWidth < 1100) { $('toggle').click(); }
   loadSettings();

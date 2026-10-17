@@ -22,16 +22,25 @@
 
 /* ---------- Instellingen links, voorbeeld rechts ---------- */
 .layout { min-height: 560px; }
-/* Standaardverdeling (zelfde als de kruiswoordpuzzel): het voorbeeld krijgt 35% van de ruimte rechts
-   van het menu, minimaal 440 px; de instellingen de rest, minimaal 340 px. Is er te weinig ruimte
-   voor allebei, dan geeft het voorbeeld toe. De kruiswoordpuzzel zet de kolommen zelf (versleepbare lijn). */
-main.wz { display: grid; grid-template-columns: minmax(340px, 1fr) minmax(0, max(440px, 35%)); grid-template-rows: minmax(0, 1fr); padding: 0; overflow: hidden; }
+/* Instellingen | versleepbare lijn | voorbeeld, voor de woordzoeker en de kruiswoordpuzzel. De breedte van
+   de instellingen (--inw) zet js/splitter.js: standaard krijgt het voorbeeld 35% van de ruimte rechts van
+   het menu (minimaal 440 px), de bezoeker kan de lijn verslepen. */
+main.wz { display: grid; grid-template-columns: var(--inw, 460px) 14px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); padding: 0; overflow: hidden; }
 /* Op een groot genoeg scherm scrolt de pagina zelf niet, alleen de instellingen */
 @media (min-width: 761px) and (min-height: 560px) { html, body { overflow: hidden; } }
 
 .controls { min-height: 0; overflow: auto; padding: 24px 28px; border-right: 1px solid var(--nav-line); display: flex; flex-direction: column; gap: 28px; }
 /* Op een breed instellingenpaneel rekken velden en tekst niet verder uit dan 1000 px */
 main.wz .controls > * { max-width: 1000px; }
+main.wz .controls { border-right: 0; }
+
+/* Versleepbare lijn met greep (js/splitter.js) */
+body.pane-drag { user-select: none; cursor: col-resize; }
+.pane-split { position: relative; cursor: col-resize; touch-action: none; display: grid; place-items: center; }
+.pane-split::before { content: ""; position: absolute; top: 0; bottom: 0; left: 6px; width: 2px; background: var(--nav-line); }
+.pane-split:hover::before, .pane-split.on::before { left: 5.5px; width: 3px; background: var(--forest); }
+.pane-grip { position: relative; z-index: 1; width: 14px; height: 54px; border-radius: 8px; background: var(--bg); border: 2px solid var(--line); display: grid; place-items: center; }
+.pane-grip i { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--line); box-shadow: 0 -9px 0 var(--line), 0 9px 0 var(--line); }
 .intro { display: flex; flex-direction: column; gap: 6px; }
 .intro h1 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.15; text-wrap: balance; }
 .eg { margin: 0; font-size: .9rem; color: var(--muted); }
@@ -132,8 +141,9 @@ main.wz .fb img { max-width: 100%; border-radius: 8px; background: #FFFFFF; }
   .variant button { width: 30px; height: 30px; }
   .variant span { min-width: 9em; }
 }
-.sheet-wrap { position: relative; flex: 1 1 0; min-height: 460px; background: var(--card); border-radius: 16px; }
-.sheet-wrap svg { position: absolute; inset: 14px; width: calc(100% - 28px); height: calc(100% - 28px); display: block; font-family: var(--font); }
+/* A4-blad: zo breed als het voorbeeldvak (hoogstens 794 px); is het hoger dan het vak, dan scrolt het vak */
+.pv-stage { flex: 1 1 0; min-height: 360px; background: var(--card); border-radius: 16px; padding: 16px; overflow: auto; }
+.pv-paper { display: block; width: min(794px, 100%); height: auto; aspect-ratio: 210 / 297; margin: 0 auto; font-family: var(--font); box-shadow: 0 3px 16px rgba(60, 50, 20, .25); }
 
 @media (max-width: 900px) {
   .controls { padding-inline: 20px; }
@@ -149,10 +159,12 @@ main.wz .fb img { max-width: 100%; border-radius: 8px; background: #FFFFFF; }
   .controls { overflow: visible; border-right: 0; padding: 24px 16px 8px; }
   .preview { overflow: visible; padding: 16px 16px 48px; }
   .pv-bar { padding-right: 0; min-height: 0; }
-  .sheet-wrap { flex: none; min-height: 0; aspect-ratio: 210 / 297; }
-  .sheet-wrap svg { inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); }
+  main.wz .pane-split { display: none; }
+  .pv-stage { flex: none; min-height: 0; padding: 8px; overflow: visible; }
 }
 @media (prefers-reduced-motion: reduce) {
+  /* ook het in- en uitklappen van de sidebar gaat direct */
+  #layout, #layout * { transition: none !important; animation: none !important; }
   .warn { animation: none; }
   .track, .track::after, .back svg { transition-duration: .01s; }
 }
