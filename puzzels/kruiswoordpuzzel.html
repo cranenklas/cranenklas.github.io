@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kruiswoordpuzzel – Cranenklas aardrijkskunde</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="../css/basis.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/woordzoeker.css">
+  <link rel="stylesheet" href="../css/kruiswoordpuzzel.css">
+</head>
+<body class="is-tools">
+
+  <!-- Navigatiebalk: brengt je terug naar de hoofdsite -->
+  <nav class="nav" aria-label="Hoofdmenu">
+    <a class="logo" href="../index.html">Cranenklas<span>.</span></a>
+    <ul>
+      <li><a class="link-tools" href="../index.html#tools" aria-current="page">Educatieve tools</a></li>
+      <li><a href="#" data-stub>Over mij</a></li>
+      <li><a href="#" data-stub>Contact</a></li>
+    </ul>
+  </nav>
+
+  <a class="back" href="index.html" aria-label="Terug naar Puzzels">
+    <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M2 36 C 6 16, 22 8, 42 10 L 40 2 L 62 14 L 38 28 L 40 19 C 26 18, 12 24, 2 36 Z"/></svg>Terug
+  </a>
+
+  <div class="layout" id="layout">
+    <aside class="side" aria-label="Onderwerp Puzzels">
+      <div class="side-head">
+        <h2><a href="index.html">Puzzels</a></h2>
+        <button class="toggle" id="toggle" type="button" aria-expanded="true" aria-controls="sideList" aria-label="Sidebar inklappen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"/></svg>
+        </button>
+      </div>
+      <ul id="sideList">
+        <li><a href="woordzoeker.html">Woordzoeker</a></li>
+        <li><a href="kruiswoordpuzzel.html" aria-current="page">Kruiswoordpuzzel</a></li>
+      </ul>
+    </aside>
+
+    <!-- Links de invoer (scrolt), dan de versleepbare lijn, rechts het voorbeeld (blijft in beeld) -->
+    <main class="wz kw" id="main">
+      <section class="controls" id="inpanel" aria-label="Gegevens van de kruiswoordpuzzel">
+        <header class="intro">
+          <h1>Kruiswoordpuzzel maken</h1>
+          <p class="eg" id="exHint"><b>Voorbeeld</b>Vervang de woorden door je eigen lijst.</p>
+        </header>
+
+        <section class="blk" aria-labelledby="hWords">
+          <h2 id="hWords">Woorden en omschrijvingen</h2>
+          <p class="hint">Typ een paar letters van een woord. Staat het in de databank, dan verschijnt de rest in grijs en vult de omschrijving zichzelf in. Tab of Enter neemt de suggestie over.</p>
+          <div class="kw-table">
+            <div class="kw-thead" aria-hidden="true"><span></span><span>Woord</span><span>Omschrijving</span><span></span></div>
+            <div class="kw-table" id="rows"></div>
+          </div>
+          <p class="hint" id="count"></p>
+          <div class="row tight">
+            <button class="btn ghost" id="bankBtn" type="button">Voorbeelden kiezen</button>
+            <button class="btn ghost" id="exBtn" type="button">Voorbeeld invullen</button>
+            <button class="btn ghost small" id="addRow" type="button">+ Rij toevoegen</button>
+            <button class="btn ghost small" id="pasteBtn" type="button" aria-expanded="false" aria-controls="pasteBox">Plakken</button>
+            <button class="btn ghost small" id="clearBtn" type="button">Leegmaken</button>
+          </div>
+          <div class="fillpanel" id="pasteBox" hidden>
+            <p class="hint">Plak twee kolommen uit een spreadsheet, of zet per regel: woord = omschrijving.</p>
+            <textarea id="pasteText" rows="5" spellcheck="false" aria-label="Woorden en omschrijvingen plakken" placeholder="RIVIER = Stroomt van een bron naar de zee"></textarea>
+            <div class="row tight"><button class="btn small" id="pasteGo" type="button">Toevoegen</button><button class="btn ghost small" id="pasteCancel" type="button">Annuleren</button></div>
+          </div>
+          <div id="wordNote" aria-live="polite"></div>
+        </section>
+
+        <section class="blk" aria-labelledby="hSol">
+          <h2 id="hSol">Oplossingswoord</h2>
+          <p class="hint">Een woord of een zin. Elke letter komt uit een eigen vakje van de puzzel. Die vakjes worden grijs met een nummer.</p>
+          <input id="sol" type="text" autocomplete="off" spellcheck="false" aria-label="Oplossingswoord" placeholder="Bijvoorbeeld KRINGLOOP">
+          <p class="hint" id="solCount"></p>
+        </section>
+
+        <section class="blk" aria-labelledby="hSheet">
+          <h2 id="hSheet">Werkblad</h2>
+          <div class="field"><label for="title">Titel</label><input id="title" type="text" maxlength="60" autocomplete="off"></div>
+          <div class="field"><label for="school">School (optioneel)</label><input id="school" type="text" maxlength="60" autocomplete="off"></div>
+          <label class="switch"><input class="vh" type="checkbox" id="wl"><span class="track"></span><span>Woordenlijst laten zien onder de puzzel</span></label>
+        </section>
+
+        <section class="blk" aria-labelledby="hPrint">
+          <h2 id="hPrint">Afdrukken</h2>
+          <p class="q" id="klasQ">Maak je de kruiswoordpuzzel voor een klas?</p>
+          <div><div class="keuze" role="radiogroup" aria-labelledby="klasQ">
+            <label><input class="vh" type="radio" name="klas" id="klasNee" value="nee" checked><span>Nee</span></label>
+            <label><input class="vh" type="radio" name="klas" id="klasJa" value="ja"><span>Ja</span></label>
+          </div></div>
+          <div class="fillpanel" id="klasBox" hidden>
+            <div class="row end">
+              <div class="field">
+                <label for="kn">Aantal leerlingen</label>
+                <div class="stepper"><button type="button" data-for="kn" data-step="-1" aria-label="Minder leerlingen">−</button><input id="kn" type="number" min="1" max="40" value="25" inputmode="numeric"><button type="button" data-for="kn" data-step="1" aria-label="Meer leerlingen">+</button></div>
+              </div>
+              <button class="help" id="qBtn" type="button" aria-expanded="false" aria-controls="qText" aria-label="Uitleg bij het aantal werkbladen">?</button>
+            </div>
+            <p class="tip" id="qText" hidden>Je krijgt één werkblad extra voor jezelf, met het antwoordblad erbij.</p>
+            <label class="switch"><input class="vh" type="checkbox" id="kuniq"><span class="track"></span><span>Eigen indeling per leerling</span></label>
+            <div class="kw-radios" role="radiogroup" aria-labelledby="kaQ">
+              <p class="q" id="kaQ">Antwoordbladen</p>
+              <label><input type="radio" name="ka" value="docent" checked> Alleen voor de docent</label>
+              <label><input type="radio" name="ka" value="leerling"> Eén per leerling</label>
+            </div>
+            <div class="kw-radios" id="kcomp" role="radiogroup" aria-labelledby="kcQ" hidden>
+              <p class="q" id="kcQ">Antwoordbladen bij een eigen indeling</p>
+              <label><input type="radio" name="kc" value="compact" checked> Compact, vier per pagina</label>
+              <label><input type="radio" name="kc" value="een"> Eén per pagina</label>
+            </div>
+          </div>
+          <p class="count" id="pages"></p>
+          <div class="row">
+            <button class="btn" id="pdfBtn" type="button">Download PDF</button>
+            <button class="btn ghost" id="imgBtn" type="button">Kopieer als afbeelding</button>
+          </div>
+          <div id="outMsg" aria-live="polite"></div>
+        </section>
+      </section>
+
+      <div class="kw-split" id="splitter" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Breedte van invoer en voorbeeld aanpassen" aria-valuemin="340" aria-valuemax="900" aria-valuenow="460" title="Sleep om de invoer breder te maken. Dubbelklik om terug te zetten.">
+        <div class="kw-grip"><i></i></div>
+      </div>
+
+      <section class="preview" id="outpanel" aria-label="Voorbeeld">
+        <div class="pv-bar">
+          <div class="keuze" role="radiogroup" aria-label="Weergave">
+            <label><input class="vh" type="radio" name="view" value="werkblad" checked><span>Werkblad</span></label>
+            <label><input class="vh" type="radio" name="view" value="antwoord"><span>Antwoordblad</span></label>
+            <label><input class="vh" type="radio" name="view" value="invullen"><span>Online invullen</span></label>
+          </div>
+          <button class="btn ghost small" id="shuffle" type="button">Husselen</button>
+          <button class="btn ghost small kw-pv-hide" id="pvHide" type="button">Voorbeeld verbergen</button>
+        </div>
+        <div id="status" role="status"></div>
+        <div class="kw-stage" id="stage"></div>
+      </section>
+
+      <button class="kw-pv-show" id="pvShow" type="button">Voorbeeld tonen</button>
+    </main>
+  </div>
+
+  <div class="kw-overlay" id="overlay" hidden>
+    <div class="kw-dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+      <div class="kw-dlg-head">
+        <h2 id="dlgTitle">Voorbeelden kiezen</h2>
+        <button class="toggle" id="dlgClose" type="button" aria-label="Sluiten">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>
+        </button>
+      </div>
+      <div class="kw-dlg-body">
+        <div class="kw-dlg-topics" id="topics" role="group" aria-label="Onderwerpen"></div>
+        <div class="kw-items" id="items"></div>
+      </div>
+      <div class="kw-dlg-foot">
+        <span class="stat" id="dlgInfo"></span>
+        <div class="row tight">
+          <button class="btn ghost" id="dlgAll" type="button">Alles aanvinken</button>
+          <button class="btn" id="dlgAdd" type="button">Toevoegen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF en het lettertype voor de pdf worden pas geladen bij "Download PDF" (zie js/kruiswoordpuzzel.js) -->
+  <script src="../js/kruiswoordbank.js"></script>
+  <script src="../js/kruiswoordpuzzel-generator.js"></script>
+  <script src="../js/kruiswoordpuzzel.js"></script>
+</body>
+</html>

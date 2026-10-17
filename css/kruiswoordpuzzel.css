@@ -1,0 +1,172 @@
+/* ===========================================================
+   Cranenklas aardrijkskunde — tool "Kruiswoordpuzzel"
+   Wordt geladen na css/basis.css, css/tool.css en css/woordzoeker.css:
+   navigatiebalk, sidebar, knoppen, de kolom met instellingen, het
+   voorbeeld, keuzeknoppen, schakelaars en meldingen komen daarvandaan.
+   Hier staat alleen wat de woordzoeker niet heeft: de versleepbare lijn,
+   het voorbeeld verbergen en tonen, de tabel met suggesties, het
+   kruiswoordraster, het A4-blad, online invullen en het venster
+   Voorbeelden kiezen.
+   Alle klassen beginnen met kw-: tool.css en woordzoeker.css gebruiken
+   namen als .seg, .sub, .note en .topics al voor iets anders.
+   =========================================================== */
+
+/* ---------- Indeling: invoer | versleepbare lijn | voorbeeld ---------- */
+main.kw { grid-template-columns: var(--inw, 460px) 14px minmax(0, 1fr); }
+main.kw .controls { border-right: 0; container: kwin / inline-size; }
+main.kw .controls > * { max-width: 1000px; }
+body.kw-drag { user-select: none; cursor: col-resize; }
+
+.kw-split { position: relative; cursor: col-resize; touch-action: none; display: grid; place-items: center; }
+.kw-split::before { content: ""; position: absolute; top: 0; bottom: 0; left: 6px; width: 2px; background: var(--nav-line); }
+.kw-split:hover::before, .kw-split.on::before { left: 5.5px; width: 3px; background: var(--forest); }
+.kw-grip { position: relative; z-index: 1; width: 14px; height: 54px; border-radius: 8px; background: var(--bg); border: 2px solid var(--line); display: grid; place-items: center; }
+.kw-grip i { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--line); box-shadow: 0 -9px 0 var(--line), 0 9px 0 var(--line); }
+
+/* ---------- Voorbeeld verbergen en tonen ---------- */
+main.kw.nopv { grid-template-columns: minmax(0, 1fr); }
+main.kw.nopv .kw-split, main.kw.nopv .preview { display: none; }
+/* Ruimte rechts houdt de invoer vrij van de Terug-pijl en de knop Voorbeeld tonen */
+main.kw.nopv .controls { padding-right: 150px; }
+.kw-pv-show {
+  display: none; position: fixed; right: 0; top: calc(var(--nav-h) + 130px); z-index: 5; writing-mode: vertical-rl;
+  padding: 18px 9px; border: 2px solid var(--line); border-right: 0; border-radius: 16px 0 0 16px;
+  background: var(--bg); color: var(--fg); font: inherit; font-weight: 700; cursor: pointer;
+}
+.kw-pv-show:hover { background: color-mix(in srgb, var(--fg) 10%, var(--bg)); }
+main.kw.nopv .kw-pv-show { display: block; }
+
+/* ---------- Tabel met woord en omschrijving, met suggesties uit de databank ---------- */
+.kw-table { display: flex; flex-direction: column; gap: 8px; }
+.kw-thead, .kw-row { display: grid; grid-template-columns: 26px minmax(190px, 220px) minmax(0, 1fr) 38px; gap: 8px; align-items: center; }
+.kw-row { position: relative; }
+.kw-thead { font-weight: 700; font-size: .9rem; color: var(--muted); }
+.kw-num { text-align: right; color: var(--muted); font-size: .9rem; font-variant-numeric: tabular-nums; }
+.kw-wc { position: relative; min-width: 0; background: var(--cup); border-radius: 12px; }
+.kw-cc { position: relative; min-width: 0; }
+main.wz input.kw-win[type=text] { position: relative; z-index: 1; background: transparent; text-transform: uppercase; font-weight: 700; letter-spacing: .02em; }
+.kw-row.has-auto .kw-cin { padding-right: 92px; }
+/* Grijze rest van de suggestie: dezelfde letters als in het invoerveld, het getypte deel onzichtbaar */
+.kw-ghost { position: absolute; inset: 0; z-index: 0; padding: 0 12px; border: 2px solid transparent; display: flex; align-items: center; font-weight: 700; letter-spacing: .02em; white-space: pre; pointer-events: none; overflow: hidden; }
+.kw-ghost .gt { visibility: hidden; }
+.kw-ghost .gr { color: var(--muted); opacity: .7; }
+.kw-auto { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: .75rem; font-weight: 700; color: var(--forest); background: color-mix(in srgb, var(--forest) 15%, var(--cup)); border-radius: 999px; padding: 2px 9px; pointer-events: none; }
+.kw-auto[hidden] { display: none; }
+.kw-x { width: 38px; height: 38px; border-radius: 50%; border: 2px solid transparent; background: none; color: var(--muted); font: inherit; font-size: 1.35rem; line-height: 1; cursor: pointer; }
+.kw-x:hover { border-color: var(--line); color: var(--fg); }
+.kw-ac { position: absolute; left: 34px; right: 0; top: calc(100% + 4px); z-index: 30; margin: 0; padding: 6px; list-style: none; background: var(--cup); border: 2px solid var(--line); border-radius: 14px; box-shadow: 0 10px 26px rgba(40, 30, 10, .22); }
+.kw-ac[hidden] { display: none; }
+.kw-ac li { display: flex; flex-direction: column; padding: 8px 10px; border-radius: 9px; cursor: pointer; }
+.kw-ac li.on { background: var(--card); }
+.kw-ac .w { font-weight: 700; letter-spacing: .02em; }
+.kw-ac .w b { color: var(--forest); }
+.kw-ac .c { font-size: .85rem; color: var(--muted); }
+/* Smal invoerpaneel: omschrijving onder het woord. Breed paneel: naast elkaar. */
+@container kwin (max-width: 600px) {
+  .kw-thead { display: none; }
+  .kw-row { grid-template-columns: 22px minmax(0, 1fr) 38px; grid-template-areas: "n w x" ". c ."; row-gap: 6px; padding-bottom: 10px; border-bottom: 1px dashed var(--nav-line); }
+  .kw-row .kw-num { grid-area: n; }
+  .kw-row .kw-wc { grid-area: w; }
+  .kw-row .kw-cc { grid-area: c; }
+  .kw-row .kw-x { grid-area: x; }
+  .kw-ac { left: 30px; top: 52px; }
+}
+
+/* Antwoordbladen: keuzerondjes onder elkaar */
+.kw-radios { display: flex; flex-direction: column; gap: 4px; }
+.kw-radios[hidden] { display: none; }
+.kw-radios label { display: flex; align-items: center; gap: 10px; font-size: .95rem; cursor: pointer; }
+.kw-radios input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--forest); }
+
+/* ---------- A4-blad: wit papier, ook in het donkere thema ---------- */
+.kw-stage { flex: 1 1 0; min-height: 360px; background: var(--card); border-radius: 16px; padding: 16px; overflow: auto; }
+.kw-paper { display: block; width: min(794px, 100%); height: auto; aspect-ratio: 210 / 297; margin: 0 auto; font-family: var(--font); box-shadow: 0 3px 16px rgba(60, 50, 20, .25); }
+.kw-empty { margin: 0; padding: 40px 10px; text-align: center; color: var(--muted); }
+
+/* Weergave: bij een smal voorbeeld lopen de drie keuzes door op een tweede regel */
+main.kw .preview { container: kwout / inline-size; }
+@container kwout (max-width: 560px) {
+  main.kw .pv-bar .keuze { flex-wrap: wrap; border-radius: 22px; }
+  main.kw .pv-bar .keuze span { padding: 6px 12px; font-size: .9rem; }
+}
+
+/* ---------- Kruiswoordraster (online invullen) ---------- */
+.kw-xw { display: grid; grid-template-columns: repeat(var(--cols), var(--cs)); grid-auto-rows: var(--cs); padding: 0 var(--bw) var(--bw) 0; width: max-content; }
+.kw-xw .f { position: relative; border: var(--bw) solid var(--bc); margin: 0 calc(var(--bw) * -1) calc(var(--bw) * -1) 0; display: grid; place-items: center; user-select: none; }
+.kw-xw .n { position: absolute; left: 2px; top: 1px; font-style: normal; font-weight: 700; font-size: max(8px, calc(var(--cs) * .3)); line-height: 1; }
+.kw-xw .si { position: absolute; right: 2px; bottom: 1px; font-size: max(7px, calc(var(--cs) * .26)); line-height: 1; font-weight: 700; }
+.kw-xw .l { font-weight: 700; font-size: calc(var(--cs) * .56); line-height: 1; padding-top: 2px; }
+.kw-xw .f.ij .l { font-size: calc(var(--cs) * .42); }
+.kw-solbox { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.kw-sg { display: flex; }
+.kw-sb { position: relative; width: 28px; height: 30px; margin-right: -2px; border: 2px solid var(--line); background: var(--cup); display: grid; place-items: center; }
+.kw-sb i { position: absolute; left: 2px; top: 1px; font-style: normal; font-size: 8px; font-weight: 700; line-height: 1; }
+.kw-sb span { font-weight: 700; font-size: 16px; padding-top: 4px; }
+
+/* ---------- Online invullen ---------- */
+.kw-play { --bw: 2px; --bc: var(--line); display: flex; flex-direction: column; gap: 14px; }
+.kw-play .kw-xw .f { cursor: pointer; background: var(--cup); }
+.kw-play .kw-xw .f.mark { background: color-mix(in srgb, var(--fg) 14%, var(--cup)); }
+.kw-play .kw-xw .f.onword { background: color-mix(in srgb, var(--forest) 20%, var(--cup)); }
+.kw-play .kw-xw .f.oncell { background: color-mix(in srgb, var(--forest) 45%, var(--cup)); }
+.kw-play .kw-xw .f.bad { background: color-mix(in srgb, var(--rust) 22%, var(--cup)); }
+.kw-play .kw-xw .f.bad .l { color: var(--rust); }
+.kw-play-bar { display: flex; gap: 12px; align-items: baseline; padding: 12px 18px; border-radius: 14px; background: var(--cup); border: 2px solid var(--line); min-height: 56px; }
+.kw-play-bar.done { color: var(--forest); border-color: var(--forest); background: color-mix(in srgb, var(--forest) 12%, var(--cup)); font-weight: 700; }
+.kw-play-bar .pb-n { font-weight: 700; white-space: nowrap; color: var(--forest); }
+.kw-play-body { display: flex; gap: 26px; align-items: flex-start; flex-wrap: wrap; }
+.kw-play-grid { flex: 1 1 420px; min-width: 0; overflow-x: auto; padding-bottom: 6px; }
+.kw-play-sol { margin-top: 18px; }
+.kw-sol-label { margin-bottom: 6px; font-weight: 700; }
+.kw-play-clues { flex: 0 1 290px; display: flex; flex-direction: column; gap: 14px; min-width: 220px; }
+.kw-play-clues h4 { margin: 0 0 6px; font-size: 1.05rem; }
+.kw-play-clues ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.kw-play-clues li { display: flex; gap: 8px; padding: 5px 8px; border-radius: 10px; cursor: pointer; font-size: .95rem; line-height: 1.3; }
+.kw-play-clues li b { flex: none; min-width: 22px; text-align: right; color: var(--forest); }
+.kw-play-clues li:hover { background: var(--cup); }
+.kw-play-clues li.on { background: color-mix(in srgb, var(--forest) 20%, var(--cup)); }
+.kw-play-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+#pMsg { font-weight: 700; }
+#pMsg.good { color: var(--forest); }
+#pMsg.bad { color: var(--rust); }
+/* Verborgen invoerveld dat de toetsen opvangt (ook het schermtoetsenbord op een telefoon) */
+.kw-hid { position: fixed; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; border: 0; padding: 0; font-size: 16px; }
+
+/* ---------- Venster Voorbeelden kiezen ---------- */
+.kw-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(38, 38, 31, .55); display: grid; place-items: center; padding: 16px; }
+.kw-overlay[hidden] { display: none; }
+.kw-dialog { width: min(860px, 100%); max-height: min(720px, 92dvh); display: flex; flex-direction: column; background: var(--bg); color: var(--fg); border: 2px solid var(--line); border-radius: 24px; overflow: hidden; }
+.kw-dlg-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 24px; border-bottom: 1px solid var(--nav-line); }
+.kw-dlg-head h2 { margin: 0; font-size: 1.5rem; line-height: 1.2; }
+.kw-dlg-body { display: grid; grid-template-columns: 230px minmax(0, 1fr); min-height: 0; flex: 1; }
+.kw-dlg-topics { border-right: 1px solid var(--nav-line); padding: 14px; overflow: auto; display: flex; flex-direction: column; gap: 4px; }
+.kw-dlg-topics button { text-align: left; border: 0; background: none; color: var(--fg); font: inherit; padding: 9px 12px; border-radius: 12px; cursor: pointer; }
+.kw-dlg-topics button:hover { background: color-mix(in srgb, var(--fg) 10%, transparent); }
+.kw-dlg-topics button[aria-current="true"] { background: var(--forest); color: var(--bg); font-weight: 700; }
+.kw-items { padding: 14px 20px; overflow: auto; }
+.kw-item { display: flex; gap: 12px; align-items: flex-start; padding: 8px 10px; border-radius: 12px; cursor: pointer; line-height: 1.35; }
+.kw-item:hover { background: var(--cup); }
+.kw-item input { flex: none; width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--forest); }
+.kw-item b { letter-spacing: .02em; }
+.kw-item .c { color: var(--muted); font-size: .95rem; }
+.kw-item.have { opacity: .55; cursor: default; }
+.kw-dlg-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 24px; border-top: 1px solid var(--nav-line); }
+
+/* ---------- Mobiele weergave: alles onder elkaar, de pagina scrolt ---------- */
+@media (max-width: 760px) {
+  main.kw, main.kw.nopv { grid-template-columns: minmax(0, 1fr); }
+  main.kw.nopv .preview { display: flex; }
+  main.kw.nopv .controls { padding-right: 16px; }
+  main.kw .kw-split, main.kw .kw-pv-hide, main.kw.nopv .kw-pv-show { display: none; }
+  .kw-stage { flex: none; min-height: 0; padding: 8px; overflow: visible; }
+  .kw-dlg-head { padding: 14px 16px; }
+  .kw-dlg-body { grid-template-columns: minmax(0, 1fr); }
+  .kw-dlg-topics { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--nav-line); }
+  .kw-dlg-topics button { white-space: nowrap; }
+  .kw-items { padding: 10px 12px; }
+  .kw-dlg-foot { padding: 12px 16px; }
+}
+/* Minder beweging: ook het in- en uitklappen van de sidebar gaat direct */
+@media (prefers-reduced-motion: reduce) {
+  #layout, #layout *, .kw-overlay * { transition: none !important; animation: none !important; }
+}
