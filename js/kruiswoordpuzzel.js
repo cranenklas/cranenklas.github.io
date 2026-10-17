@@ -168,7 +168,10 @@
   $('#addRow').onclick = function () {
     if (invoer.woorden.length >= MAXW) { wordNote('Maximaal ' + MAXW + ' woorden.'); return; }
     var r = blankRow(); invoer.woorden.push(r); renderTable();
-    $('[data-id="' + r.id + '"] .kw-win', rowsBox).focus();
+    /* de nieuwe rij staat onderaan de tabel, onder de knoppen: cursor erin en de hele rij in beeld */
+    var el = $('[data-id="' + r.id + '"]', rowsBox);
+    $('.kw-win', el).focus({ preventScroll: true });
+    el.scrollIntoView({ block: 'nearest' });
   };
   $('#clearBtn').onclick = function () { invoer.woorden = [blankRow(), blankRow(), blankRow()]; edited(); renderTable(); schedule(); };
   $('#exBtn').onclick = function () { loadExample(); };
@@ -945,20 +948,29 @@
   $('#imgBtn').onclick = copyImage;
 
   /* ---------- Sidebar, versleepbare lijn en voorbeeld verbergen ---------- */
-  var DEF_W = 460, wanted = DEF_W, STORE_W = 'cranenklas-kruiswoordpuzzel-breedte';
+  /* Standaard krijgt het voorbeeld 35% van de ruimte rechts van het menu (minimaal 440 px) en de invoer
+     de rest; dat rekent mee met de venstergrootte. Een gesleepte breedte wordt bewaard en gaat voor. */
+  var PV_SHARE = 0.35, PV_MIN = 440, IN_MIN = 340, SPLIT_W = 14, STORE_W = 'cranenklas-kruiswoordpuzzel-breedte';
+  var wanted = null;  /* null: de standaardverdeling */
+  function defaultIn() { var room = main.clientWidth; return room - SPLIT_W - Math.max(PV_MIN, Math.round(room * PV_SHARE)); }
   function clampIn(w) {
-    var max = Math.max(340, main.clientWidth - 14 - 440);
-    return Math.min(Math.max(w, 340), max);
+    var max = Math.max(IN_MIN, main.clientWidth - SPLIT_W - PV_MIN);
+    return Math.min(Math.max(w, IN_MIN), max);
   }
+  function curIn() { return clampIn(wanted === null ? defaultIn() : wanted); }
   function applyIn() {
-    var w = clampIn(wanted);
+    var w = curIn();
     main.style.setProperty('--inw', w + 'px');
     splitter.setAttribute('aria-valuenow', String(Math.round(w)));
     splitter.setAttribute('aria-valuemax', String(Math.round(clampIn(5000))));
   }
+  /* w = null zet terug naar de standaardverdeling en vergeet de bewaarde breedte */
   function setWanted(w, save) {
     wanted = w; applyIn();
-    if (save) { try { localStorage.setItem(STORE_W, String(Math.round(clampIn(w)))); } catch (err) { /* opslag niet beschikbaar */ } }
+    if (save) {
+      try { if (w === null) localStorage.removeItem(STORE_W); else localStorage.setItem(STORE_W, String(Math.round(clampIn(w)))); }
+      catch (err) { /* opslag niet beschikbaar */ }
+    }
   }
   try { var saved = parseInt(localStorage.getItem(STORE_W), 10); if (saved) wanted = saved; } catch (err) { /* opslag niet beschikbaar */ }
   applyIn();
@@ -975,16 +987,16 @@
   });
   function endDrag(e) {
     if (splitter.hasPointerCapture && splitter.hasPointerCapture(e.pointerId)) splitter.releasePointerCapture(e.pointerId);
-    splitter.classList.remove('on'); document.body.classList.remove('kw-drag'); setWanted(wanted, true);
+    splitter.classList.remove('on'); document.body.classList.remove('kw-drag'); if (wanted !== null) setWanted(wanted, true);
   }
   splitter.addEventListener('pointerup', endDrag);
   splitter.addEventListener('pointercancel', endDrag);
-  splitter.addEventListener('dblclick', function () { setWanted(DEF_W, true); });
+  splitter.addEventListener('dblclick', function () { setWanted(null, true); });
   splitter.addEventListener('keydown', function (e) {
-    var cur = clampIn(wanted);
+    var cur = curIn();
     if (e.key === 'ArrowLeft') { e.preventDefault(); setWanted(cur - 30, true); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); setWanted(cur + 30, true); }
-    else if (e.key === 'Home') { e.preventDefault(); setWanted(DEF_W, true); }
+    else if (e.key === 'Home') { e.preventDefault(); setWanted(null, true); }
   });
   $('#toggle').addEventListener('click', function () {
     var c = $('#layout').classList.toggle('collapsed');

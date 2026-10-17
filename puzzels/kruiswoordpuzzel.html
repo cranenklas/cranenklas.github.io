@@ -48,14 +48,16 @@
           <p class="eg" id="exHint"><b>Voorbeeld</b>Vervang de woorden door je eigen lijst.</p>
         </header>
 
+        <section class="blk" aria-labelledby="hSheet">
+          <h2 id="hSheet">Werkblad</h2>
+          <div class="field"><label for="title">Titel</label><input id="title" type="text" maxlength="60" autocomplete="off"></div>
+          <div class="field"><label for="school">School (optioneel)</label><input id="school" type="text" maxlength="60" autocomplete="off"></div>
+          <label class="switch"><input class="vh" type="checkbox" id="wl"><span class="track"></span><span>Woordenlijst laten zien onder de puzzel</span></label>
+        </section>
+
         <section class="blk" aria-labelledby="hWords">
           <h2 id="hWords">Woorden en omschrijvingen</h2>
           <p class="hint">Typ een paar letters van een woord. Staat het in de databank, dan verschijnt de rest in grijs en vult de omschrijving zichzelf in. Tab of Enter neemt de suggestie over.</p>
-          <div class="kw-table">
-            <div class="kw-thead" aria-hidden="true"><span></span><span>Woord</span><span>Omschrijving</span><span></span></div>
-            <div class="kw-table" id="rows"></div>
-          </div>
-          <p class="hint" id="count"></p>
           <div class="row tight">
             <button class="btn ghost" id="bankBtn" type="button">Voorbeelden kiezen</button>
             <button class="btn ghost" id="exBtn" type="button">Voorbeeld invullen</button>
@@ -69,6 +71,11 @@
             <div class="row tight"><button class="btn small" id="pasteGo" type="button">Toevoegen</button><button class="btn ghost small" id="pasteCancel" type="button">Annuleren</button></div>
           </div>
           <div id="wordNote" aria-live="polite"></div>
+          <div class="kw-table">
+            <div class="kw-thead" aria-hidden="true"><span></span><span>Woord</span><span>Omschrijving</span><span></span></div>
+            <div class="kw-table" id="rows"></div>
+          </div>
+          <p class="hint" id="count"></p>
         </section>
 
         <section class="blk" aria-labelledby="hSol">
@@ -76,13 +83,6 @@
           <p class="hint">Een woord of een zin. Elke letter komt uit een eigen vakje van de puzzel. Die vakjes worden grijs met een nummer.</p>
           <input id="sol" type="text" autocomplete="off" spellcheck="false" aria-label="Oplossingswoord" placeholder="Bijvoorbeeld KRINGLOOP">
           <p class="hint" id="solCount"></p>
-        </section>
-
-        <section class="blk" aria-labelledby="hSheet">
-          <h2 id="hSheet">Werkblad</h2>
-          <div class="field"><label for="title">Titel</label><input id="title" type="text" maxlength="60" autocomplete="off"></div>
-          <div class="field"><label for="school">School (optioneel)</label><input id="school" type="text" maxlength="60" autocomplete="off"></div>
-          <label class="switch"><input class="vh" type="checkbox" id="wl"><span class="track"></span><span>Woordenlijst laten zien onder de puzzel</span></label>
         </section>
 
         <section class="blk" aria-labelledby="hPrint">
