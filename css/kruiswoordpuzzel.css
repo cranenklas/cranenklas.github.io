@@ -95,7 +95,8 @@ main.kw .preview { container: kwout / inline-size; }
 .kw-xw .f { position: relative; border: var(--bw) solid var(--bc); margin: 0 calc(var(--bw) * -1) calc(var(--bw) * -1) 0; display: grid; place-items: center; user-select: none; }
 .kw-xw .n { position: absolute; left: 2px; top: 1px; font-style: normal; font-weight: 700; font-size: max(8px, calc(var(--cs) * .3)); line-height: 1; }
 .kw-xw .si { position: absolute; right: 2px; bottom: 1px; font-size: max(7px, calc(var(--cs) * .26)); line-height: 1; font-weight: 700; }
-.kw-xw .l { font-weight: 700; font-size: calc(var(--cs) * .56); line-height: 1; padding-top: 2px; }
+/* De letter staat iets onder het midden, zodat het startnummer linksboven er niet tegenaan komt */
+.kw-xw .l { font-weight: 700; font-size: calc(var(--cs) * .56); line-height: 1; padding-top: calc(var(--cs) * .2); }
 .kw-xw .f.ij .l { font-size: calc(var(--cs) * .42); }
 .kw-solbox { display: flex; flex-wrap: wrap; gap: 8px 16px; }
 .kw-sg { display: flex; }

@@ -19,23 +19,14 @@
 
   /* Databank (js/kruiswoordbank.js): onderwerpen met paren [woord, omschrijving] */
   var BANK = typeof KRUISWOORDBANK !== 'undefined' ? KRUISWOORDBANK : [];
+  /* Voor het aanvullen tijdens het typen: het woord zoals in het raster (FÖHN wordt FOHN) */
   var ALL = [];
-  BANK.forEach(function (t) { t.items.forEach(function (it) { ALL.push({ w: it[0], c: it[1], topic: t.name }); }); });
+  BANK.forEach(function (t) { t.items.forEach(function (it) { ALL.push({ w: norm(it[0]), c: it[1], topic: t.name }); }); });
 
-  /* Het voorbeeld waarmee de tool opent */
+  /* Het voorbeeld waarmee de tool opent: alle woorden van het eerste onderwerp van de databank (Water) */
   var EX = {
     titel: 'Kruiswoordpuzzel waterkringloop', oplossing: 'KRINGLOOP',
-    woorden: [
-      ['VERDAMPING', 'Water verandert door warmte in waterdamp'],
-      ['CONDENSATIE', 'Waterdamp koelt af en wordt weer vloeibaar'],
-      ['NEERSLAG', 'Regen, sneeuw en hagel die uit wolken vallen'],
-      ['INFILTRATIE', 'Regenwater zakt de grond in'],
-      ['GRONDWATER', 'Water dat in de grond zit'],
-      ['RIVIER', 'Stroomt van een bron naar de zee'],
-      ['GLETSJER', 'Rivier van ijs in de bergen'],
-      ['OCEAAN', 'Groot zoutwatergebied tussen de continenten'],
-      ['WOLK', 'Hangt in de lucht en bestaat uit druppeltjes'],
-      ['BRON', 'Plek waar een rivier begint']]
+    woorden: BANK.length ? BANK[0].items : []
   };
 
   /* Toestand. Alle invoer van de puzzel staat in één object (invoer), zodat
@@ -484,7 +475,7 @@
   /* Raster: witte vakjes met zwarte rand, grijs voor de oplossing, startnummer linksboven,
      nummer van de oplossingsletter rechtsonder; op het antwoordblad de letters in rood */
   function drawGrid(g, P, gx, gy, cell, answer) {
-    var markAt = P.markAt || new Map(), ns = Math.max(2.1, cell * 0.3), ss = Math.max(1.85, cell * 0.26);
+    var markAt = P.markAt || new Map(), ns = Math.max(1.6, cell * 0.3), ss = Math.max(1.4, cell * 0.26);
     for (var r = 0; r < P.rows; r++) for (var c = 0; c < P.cols; c++) {
       var x = P.cells[r][c]; if (!x) continue;
       var m = markAt.get(r * 1000 + c), cx = gx + c * cell, cy = gy + r * cell;
@@ -492,8 +483,13 @@
       if (x.num) g.text(cx + 0.5, cy + 0.3 + ns * 0.78, x.num, { size: ns, weight: 700 });
       if (m !== undefined) g.text(cx + cell - 0.5, cy + cell - 0.45, m + 1, { size: ss, weight: 700, anchor: 'end' });
       if (answer) {
-        var ls = cell * (x.t.length > 1 ? 0.42 : 0.56);
-        g.text(cx + cell / 2, cy + cell / 2 + ls * 0.36 + 0.26, x.t, { size: ls, weight: 700, anchor: 'middle', fill: RED });
+        /* De letter blijft tussen het startnummer (boven) en het nummer van de oplossingsletter (onder).
+           In een groot vakje is daar ruimte genoeg; in een klein vakje (compact antwoordblad) schuift of krimpt de letter. */
+        var ls = cell * (x.t.length > 1 ? 0.42 : 0.56), base = cy + cell / 2 + ls * 0.36 + 0.26;
+        var top = cy + (x.num ? 0.3 + ns * 0.78 + 0.15 : 0.3), bot = cy + cell - (m !== undefined ? 0.45 + ss * 0.72 + 0.15 : 0.4);
+        ls = Math.min(ls, (bot - top) / 0.72);
+        base = Math.min(Math.max(base, top + ls * 0.72), bot);
+        g.text(cx + cell / 2, base, x.t, { size: ls, weight: 700, anchor: 'middle', fill: RED });
       }
     }
   }
@@ -770,7 +766,7 @@
   }
   function layoutPlay() {
     var g = $('#playGrid'), wrap = $('#pgw'); if (!g || !wrap) return;
-    var cs = Math.max(22, Math.min(46, Math.floor((wrap.clientWidth - 6) / puzzle.cols)));
+    var cs = Math.max(26, Math.min(46, Math.floor((wrap.clientWidth - 6) / puzzle.cols)));
     g.style.setProperty('--cs', cs + 'px');
   }
   /* focus: alleen bij het kiezen van de weergave, niet tijdens het typen in de tabel */
